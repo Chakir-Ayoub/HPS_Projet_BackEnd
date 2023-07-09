@@ -1,5 +1,6 @@
 package com.example.hps.serviceImpl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
@@ -24,8 +25,7 @@ public class PlanificationImpl implements PlanificationService {
 		Planification planificationCheck=planificationRepository.findBydatePlanification(planificationDto.getDatePlanification());
 		if(planificationCheck!=null) throw new RuntimeException("Cette planification il existe déja ! ");
 		
-		ModelMapper modelMapper=new ModelMapper();
-		Planification planification=modelMapper.map(planificationDto, Planification.class);
+
 		
 		
 		for(int i=0;i<planificationDto.getSessions().size();i++) {
@@ -33,6 +33,9 @@ public class PlanificationImpl implements PlanificationService {
 			sessionDto.setPlanification(planificationDto);
 			planificationDto.getSessions().set(i, sessionDto);
 		}
+		
+		ModelMapper modelMapper=new ModelMapper();
+		Planification planification=modelMapper.map(planificationDto, Planification.class);
 		
 		Planification newplanification=planificationRepository.save(planification);
 		
@@ -42,22 +45,45 @@ public class PlanificationImpl implements PlanificationService {
 	}
 
 	@Override
-	public PlanificationDto ModifierPlanification(PlanificationDto planificationDto) {
+	public PlanificationDto ModifierPlanification(PlanificationDto planificationDto,Long id) {
 		// TODO Auto-generated method stub
-				
-		return null;
+		Planification planificationCheck=planificationRepository.findByidPlanification(id);
+		if(planificationCheck==null) throw new RuntimeException("Cette planification n'existe pas ! ");
+		
+		ModelMapper modelMapper=new ModelMapper();
+		Planification planficationconvertToEntity=modelMapper.map(planificationDto, Planification.class);
+		
+		planificationCheck.setDatePlanification(planficationconvertToEntity.getDatePlanification());
+		planificationCheck.setSessions(planficationconvertToEntity.getSessions());
+		
+	   planificationRepository.save(planificationCheck);
+	 
+	    PlanificationDto planificationDtoModifier = modelMapper.map(planificationCheck, PlanificationDto.class);
+		return planificationDtoModifier;
 	}
 
 	@Override
 	public void SupperimerPlanification(Long id) {
 		// TODO Auto-generated method stub
-		
+		Planification planification=planificationRepository.findByidPlanification(id);
+		if(planification==null) throw new RuntimeException("Cette Planification n'existe oas ! ");
+		planificationRepository.delete(planification);
 	}
 
 	@Override
 	public List<PlanificationDto> GetAllPlaning() {
 		// TODO Auto-generated method stub
-		return null;
+		List<Planification> planifications;
+		planifications=planificationRepository.findAll();
+		
+		List<PlanificationDto> planificationDtos=new ArrayList<>();
+		for(Planification planification: planifications) {
+			ModelMapper modelMapper=new ModelMapper();
+			PlanificationDto planificationDto=modelMapper.map(planification, PlanificationDto.class);
+			
+			planificationDtos.add(planificationDto);
+		}
+		return planificationDtos;
 	}
 	
 }

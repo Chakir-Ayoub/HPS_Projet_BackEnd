@@ -20,29 +20,31 @@ public class ProjetImpl implements ProjetService {
 	ProjetRepository projetRepository;
 
 	@Override
-	public ProjetDto AjouterProjet(ProjetDto projetDto) {
+	public ProjetDto AjouterProjet(ProjetDto projet) {
 		// TODO Auto-generated method stub
-		Projet projetCheck = projetRepository.findBynomprojet(projetDto.getNomprojet());
-		if (projetCheck != null) {
-		    throw new RuntimeException("Ce Projet existe déjà !");
-		}
+		Projet projetCheck = projetRepository.findBynomprojet(projet.getNomprojet());
+		if (projetCheck != null) throw new RuntimeException("Ce Projet existe déjà !");
 
-
-		for (int i = 0; i < projetDto.getDetails().size(); i++) {
-		    DetailDto detailDto = projetDto.getDetails().get(i);
-		    detailDto.setProjetDto(projetDto); 
-		    projetDto.getDetails().set(i, detailDto);
+		
+		
+		for (int i = 0; i < projet.getDetails().size(); i++) {
+		    DetailDto detailDto = projet.getDetails().get(i);
+			detailDto.setProjet(projet);
+		    projet.getDetails().set(i, detailDto);
 		}
 		
 		ModelMapper modelMapper = new ModelMapper();
-		
-		Projet projet = modelMapper.map(projetDto, Projet.class);
-		
-		Projet newProjet = projetRepository.save(projet);
 
+		Projet projett = modelMapper.map(projet, Projet.class);
+
+
+
+		Projet newProjet = projetRepository.save(projett); //DAO 
+		
 		ProjetDto projetDto2 = modelMapper.map(newProjet, ProjetDto.class);
-
 		return projetDto2;
+
+		
 	}
 
 	@Override
