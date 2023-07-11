@@ -28,7 +28,7 @@ public class Planification implements Serializable {
 	private LocalDate datePlanification;
 
 	@OneToMany(cascade = CascadeType.ALL,mappedBy = "planification")
-	private List<Session> sessions=new ArrayList<>();
+	private List<Session> sessions;
 
 	public Planification(Long idPlanification, LocalDate datePlanification, List<Session> sessions) {
 		super();
@@ -65,7 +65,8 @@ public class Planification implements Serializable {
 	public void setSessions(List<Session> sessions) {
 		this.sessions = sessions;
 	}
-	
+
+
 	
 	
 	

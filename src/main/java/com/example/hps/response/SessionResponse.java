@@ -1,6 +1,7 @@
 package com.example.hps.response;
 
 import java.time.LocalTime;
+import java.util.List;
 
 
 
@@ -10,6 +11,7 @@ public class SessionResponse {
 	private String nomsession;
 	private LocalTime heureD;
 	private LocalTime heureF;
+	private List<DetailResponse> details;
 	
 	public long getIdsession() {
 		return idsession;
@@ -34,6 +36,12 @@ public class SessionResponse {
 	}
 	public void setHeureF(LocalTime heureF) {
 		this.heureF = heureF;
+	}
+	public List<DetailResponse> getDetails() {
+		return details;
+	}
+	public void setDetails(List<DetailResponse> details) {
+		this.details = details;
 	}
 
 

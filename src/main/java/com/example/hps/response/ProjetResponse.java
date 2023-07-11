@@ -11,11 +11,17 @@ public class ProjetResponse {
 	private String description;
 	private LocalDate datedemarrage;
 	private LocalDate datelivraison;	
-	//private List<DetailResponse> details;
+	private List<DetailResponse> details;
 	
 	
 
 	
+	public List<DetailResponse> getDetails() {
+		return details;
+	}
+	public void setDetails(List<DetailResponse> details) {
+		this.details = details;
+	}
 	public Long getIdprojet() {
 		return idprojet;
 	}

@@ -1,7 +1,6 @@
 package com.example.hps.dto;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -9,7 +8,7 @@ import java.util.List;
 public class PlanificationDto {
 	private Long idPlanification;
 	private LocalDate datePlanification;
-	private List<SessionDto> sessions=new ArrayList<>();
+	private List<SessionDto> sessions;
 	
 	public Long getIdPlanification() {
 		return idPlanification;

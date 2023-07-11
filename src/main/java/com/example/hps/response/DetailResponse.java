@@ -8,16 +8,8 @@ public class DetailResponse {
 	private String Done;
 	private String Doing;
 	private String commentaire;
-	private SessionResponse session;
 
 	
-
-	public SessionResponse getSession() {
-		return session;
-	}
-	public void setSession(SessionResponse session) {
-		this.session = session;
-	}
 	public Long getIddetail() {
 		return iddetail;
 	}

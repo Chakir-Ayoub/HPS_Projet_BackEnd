@@ -29,12 +29,12 @@ public class Detail implements Serializable {
 	@Column(nullable = false,length = 250)
 	private String commentaire;
 	
-	@ManyToOne()
+	@ManyToOne
 	@JoinColumn(name = "id_session")
 	private Session session;
 	
 	
-	@ManyToOne()
+	@ManyToOne
 	@JoinColumn(name = "projet")
 	private Projet projet;
 
@@ -126,7 +126,6 @@ public class Detail implements Serializable {
 	public void setProjet(Projet projet) {
 		this.projet = projet;
 	}
-
-
+	
 	
 }

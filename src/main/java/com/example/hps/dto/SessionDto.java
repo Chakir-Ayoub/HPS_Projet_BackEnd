@@ -2,6 +2,8 @@ package com.example.hps.dto;
 
 import java.time.LocalTime;
 import java.util.List;
+
+import com.example.hps.entity.Detail;
 public class SessionDto {
 	
 	private Long idsession;
@@ -10,11 +12,18 @@ public class SessionDto {
 	private LocalTime heureF;
 	private PlanificationDto planification;
 	private List<DetailDto> details;
+
 	
-	public long getIdsession() {
+	public List<DetailDto> getDetails() {
+		return details;
+	}
+	public void setDetails(List<DetailDto> details) {
+		this.details = details;
+	}
+	public Long getIdsession() {
 		return idsession;
 	}
-	public void setIdsession(long idsession) {
+	public void setIdsession(Long idsession) {
 		this.idsession = idsession;
 	}
 	public String getNomsession() {
@@ -41,13 +50,9 @@ public class SessionDto {
 	public void setPlanification(PlanificationDto planification) {
 		this.planification = planification;
 	}
-	public List<DetailDto> getDetails() {
-		return details;
-	}
-	public void setDetails(List<DetailDto> details) {
-		this.details = details;
-	}
+
 	
+
 	
 	
 }

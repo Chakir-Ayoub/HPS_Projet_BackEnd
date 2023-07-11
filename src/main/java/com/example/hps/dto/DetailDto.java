@@ -1,8 +1,12 @@
 package com.example.hps.dto;
 
+import java.io.Serializable;
 
-
-public class DetailDto {
+public class DetailDto implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2072174640665542961L;
 	private Long iddetail;
 	private String Todo;
 	private String Done;
@@ -10,7 +14,6 @@ public class DetailDto {
 	private String commentaire;
 	private SessionDto session;
 	private ProjetDto projet;
-	
 	public Long getIddetail() {
 		return iddetail;
 	}
@@ -53,6 +56,7 @@ public class DetailDto {
 	public void setProjet(ProjetDto projet) {
 		this.projet = projet;
 	}
+	
 	
 	
 	

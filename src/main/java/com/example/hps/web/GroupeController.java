@@ -17,8 +17,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.hps.dto.GroupeDto;
+import com.example.hps.entity.Groupe;
+import com.example.hps.entity.Utilisateur;
+import com.example.hps.repository.GroupeRepository;
+import com.example.hps.repository.UtilisateurRepository;
 import com.example.hps.request.GroupeRequest;
 import com.example.hps.response.GroupeResponse;
+import com.example.hps.response.UtilisateurResponse;
 import com.example.hps.service.GroupeService;
 
 @RestController
@@ -36,6 +41,7 @@ public class GroupeController {
 		
 		GroupeDto createGroupe=groupeService.AjouterGroupe(groupeDto);
 		GroupeResponse groupeResponse=modelMapper.map(createGroupe, GroupeResponse.class);
+		
 		
 		return new ResponseEntity<GroupeResponse>(groupeResponse,HttpStatus.ACCEPTED);
 	}
@@ -73,6 +79,8 @@ public class GroupeController {
 		groupeService.SupperimerGroupe(id);
 		return new ResponseEntity<Object>(HttpStatus.NO_CONTENT);
 	}
+	
+
 	
 
 }

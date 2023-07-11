@@ -16,6 +16,8 @@ public class SessionRequest {
 	private LocalTime heureD;
 	@NotBlank(message = "Ce champs ne doit pas etre Null !")
 	private LocalTime heureF;
+	
+	
 	public String getNomsession() {
 		return nomsession;
 	}

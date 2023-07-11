@@ -7,6 +7,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.hps.Exceptions.RestException;
 import com.example.hps.dto.DetailDto;
 import com.example.hps.entity.Detail;
 import com.example.hps.repository.DetailRepository;
@@ -39,6 +40,11 @@ public class DetailImpl implements DetailsService {
 	@Override
 	public void SupperimerDetail(Long id) {
 		// TODO Auto-generated method stub
+		Detail detailcheck=detailRepository.findByiddetail(id);
+		
+		if(detailcheck==null) throw new RestException("Ce Details n'existe pas");
+		
+		detailRepository.delete(detailcheck);
 
 	}
 

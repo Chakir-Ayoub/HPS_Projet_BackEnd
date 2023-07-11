@@ -38,7 +38,7 @@ public class Session implements Serializable {
 	private Planification planification;
 	
 	@JsonIgnore
-	@OneToMany(cascade = CascadeType.ALL,mappedBy = "session")
+	@OneToMany(mappedBy = "session",cascade = CascadeType.ALL)
 	private List<Detail> details;
 
 	public Session(Long idsession, String nomsession, LocalTime heureD, LocalTime heureF, Planification planification,

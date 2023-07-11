@@ -28,6 +28,11 @@ public class Groupe implements Serializable{
 	@OneToMany(cascade = CascadeType.ALL,mappedBy = "groupe")
 	private List<Utilisateur> utilisateurs;
 	
+	public void AddUtilisateur(Utilisateur utilisateur) {
+		utilisateurs.add(utilisateur);
+		utilisateur.setGroupe(this);
+	}
+	
 	
 	@OneToMany(cascade = CascadeType.ALL,mappedBy = "groupe")
 	private List<Sous_Groupe> sous_Groupes;
