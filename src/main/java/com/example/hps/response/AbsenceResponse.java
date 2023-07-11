@@ -4,17 +4,17 @@ import java.util.Date;
 
 
 public class AbsenceResponse {
-	private Long id_Absence;
+	private Long idAbsence;
 	private String Type;
 	private Date date_debut;
 	private Date date_fin;
-	private boolean justification=false;
-	private UtilisateurResponse utilisateurResponse;
-	public Long getId_Absence() {
-		return id_Absence;
+	private boolean justification;
+	
+	public Long getIdAbsence() {
+		return idAbsence;
 	}
-	public void setId_Absence(Long id_Absence) {
-		this.id_Absence = id_Absence;
+	public void setIdAbsence(Long idAbsence) {
+		this.idAbsence = idAbsence;
 	}
 	public String getType() {
 		return Type;
@@ -40,12 +40,7 @@ public class AbsenceResponse {
 	public void setJustification(boolean justification) {
 		this.justification = justification;
 	}
-	public UtilisateurResponse getUtilisateurResponse() {
-		return utilisateurResponse;
-	}
-	public void setUtilisateurResponse(UtilisateurResponse utilisateurResponse) {
-		this.utilisateurResponse = utilisateurResponse;
-	}
+
 	
 	
 }

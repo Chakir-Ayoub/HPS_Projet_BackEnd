@@ -17,7 +17,6 @@ public class UtilisateurRequest {
 	@Size(min = 3,message = "Ce champs doit avoir au moins 3 Caracteres !")
 	private String prenom_utilisateur;
 	@NotBlank(message = "Ce champs ne doit pas etre Null !")
-	@Size(min = 3,message = "Ce champs doit avoir au moins 3 Caracteres !")
 	private Date date_naiss;
 	@NotBlank(message = "Ce champs ne doit pas etre Null !")
 	@Email(message = "Ce champs doit respecter la format email !")
@@ -30,11 +29,11 @@ public class UtilisateurRequest {
 	@Size(max = 10,message = "Ce champs doit avoir au max 10 Caracteres !")
 	private int telephone;
 	
-	private List<AbsenceRequest>  absenceRequests=new ArrayList<>();
+	private List<AbsenceRequest>  absences;
 	
-	private List<GroupeRequest> groupeRequests =new ArrayList<>();
+	private List<GroupeRequest> groupe ;
 	
-	private SessionRequest sessionRequest;
+	private SessionRequest session;
 
 	public String getNom_utilisateur() {
 		return nom_utilisateur;
@@ -84,29 +83,33 @@ public class UtilisateurRequest {
 		this.telephone = telephone;
 	}
 
-	public List<AbsenceRequest> getAbsenceRequests() {
-		return absenceRequests;
+
+
+	public List<AbsenceRequest> getAbsences() {
+		return absences;
 	}
 
-	public void setAbsenceRequests(List<AbsenceRequest> absenceRequests) {
-		this.absenceRequests = absenceRequests;
+	public void setAbsences(List<AbsenceRequest> absences) {
+		this.absences = absences;
 	}
 
-	public List<GroupeRequest> getGroupeRequests() {
-		return groupeRequests;
+	public List<GroupeRequest> getGroupe() {
+		return groupe;
 	}
 
-	public void setGroupeRequests(List<GroupeRequest> groupeRequests) {
-		this.groupeRequests = groupeRequests;
+	public void setGroupe(List<GroupeRequest> groupe) {
+		this.groupe = groupe;
 	}
 
-	public SessionRequest getSessionRequest() {
-		return sessionRequest;
+	public SessionRequest getSession() {
+		return session;
 	}
 
-	public void setSessionRequest(SessionRequest sessionRequest) {
-		this.sessionRequest = sessionRequest;
+	public void setSession(SessionRequest session) {
+		this.session = session;
 	}
+
+
 	
 	
 }

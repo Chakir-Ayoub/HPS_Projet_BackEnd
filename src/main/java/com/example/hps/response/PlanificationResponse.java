@@ -8,7 +8,6 @@ import java.util.List;
 public class PlanificationResponse {
 	private Long idPlanification;
 	private LocalDate datePlanification;
-	private List<SessionResponse> sessions=new ArrayList<>();
 	
 	public Long getIdPlanification() {
 		return idPlanification;
@@ -22,12 +21,7 @@ public class PlanificationResponse {
 	public void setDatePlanification(LocalDate datePlanification) {
 		this.datePlanification = datePlanification;
 	}
-	public List<SessionResponse> getSessions() {
-		return sessions;
-	}
-	public void setSessions(List<SessionResponse> sessions) {
-		this.sessions = sessions;
-	}
+
 
 	
 	

@@ -13,7 +13,7 @@ public class ProjetDto {
 	private String description;
 	private LocalDate datedemarrage;
 	private LocalDate datelivraison;
-	List<DetailDto> details=new ArrayList<>();
+	private List<DetailDto> details;
 	
 	
 	public Long getIdprojet() {

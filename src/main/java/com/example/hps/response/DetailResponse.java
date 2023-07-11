@@ -8,11 +8,16 @@ public class DetailResponse {
 	private String Done;
 	private String Doing;
 	private String commentaire;
+	private SessionResponse session;
+
 	
-	private SessionResponse sessionResponse ;
-	private ProjetResponse projetResponse;
-	
-	
+
+	public SessionResponse getSession() {
+		return session;
+	}
+	public void setSession(SessionResponse session) {
+		this.session = session;
+	}
 	public Long getIddetail() {
 		return iddetail;
 	}
@@ -43,18 +48,7 @@ public class DetailResponse {
 	public void setCommentaire(String commentaire) {
 		this.commentaire = commentaire;
 	}
-	public SessionResponse getSessionResponse() {
-		return sessionResponse;
-	}
-	public void setSessionResponse(SessionResponse sessionResponse) {
-		this.sessionResponse = sessionResponse;
-	}
-	public ProjetResponse getProjetResponse() {
-		return projetResponse;
-	}
-	public void setProjetResponse(ProjetResponse projetResponse) {
-		this.projetResponse = projetResponse;
-	}
+
 	
 	
 }

@@ -2,7 +2,6 @@ package com.example.hps.entity;
 
 import java.io.Serializable;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -24,7 +23,7 @@ public class Session implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long idsession;
+	private Long idsession;
 	@Column(length = 35,nullable = false)
 	private String nomsession;
 	@Column(nullable = false)
@@ -39,10 +38,10 @@ public class Session implements Serializable {
 	private Planification planification;
 	
 	@JsonIgnore
-	@OneToMany(cascade = CascadeType.ALL,mappedBy = "session",orphanRemoval = true)
-	private List<Detail> details=new ArrayList<>();
+	@OneToMany(cascade = CascadeType.ALL,mappedBy = "session")
+	private List<Detail> details;
 
-	public Session(long idsession, String nomsession, LocalTime heureD, LocalTime heureF, Planification planification,
+	public Session(Long idsession, String nomsession, LocalTime heureD, LocalTime heureF, Planification planification,
 			List<Detail> details) {
 		super();
 		this.idsession = idsession;
@@ -58,11 +57,11 @@ public class Session implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public long getIdsession() {
+	public Long getIdsession() {
 		return idsession;
 	}
 
-	public void setIdsession(long idsession) {
+	public void setIdsession(Long idsession) {
 		this.idsession = idsession;
 	}
 
@@ -105,6 +104,6 @@ public class Session implements Serializable {
 	public void setDetails(List<Detail> details) {
 		this.details = details;
 	}
-	
+
 	
 }

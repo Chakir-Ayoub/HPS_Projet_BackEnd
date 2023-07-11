@@ -8,6 +8,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.hps.Exceptions.RestException;
 import com.example.hps.dto.SessionDto;
 import com.example.hps.entity.Session;
 import com.example.hps.repository.SessionRepository;
@@ -23,7 +24,7 @@ public class SessionImpl implements SessionService {
 	public SessionDto AjouterSession(SessionDto sessionDto) {
 		// TODO Auto-generated method stub
 		Session sessioncheck=sessionRepository.findBynomsession(sessionDto.getNomsession());
-		if(sessioncheck!=null) throw new RuntimeException("Cette Session il existe déja !");
+		if(sessioncheck!=null) throw new RestException("Cette Session il existe déja !");
 		
 		ModelMapper modelMapper =new ModelMapper();
 		Session session=modelMapper.map(sessionDto, Session.class);
@@ -39,7 +40,7 @@ public class SessionImpl implements SessionService {
 	public SessionDto ModifierSession(SessionDto sessionDto,Long id) {
 		// TODO Auto-generated method stub
 		Session sessionCheck=sessionRepository.findByidsession(id);
-		if(sessionCheck==null) throw new RuntimeException("Cette Session il n'existe pas !");
+		if(sessionCheck==null) throw new RestException("Cette Session il n'existe pas !");
 
 		ModelMapper modelMapper=new ModelMapper();
 		Session modifierObjectSession=modelMapper.map(sessionDto, Session.class);
@@ -63,7 +64,7 @@ public class SessionImpl implements SessionService {
 	public void SupperimerSession(Long id) {
 		// TODO Auto-generated method stub
 		Session sessionCheck=sessionRepository.findByidsession(id);
-		if(sessionCheck==null) throw new RuntimeException("Cette Session il n'existe pas ! ");
+		if(sessionCheck==null) throw new RestException("Cette Session il n'existe pas ! ");
 		
 		sessionRepository.delete(sessionCheck);
 	}

@@ -11,7 +11,10 @@ public class ProjetResponse {
 	private String description;
 	private LocalDate datedemarrage;
 	private LocalDate datelivraison;	
-	List<DetailResponse> details=new ArrayList<>();
+	//private List<DetailResponse> details;
+	
+	
+
 	
 	public Long getIdprojet() {
 		return idprojet;
@@ -43,13 +46,6 @@ public class ProjetResponse {
 	public void setDatelivraison(LocalDate datelivraison) {
 		this.datelivraison = datelivraison;
 	}
-	public List<DetailResponse> getDetails() {
-		return details;
-	}
-	public void setDetails(List<DetailResponse> details) {
-		this.details = details;
-	}
-
 	
 	
 	

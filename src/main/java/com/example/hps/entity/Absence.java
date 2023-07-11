@@ -18,7 +18,7 @@ public class Absence implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id_Absence;
+	private Long idAbsence;
 	@Column(length = 35,nullable = false)
 	private String Type;
 	@Column(nullable = false)
@@ -26,7 +26,7 @@ public class Absence implements Serializable {
 	@Column(nullable = false)
 	private Date date_fin;
 	@Column(nullable = false)
-	private boolean justification=false;
+	private boolean justification;
 	
 	@ManyToOne
 	@JoinColumn(name = "utilisateur_id")
@@ -35,12 +35,25 @@ public class Absence implements Serializable {
 	public Absence(Long id_Absence, String type, Date date_debut, Date date_fin, boolean justification,
 			Utilisateur utilisateur) {
 		super();
-		this.id_Absence = id_Absence;
+		this.idAbsence = id_Absence;
 		Type = type;
 		this.date_debut = date_debut;
 		this.date_fin = date_fin;
 		this.justification = justification;
 		this.utilisateur = utilisateur;
+	}
+
+	public Absence() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public Long getIdAbsence() {
+		return idAbsence;
+	}
+
+	public void setIdAbsence(Long idAbsence) {
+		this.idAbsence = idAbsence;
 	}
 
 	public String getType() {

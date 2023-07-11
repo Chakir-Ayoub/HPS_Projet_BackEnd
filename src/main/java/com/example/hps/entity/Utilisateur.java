@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -13,7 +15,7 @@ public class Utilisateur implements Serializable {
 	private static final long serialVersionUID = 801544110262708169L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long Id;
+	private Long idutilisateur;
 	@Column(length = 35 ,nullable = false)
 	private String nom_utilisateur;
 	@Column(length = 35 ,nullable = false)
@@ -27,11 +29,13 @@ public class Utilisateur implements Serializable {
 	@Column(nullable = false)
 	private int telephone;
 	
-	@OneToMany(cascade = CascadeType.ALL,mappedBy = "utilisateur",orphanRemoval = true)
+	@OneToMany(cascade = CascadeType.ALL,mappedBy = "utilisateur")
 	private List<Absence> absences=new ArrayList<>();
 	
-	@OneToMany(cascade = CascadeType.ALL,mappedBy = "utilisateur",orphanRemoval = true)
-	private List<Groupe> groupes =new ArrayList<>();
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name="id_Groupe")
+	private Groupe groupe;
 	
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_session")
@@ -56,12 +60,29 @@ public class Utilisateur implements Serializable {
 
 
 
-	public Long getId() {
-		return Id;
+
+	public Long getIdutilisateur() {
+		return idutilisateur;
 	}
 
-	public void setId(Long id) {
-		Id = id;
+	public void setIdutilisateur(Long idutilisateur) {
+		this.idutilisateur = idutilisateur;
+	}
+
+	public Groupe getGroupe() {
+		return groupe;
+	}
+
+	public void setGroupe(Groupe groupe) {
+		this.groupe = groupe;
+	}
+
+	public Session getSession() {
+		return session;
+	}
+
+	public void setSession(Session session) {
+		this.session = session;
 	}
 
 	public String getNom_utilisateur() {

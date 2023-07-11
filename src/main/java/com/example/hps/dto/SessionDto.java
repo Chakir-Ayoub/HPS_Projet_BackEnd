@@ -1,18 +1,16 @@
 package com.example.hps.dto;
 
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
-
-
-
 public class SessionDto {
-	private long idsession;
+	
+	private Long idsession;
 	private String nomsession;
 	private LocalTime heureD;
 	private LocalTime heureF;
 	private PlanificationDto planification;
-	private List<DetailDto> detailsDtos=new ArrayList<>();
+	private List<DetailDto> details;
+	
 	public long getIdsession() {
 		return idsession;
 	}
@@ -43,16 +41,12 @@ public class SessionDto {
 	public void setPlanification(PlanificationDto planification) {
 		this.planification = planification;
 	}
-	public List<DetailDto> getDetailsDtos() {
-		return detailsDtos;
+	public List<DetailDto> getDetails() {
+		return details;
 	}
-	public void setDetailsDtos(List<DetailDto> detailsDtos) {
-		this.detailsDtos = detailsDtos;
+	public void setDetails(List<DetailDto> details) {
+		this.details = details;
 	}
-	
-	
-	
-
 	
 	
 	

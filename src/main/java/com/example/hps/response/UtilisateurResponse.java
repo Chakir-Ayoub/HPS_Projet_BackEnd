@@ -4,22 +4,32 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.example.hps.entity.Session;
+
 
 
 public class UtilisateurResponse {
-	private Long Id;
+	private Long idutilisateur;
 	private String nom_utilisateur;
 	private String prenom_utilisateur;
 	private Date date_naiss;
 	private String email;
 	private int telephone;
-	private List<AbsenceResponse> absencesResponses=new ArrayList<>();
-	private List<GroupeResponse> groupesResponses =new ArrayList<>();
-	public Long getId() {
-		return Id;
+	private List<AbsenceResponse> absences=new ArrayList<>();
+	private Session session ;
+
+	public Session getSession() {
+		return session;
 	}
-	public void setId(Long id) {
-		Id = id;
+	public void setSession(Session session) {
+		this.session = session;
+	}
+	
+	public Long getIdutilisateur() {
+		return idutilisateur;
+	}
+	public void setIdutilisateur(Long idutilisateur) {
+		this.idutilisateur = idutilisateur;
 	}
 	public String getNom_utilisateur() {
 		return nom_utilisateur;
@@ -51,19 +61,16 @@ public class UtilisateurResponse {
 	public void setTelephone(int telephone) {
 		this.telephone = telephone;
 	}
-	public List<AbsenceResponse> getAbsencesResponses() {
-		return absencesResponses;
-	}
-	public void setAbsencesResponses(List<AbsenceResponse> absencesResponses) {
-		this.absencesResponses = absencesResponses;
-	}
-	public List<GroupeResponse> getGroupesResponses() {
-		return groupesResponses;
-	}
-	public void setGroupesResponses(List<GroupeResponse> groupesResponses) {
-		this.groupesResponses = groupesResponses;
-	}
+
 	
+	public List<AbsenceResponse> getAbsences() {
+		return absences;
+	}
+	public void setAbsences(List<AbsenceResponse> absences) {
+		this.absences = absences;
+	}
+
+
 	
 	
 }

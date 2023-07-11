@@ -27,7 +27,7 @@ public class Planification implements Serializable {
 	@Column(nullable = false)
 	private LocalDate datePlanification;
 
-	@OneToMany(cascade = CascadeType.ALL,mappedBy = "planification",orphanRemoval = true)
+	@OneToMany(cascade = CascadeType.ALL,mappedBy = "planification")
 	private List<Session> sessions=new ArrayList<>();
 
 	public Planification(Long idPlanification, LocalDate datePlanification, List<Session> sessions) {

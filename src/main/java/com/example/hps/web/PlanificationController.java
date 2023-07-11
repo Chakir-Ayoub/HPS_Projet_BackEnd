@@ -1,13 +1,17 @@
 package com.example.hps.web;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,12 +29,22 @@ public class PlanificationController {
 	
 	@Autowired
 	private PlanificationService planificationService;
-	@Autowired 
-	private PlanificationRepository planificationRepository;
+
 	
 	@GetMapping
-	public List<Planification> GetAll(){
-		return planificationRepository.findAll();
+	public ResponseEntity<List<PlanificationResponse>> GetAll(){
+		
+		List<PlanificationResponse> planificationResponses=new ArrayList<>();
+		
+		List<PlanificationDto> planificationDtos=planificationService.GetAllPlaning();
+		
+		for(PlanificationDto planificationDto: planificationDtos) {
+			ModelMapper modelMapper=new ModelMapper();
+			PlanificationResponse planificationResponse=modelMapper.map(planificationDto, PlanificationResponse.class);
+			
+			planificationResponses.add(planificationResponse);
+		}
+		return new ResponseEntity<List<PlanificationResponse>>(planificationResponses,HttpStatus.ACCEPTED);
 	}
 	
 	@PostMapping
@@ -44,4 +58,23 @@ public class PlanificationController {
 		return new ResponseEntity<PlanificationResponse>(planificationResponse,HttpStatus.ACCEPTED);
 	}
 	
+	@PutMapping(path = "/{id}")
+	public ResponseEntity<PlanificationResponse> Modifier(@RequestBody PlanificationRequest planificationRequest,@PathVariable Long id){
+		
+		ModelMapper modelMapper=new ModelMapper();
+		
+		PlanificationDto planificationDto=modelMapper.map(planificationRequest, PlanificationDto.class);
+		
+		PlanificationDto planificationModifier= planificationService.ModifierPlanification(planificationDto, id);
+		
+		PlanificationResponse planificationResponse=modelMapper.map(planificationModifier, PlanificationResponse.class);
+		return new ResponseEntity<PlanificationResponse>(planificationResponse,HttpStatus.CREATED);
+	}
+	
+	@DeleteMapping(path = "/{id}")
+	public ResponseEntity<Object> Delete(@PathVariable Long id) throws Exception{
+		
+		planificationService.SupperimerPlanification(id);
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	}
 }

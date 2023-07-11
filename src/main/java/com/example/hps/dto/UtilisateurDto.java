@@ -7,7 +7,7 @@ import java.util.List;
 
 
 public class UtilisateurDto {
-	private Long Id;
+	private Long idutilisateur;
 	private String nom_utilisateur;
 	private String prenom_utilisateur;
 	private Date date_naiss;
@@ -15,15 +15,16 @@ public class UtilisateurDto {
 	private String encryptionpassword;
 	private int telephone;
 	private List<AbsenceDto> absences=new ArrayList<>();
-	private List<GroupeDto> groupes =new ArrayList<>();
-	private SessionDto sessionDto;
+	private GroupeDto groupe ;
+	private SessionDto session;
 	
 	
-	public Long getId() {
-		return Id;
+
+	public Long getIdutilisateur() {
+		return idutilisateur;
 	}
-	public void setId(Long id) {
-		Id = id;
+	public void setIdutilisateur(Long idutilisateur) {
+		this.idutilisateur = idutilisateur;
 	}
 	public String getNom_utilisateur() {
 		return nom_utilisateur;
@@ -67,18 +68,21 @@ public class UtilisateurDto {
 	public void setAbsences(List<AbsenceDto> absences) {
 		this.absences = absences;
 	}
-	public List<GroupeDto> getGroupes() {
-		return groupes;
+	
+	
+	public GroupeDto getGroupe() {
+		return groupe;
 	}
-	public void setGroupes(List<GroupeDto> groupes) {
-		this.groupes = groupes;
+	public void setGroupe(GroupeDto groupe) {
+		this.groupe = groupe;
 	}
-	public SessionDto getSessionDto() {
-		return sessionDto;
+	public SessionDto getSession() {
+		return session;
 	}
-	public void setSessionDto(SessionDto sessionDto) {
-		this.sessionDto = sessionDto;
+	public void setSession(SessionDto session) {
+		this.session = session;
 	}
+
 	
 	
 }

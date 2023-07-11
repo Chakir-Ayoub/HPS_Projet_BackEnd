@@ -16,8 +16,6 @@ public class SessionRequest {
 	private LocalTime heureD;
 	@NotBlank(message = "Ce champs ne doit pas etre Null !")
 	private LocalTime heureF;
-	private PlanificationRequest planification;
-    private List<DetailsRequest> details;
 	public String getNomsession() {
 		return nomsession;
 	}
@@ -36,19 +34,7 @@ public class SessionRequest {
 	public void setHeureF(LocalTime heureF) {
 		this.heureF = heureF;
 	}
-	public PlanificationRequest getPlanification() {
-		return planification;
-	}
-	public void setPlanification(PlanificationRequest planification) {
-		this.planification = planification;
-	}
-	public List<DetailsRequest> getDetails() {
-		return details;
-	}
-	public void setDetails(List<DetailsRequest> details) {
-		this.details = details;
-	}
-	
+
     
 	
 }

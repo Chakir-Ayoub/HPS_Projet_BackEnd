@@ -6,7 +6,7 @@ import com.example.hps.dto.GroupeDto;
 
 public interface GroupeService {
 	GroupeDto AjouterGroupe(GroupeDto groupeDto);
-	GroupeDto ModifierGroupe(GroupeDto groupeDto);
+	GroupeDto ModifierGroupe(GroupeDto groupeDto, Long id);
 	void SupperimerGroupe(Long id);
 	List<GroupeDto> GetAllGroupe();
 }

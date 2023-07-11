@@ -6,20 +6,21 @@ import java.util.Date;
 
 
 public class AbsenceDto {
-	private Long id_Absence;
+	private Long idAbsence;
 	private String Type;
 	private Date date_debut;
 	private Date date_fin;
-	private boolean justification=false;
+	private boolean justification;
 	
-	private UtilisateurDto utilisateurDto;
 
-	public Long getId_Absence() {
-		return id_Absence;
+	
+
+	public Long getIdAbsence() {
+		return idAbsence;
 	}
 
-	public void setId_Absence(Long id_Absence) {
-		this.id_Absence = id_Absence;
+	public void setIdAbsence(Long idAbsence) {
+		this.idAbsence = idAbsence;
 	}
 
 	public String getType() {
@@ -54,13 +55,9 @@ public class AbsenceDto {
 		this.justification = justification;
 	}
 
-	public UtilisateurDto getUtilisateurDto() {
-		return utilisateurDto;
-	}
+	
 
-	public void setUtilisateurDto(UtilisateurDto utilisateurDto) {
-		this.utilisateurDto = utilisateurDto;
-	}
+	
 	
 	
 }

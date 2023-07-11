@@ -10,6 +10,7 @@ public class SessionResponse {
 	private String nomsession;
 	private LocalTime heureD;
 	private LocalTime heureF;
+	
 	public long getIdsession() {
 		return idsession;
 	}
@@ -34,6 +35,7 @@ public class SessionResponse {
 	public void setHeureF(LocalTime heureF) {
 		this.heureF = heureF;
 	}
+
 
 	
 }

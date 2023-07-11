@@ -1,14 +1,16 @@
 package com.example.hps.dto;
 
+
+
 public class DetailDto {
 	private Long iddetail;
 	private String Todo;
 	private String Done;
 	private String Doing;
 	private String commentaire;
-	private SessionDto sessionDto;
-	private ProjetDto projetDto;
-
+	private SessionDto session;
+	private ProjetDto projet;
+	
 	public Long getIddetail() {
 		return iddetail;
 	}
@@ -39,18 +41,19 @@ public class DetailDto {
 	public void setCommentaire(String commentaire) {
 		this.commentaire = commentaire;
 	}
-	public SessionDto getSessionDto() {
-		return sessionDto;
+	public SessionDto getSession() {
+		return session;
 	}
-	public void setSessionDto(SessionDto sessionDto) {
-		this.sessionDto = sessionDto;
+	public void setSession(SessionDto session) {
+		this.session = session;
 	}
-	public ProjetDto getProjetDto() {
-		return projetDto;
+	public ProjetDto getProjet() {
+		return projet;
 	}
-	public void setProjetDto(ProjetDto projetDto) {
-		this.projetDto = projetDto;
+	public void setProjet(ProjetDto projet) {
+		this.projet = projet;
 	}
+	
 	
 	
 }

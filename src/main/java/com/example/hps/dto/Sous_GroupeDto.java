@@ -1,30 +1,33 @@
 package com.example.hps.dto;
 
 
-
 public class Sous_GroupeDto {
-	private Long id_sous_groupe;
-	private String nom_sous_groupe;
-	private GroupeDto groupeDto;
+	private Long idsousgroupe;
+	private String nomsousgroupe;
+	private GroupeDto groupe;
+
 	
-	public Long getId_sous_groupe() {
-		return id_sous_groupe;
+	public GroupeDto getGroupe() {
+		return groupe;
 	}
-	public void setId_sous_groupe(Long id_sous_groupe) {
-		this.id_sous_groupe = id_sous_groupe;
+	public void setGroupe(GroupeDto groupe) {
+		this.groupe = groupe;
 	}
-	public String getNom_sous_groupe() {
-		return nom_sous_groupe;
+	public Long getIdsousgroupe() {
+		return idsousgroupe;
 	}
-	public void setNom_sous_groupe(String nom_sous_groupe) {
-		this.nom_sous_groupe = nom_sous_groupe;
+	public void setIdsousgroupe(Long idsousgroupe) {
+		this.idsousgroupe = idsousgroupe;
 	}
-	public GroupeDto getGroupeDto() {
-		return groupeDto;
+	public String getNomsousgroupe() {
+		return nomsousgroupe;
 	}
-	public void setGroupeDto(GroupeDto groupeDto) {
-		this.groupeDto = groupeDto;
+	public void setNomsousgroupe(String nomsousgroupe) {
+		this.nomsousgroupe = nomsousgroupe;
 	}
+
+	
+	
 	
 	
 }

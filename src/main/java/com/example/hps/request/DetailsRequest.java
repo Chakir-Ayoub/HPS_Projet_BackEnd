@@ -18,8 +18,8 @@ public class DetailsRequest  {
 	@NotBlank(message = "Ce champs ne doit pas etre Null !")
 	@Size(min = 5,message = "Ce champs doit avoir au moins 3 Caracteres !")
 	private String commentaire;
-	private SessionRequest sessionRequest;
-	private ProjetRequest projetRequest;
+	private SessionRequest session;
+	private ProjetRequest projet;
 	
 	
 	public String getTodo() {
@@ -46,18 +46,19 @@ public class DetailsRequest  {
 	public void setCommentaire(String commentaire) {
 		this.commentaire = commentaire;
 	}
-	public SessionRequest getSessionRequest() {
-		return sessionRequest;
-	}
-	public void setSessionRequest(SessionRequest sessionRequest) {
-		this.sessionRequest = sessionRequest;
-	}
-	public ProjetRequest getProjetRequest() {
-		return projetRequest;
-	}
-	public void setProjetRequest(ProjetRequest projetRequest) {
-		this.projetRequest = projetRequest;
-	}
 	
+	public SessionRequest getSession() {
+		return session;
+	}
+	public void setSession(SessionRequest session) {
+		this.session = session;
+	}
+	public ProjetRequest getProjet() {
+		return projet;
+	}
+	public void setProjet(ProjetRequest projet) {
+		this.projet = projet;
+	}
+
 	
 }

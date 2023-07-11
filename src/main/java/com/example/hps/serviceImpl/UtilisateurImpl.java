@@ -1,201 +1,116 @@
 package com.example.hps.serviceImpl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery.FetchableFluentQuery;
+import org.springframework.stereotype.Service;
 
+import com.example.hps.Exceptions.RestException;
+import com.example.hps.dto.GroupeDto;
+import com.example.hps.dto.UtilisateurDto;
+import com.example.hps.entity.Groupe;
 import com.example.hps.entity.Utilisateur;
+import com.example.hps.repository.GroupeRepository;
 import com.example.hps.repository.UtilisateurRepository;
+import com.example.hps.request.UtilisateurRequest;
+import com.example.hps.service.UtilisateurService;
 
-public class UtilisateurImpl implements UtilisateurRepository {
+@Service
+public class UtilisateurImpl implements UtilisateurService {
 	
 	@Autowired
 	UtilisateurRepository utilisateurRepository;
-	@Override
-	public void flush() {
-		// TODO Auto-generated method stub
+	@Autowired
+	GroupeRepository groupeRepository;
 
+	@Override
+	public UtilisateurDto AjouterUtilisateur(UtilisateurDto utilisateurDto) {
+		// TODO Auto-generated method stub
+		Utilisateur utilisateurcheckemail=utilisateurRepository.findByemail(utilisateurDto.getEmail());
+		Utilisateur utilisateurChecktelephone=utilisateurRepository.findBytelephone(utilisateurDto.getTelephone());
+		
+		if(utilisateurcheckemail!=null || utilisateurChecktelephone!=null ) throw new RestException("Vous Pouvez pas Ajouté deux utilisateur avec méme email ou bien le méme numéro de téléphone ");
+		
+		ModelMapper modelMapper=new ModelMapper();
+		
+		Utilisateur utilisateur=modelMapper.map(utilisateurDto, Utilisateur.class);
+		utilisateur.setEncryptionpassword("dekebfrhgfuyrgi");
+		Utilisateur utilisateur2=utilisateurRepository.save(utilisateur);
+		
+		UtilisateurDto utilisateurDto2=modelMapper.map(utilisateur2, UtilisateurDto.class);
+		
+		return utilisateurDto2;
 	}
 
 	@Override
-	public <S extends Utilisateur> S saveAndFlush(S entity) {
+	public UtilisateurDto ModifierUtilisateur(UtilisateurDto utilisateurDto,Long id) {
 		// TODO Auto-generated method stub
-		return null;
+		
+		Utilisateur utilisateurcheck=utilisateurRepository.findByidutilisateur(id);
+		if(utilisateurcheck==null) throw new RestException("Ce utiisateur n'existe pas ");
+		
+		Utilisateur utilisateurcheckemail=utilisateurRepository.findByemail(utilisateurDto.getEmail());
+		Utilisateur utilisateurChecktelephone=utilisateurRepository.findBytelephone(utilisateurDto.getTelephone());
+		
+		if(utilisateurcheckemail!=null || utilisateurChecktelephone!=null ) throw new RestException("Vous Pouvez pas Ajouté deux utilisateur avec méme email ou bien le méme numéro de téléphone ");
+		
+
+		
+		utilisateurcheck.setDate_naiss(utilisateurDto.getDate_naiss());
+		utilisateurcheck.setEmail(utilisateurDto.getEmail());
+		utilisateurcheck.setNom_utilisateur(utilisateurDto.getNom_utilisateur());
+		utilisateurcheck.setPrenom_utilisateur(utilisateurcheck.getPrenom_utilisateur());
+		utilisateurcheck.setTelephone(utilisateurcheck.getTelephone());
+		
+		Utilisateur ObjetModifier=utilisateurRepository.save(utilisateurcheck);
+		
+		ModelMapper modelMapper=new ModelMapper();
+		UtilisateurDto utilisateurDto2=modelMapper.map(ObjetModifier, UtilisateurDto.class);
+		
+		return utilisateurDto2;
 	}
 
 	@Override
-	public <S extends Utilisateur> List<S> saveAllAndFlush(Iterable<S> entities) {
+	public void SupperimerUtilisateur(Long id) {
 		// TODO Auto-generated method stub
-		return null;
+		Utilisateur utilisateur=utilisateurRepository.findByidutilisateur(id);
+		if(utilisateur==null) throw new RestException("Ce Utilisateur il n'existe pas");
+		utilisateurRepository.delete(utilisateur);
 	}
 
 	@Override
-	public void deleteAllInBatch(Iterable<Utilisateur> entities) {
+	public List<UtilisateurDto> GetAllUser() {
 		// TODO Auto-generated method stub
-
+		List<Utilisateur> utilisateurs;
+		utilisateurs=utilisateurRepository.findAll();
+		
+		List<UtilisateurDto> utilisateurDtos=new ArrayList<>();
+		for(Utilisateur utilisateur: utilisateurs) {
+			ModelMapper modelMapper=new ModelMapper();
+			UtilisateurDto utilisateurDto=modelMapper.map(utilisateur, UtilisateurDto.class);
+			
+			utilisateurDtos.add(utilisateurDto);
+		}
+		return utilisateurDtos;
 	}
 
 	@Override
-	public void deleteAllByIdInBatch(Iterable<Long> ids) {
+	public void AffecteUserToGroupe(String emailutilisateur, String nomgroupe) {
 		// TODO Auto-generated method stub
-
+		Utilisateur utilisateur=utilisateurRepository.findByemail(emailutilisateur);
+		Groupe groupe=groupeRepository.findBynomgroupe(nomgroupe);
+		groupe.setUtilisateurs((List<Utilisateur>) utilisateur);
+		 
 	}
-
-	@Override
-	public void deleteAllInBatch() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public Utilisateur getOne(Long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Utilisateur getById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Utilisateur getReferenceById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public <S extends Utilisateur> List<S> findAll(Example<S> example) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public <S extends Utilisateur> List<S> findAll(Example<S> example, Sort sort) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public <S extends Utilisateur> List<S> saveAll(Iterable<S> entities) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Utilisateur> findAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Utilisateur> findAllById(Iterable<Long> ids) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public <S extends Utilisateur> S save(S entity) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Optional<Utilisateur> findById(Long id) {
-		// TODO Auto-generated method stub
-		return Optional.empty();
-	}
-
-	@Override
-	public boolean existsById(Long id) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public long count() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public void deleteById(Long id) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void delete(Utilisateur entity) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void deleteAllById(Iterable<? extends Long> ids) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void deleteAll(Iterable<? extends Utilisateur> entities) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void deleteAll() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public List<Utilisateur> findAll(Sort sort) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Page<Utilisateur> findAll(Pageable pageable) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public <S extends Utilisateur> Optional<S> findOne(Example<S> example) {
-		// TODO Auto-generated method stub
-		return Optional.empty();
-	}
-
-	@Override
-	public <S extends Utilisateur> Page<S> findAll(Example<S> example, Pageable pageable) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public <S extends Utilisateur> long count(Example<S> example) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public <S extends Utilisateur> boolean exists(Example<S> example) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public <S extends Utilisateur, R> R findBy(Example<S> example, Function<FetchableFluentQuery<S>, R> queryFunction) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
 }

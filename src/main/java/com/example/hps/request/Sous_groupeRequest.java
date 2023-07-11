@@ -8,25 +8,20 @@ public class Sous_groupeRequest {
 	
 	@NotBlank(message = "Ce champs ne doit pas etre Null !")
 	@Size(min = 3,message = "Ce champs doit avoir au moins 3 Caracteres !")
-	private String nom_sous_groupe;
-	
-	private GroupeRequest groupeRequest;
+	private String nomsousgroupe;
 
-	public String getNom_sous_groupe() {
-		return nom_sous_groupe;
+	public String getNomsousgroupe() {
+		return nomsousgroupe;
 	}
 
-	public void setNom_sous_groupe(String nom_sous_groupe) {
-		this.nom_sous_groupe = nom_sous_groupe;
+	public void setNomsousgroupe(String nomsousgroupe) {
+		this.nomsousgroupe = nomsousgroupe;
 	}
 
-	public GroupeRequest getGroupeRequest() {
-		return groupeRequest;
-	}
 
-	public void setGroupeRequest(GroupeRequest groupeRequest) {
-		this.groupeRequest = groupeRequest;
-	}
-	
+
+
+
+
 	
 }

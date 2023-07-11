@@ -18,28 +18,28 @@ public class Sous_Groupe implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id_sous_groupe;
+	private Long idsousgroupe;
 	@Column(nullable = false,length = 35)
-	private String nom_sous_groupe;
+	private String nomsousgroupe;
 	
 	@ManyToOne
-	@JoinColumn(name = "id_groupe")
+	@JoinColumn(name = "groupe")
 	private Groupe groupe;
 
-	public Long getId_sous_groupe() {
-		return id_sous_groupe;
+	public Long getIdsousgroupe() {
+		return idsousgroupe;
 	}
 
-	public void setId_sous_groupe(Long id_sous_groupe) {
-		this.id_sous_groupe = id_sous_groupe;
+	public void setIdsousgroupe(Long idsousgroupe) {
+		this.idsousgroupe = idsousgroupe;
 	}
 
-	public String getNom_sous_groupe() {
-		return nom_sous_groupe;
+	public String getNomsousgroupe() {
+		return nomsousgroupe;
 	}
 
-	public void setNom_sous_groupe(String nom_sous_groupe) {
-		this.nom_sous_groupe = nom_sous_groupe;
+	public void setNomsousgroupe(String nomsousgroupe) {
+		this.nomsousgroupe = nomsousgroupe;
 	}
 
 	public Groupe getGroupe() {
@@ -49,6 +49,8 @@ public class Sous_Groupe implements Serializable {
 	public void setGroupe(Groupe groupe) {
 		this.groupe = groupe;
 	}
+
+	
 	
 	
 }

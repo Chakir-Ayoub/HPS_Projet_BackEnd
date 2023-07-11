@@ -3,14 +3,13 @@ package com.example.hps.entity;
 import java.io.Serializable;
 import java.util.List;
 
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 
 @Entity
@@ -20,43 +19,65 @@ public class Groupe implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id_group;
+	private Long idgroup;
 	@Column(nullable = false,length = 35)
-	private String nom_groupe;
+	private String nomgroupe;
 	
-	@ManyToOne
-	@JoinColumn(name = "id_utilisateur")
-	private Utilisateur utilisateur;
 	
-	@OneToMany(cascade = CascadeType.ALL,mappedBy = "groupe",orphanRemoval = true)
+	
+	@OneToMany(cascade = CascadeType.ALL,mappedBy = "groupe")
+	private List<Utilisateur> utilisateurs;
+	
+	
+	@OneToMany(cascade = CascadeType.ALL,mappedBy = "groupe")
 	private List<Sous_Groupe> sous_Groupes;
-	
-	
-	public Groupe(Long id_group, String nom_groupe) {
+
+	public Groupe(Long idgroup, String nomgroupe, List<Utilisateur> utilisateurs, List<Sous_Groupe> sous_Groupes) {
 		super();
-		this.id_group = id_group;
-		this.nom_groupe = nom_groupe;
+		this.idgroup = idgroup;
+		this.nomgroupe = nomgroupe;
+		this.utilisateurs = utilisateurs;
+		this.sous_Groupes = sous_Groupes;
 	}
-	
-	
+
 	public Groupe() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
+	public Long getIdgroup() {
+		return idgroup;
+	}
 
-	public Long getId_group() {
-		return id_group;
+	public void setIdgroup(Long idgroup) {
+		this.idgroup = idgroup;
 	}
-	public void setId_group(Long id_group) {
-		this.id_group = id_group;
+
+	public String getNomgroupe() {
+		return nomgroupe;
 	}
-	public String getNom_groupe() {
-		return nom_groupe;
+
+	public void setNomgroupe(String nomgroupe) {
+		this.nomgroupe = nomgroupe;
 	}
-	public void setNom_groupe(String nom_groupe) {
-		this.nom_groupe = nom_groupe;
+
+	public List<Utilisateur> getUtilisateurs() {
+		return utilisateurs;
 	}
+
+	public void setUtilisateurs(List<Utilisateur> utilisateurs) {
+		this.utilisateurs = utilisateurs;
+	}
+
+	public List<Sous_Groupe> getSous_Groupes() {
+		return sous_Groupes;
+	}
+
+	public void setSous_Groupes(List<Sous_Groupe> sous_Groupes) {
+		this.sous_Groupes = sous_Groupes;
+	}
+	
+	
 	
 	
 }

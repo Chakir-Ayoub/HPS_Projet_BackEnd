@@ -1,37 +1,34 @@
 package com.example.hps.request;
 
+
 import java.util.List;
 
+import com.example.hps.entity.Sous_Groupe;
+
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 
 public class GroupeRequest {
 	@NotBlank(message = "Ce champs ne doit pas etre Null !")
+	@NotEmpty(message = "ce champs ne doit pas etre vide")
 	@Size(min = 3,message = "Ce champs doit avoir au moins 3 Caracteres !")
-	private String nom_groupe;
+	private String nomgroupe;
+	private List<Sous_Groupe> sous_Groupes;
 	
-	private UtilisateurRequest utilisateurRequest;
-	private List<Sous_groupeRequest>  groupeRequests;
-	
-	
-	public String getNom_groupe() {
-		return nom_groupe;
+	public List<Sous_Groupe> getSous_Groupes() {
+		return sous_Groupes;
 	}
-	public void setNom_groupe(String nom_groupe) {
-		this.nom_groupe = nom_groupe;
+	public void setSous_Groupes(List<Sous_Groupe> sous_Groupes) {
+		this.sous_Groupes = sous_Groupes;
 	}
-	public UtilisateurRequest getUtilisateurRequest() {
-		return utilisateurRequest;
+	public String getNomgroupe() {
+		return nomgroupe;
 	}
-	public void setUtilisateurRequest(UtilisateurRequest utilisateurRequest) {
-		this.utilisateurRequest = utilisateurRequest;
+	public void setNomgroupe(String nomgroupe) {
+		this.nomgroupe = nomgroupe;
 	}
-	public List<Sous_groupeRequest> getGroupeRequests() {
-		return groupeRequests;
-	}
-	public void setGroupeRequests(List<Sous_groupeRequest> groupeRequests) {
-		this.groupeRequests = groupeRequests;
-	}
+
 	
 	
 	

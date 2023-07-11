@@ -15,8 +15,7 @@ public class AbsenceRequest {
 	@NotBlank(message = "Ce champs ne doit pas etre Null !")
 	private Date date_fin;
 	@NotBlank(message = "Ce champs ne doit pas etre Null !")
-	private boolean justification=false;
-	private UtilisateurRequest utilisateurRequest;
+	private boolean justification;
 	public String getType() {
 		return Type;
 	}
@@ -41,12 +40,7 @@ public class AbsenceRequest {
 	public void setJustification(boolean justification) {
 		this.justification = justification;
 	}
-	public UtilisateurRequest getUtilisateurRequest() {
-		return utilisateurRequest;
-	}
-	public void setUtilisateurRequest(UtilisateurRequest utilisateurRequest) {
-		this.utilisateurRequest = utilisateurRequest;
-	}
+
 	
 	
 

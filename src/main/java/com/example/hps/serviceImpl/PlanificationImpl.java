@@ -7,6 +7,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.hps.Exceptions.RestException;
 import com.example.hps.dto.PlanificationDto;
 import com.example.hps.dto.SessionDto;
 import com.example.hps.entity.Planification;
@@ -23,9 +24,7 @@ public class PlanificationImpl implements PlanificationService {
 	public PlanificationDto AjouterPlanification(PlanificationDto planificationDto) {
 		// TODO Auto-generated method stub
 		Planification planificationCheck=planificationRepository.findBydatePlanification(planificationDto.getDatePlanification());
-		if(planificationCheck!=null) throw new RuntimeException("Cette planification il existe déja ! ");
-		
-
+		if(planificationCheck!=null) throw new RestException("Cette planification il existe déja ! ");
 		
 		
 		for(int i=0;i<planificationDto.getSessions().size();i++) {
@@ -48,7 +47,7 @@ public class PlanificationImpl implements PlanificationService {
 	public PlanificationDto ModifierPlanification(PlanificationDto planificationDto,Long id) {
 		// TODO Auto-generated method stub
 		Planification planificationCheck=planificationRepository.findByidPlanification(id);
-		if(planificationCheck==null) throw new RuntimeException("Cette planification n'existe pas ! ");
+		if(planificationCheck==null) throw new RestException("Cette planification n'existe pas ! ");
 		
 		ModelMapper modelMapper=new ModelMapper();
 		Planification planficationconvertToEntity=modelMapper.map(planificationDto, Planification.class);
@@ -66,7 +65,7 @@ public class PlanificationImpl implements PlanificationService {
 	public void SupperimerPlanification(Long id) {
 		// TODO Auto-generated method stub
 		Planification planification=planificationRepository.findByidPlanification(id);
-		if(planification==null) throw new RuntimeException("Cette Planification n'existe oas ! ");
+		if(planification==null) throw new RestException("Cette Planification n'existe pas ! ");
 		planificationRepository.delete(planification);
 	}
 
