@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 import com.example.hps.Exceptions.RestException;
 import com.example.hps.dto.DetailDto;
 import com.example.hps.dto.ProjetDto;
+import com.example.hps.entity.Detail;
 import com.example.hps.entity.Projet;
+import com.example.hps.repository.DetailRepository;
 import com.example.hps.repository.ProjetRepository;
 import com.example.hps.service.ProjetService;
 
@@ -19,6 +21,8 @@ public class ProjetImpl implements ProjetService {
 	
 	@Autowired
 	ProjetRepository projetRepository;
+	@Autowired
+	DetailRepository detailRepository;
 
 	@Override
 	public ProjetDto AjouterProjet(ProjetDto projet) {
@@ -106,6 +110,39 @@ public class ProjetImpl implements ProjetService {
 		}
 		
 		return projetsDtos;
+	}
+
+	@Override
+	public ProjetDto AjouterDetailToProjet(Long iddetail, Long idprojet) {
+		// TODO Auto-generated method stub
+		ModelMapper modelMapper=new ModelMapper();
+		
+		Detail detail=detailRepository.findByiddetail(iddetail);
+		Projet projet=projetRepository.findByidprojet(idprojet);
+		
+		projet.AddDetails(detail, projet);
+		
+		projetRepository.save(projet);
+		ProjetDto projetDto=modelMapper.map(projet, ProjetDto.class);
+		
+		return projetDto;
+	}
+
+	@Override
+	public ProjetDto SupperimerDetailToProjet(Long iddetail, Long idprojet) {
+		// TODO Auto-generated method stub
+		ModelMapper modelMapper=new ModelMapper();
+		
+		Detail detail=detailRepository.findByiddetail(iddetail);
+		Projet projet=projetRepository.findByidprojet(idprojet);
+		
+		projet.RemoveDetails(detail);
+		
+		projetRepository.save(projet);
+		ProjetDto projetDto=modelMapper.map(projet, ProjetDto.class);
+		
+		
+		return projetDto;
 	}
 
 	

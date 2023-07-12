@@ -9,4 +9,6 @@ public interface PlanificationService {
 	PlanificationDto ModifierPlanification(PlanificationDto planificationDto,Long id);
 	void SupperimerPlanification(Long id);
 	List<PlanificationDto> GetAllPlaning();
+	PlanificationDto AffecteSessionToplanification(Long idsession,Long idplanification);
+	PlanificationDto SupperimerSessionToPlanification(Long idsession,Long idplanification);
 }

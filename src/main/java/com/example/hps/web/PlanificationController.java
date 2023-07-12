@@ -77,4 +77,26 @@ public class PlanificationController {
 		planificationService.SupperimerPlanification(id);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
+	
+	@GetMapping("/AffecteSessionToPlanification/{idsession}/{idPlani}")
+	public ResponseEntity<PlanificationResponse> AffecteSessionToPlanification(@PathVariable Long idsession,@PathVariable Long idPlani){
+		
+		ModelMapper modelMapper=new ModelMapper();
+		
+		PlanificationDto planificationDto=planificationService.AffecteSessionToplanification(idsession, idPlani);
+		PlanificationResponse planificationResponse=modelMapper.map(planificationDto, PlanificationResponse.class);
+		
+		return new ResponseEntity<PlanificationResponse>(planificationResponse,HttpStatus.ACCEPTED);
+	}
+	
+	@DeleteMapping("/SupperimerSessionToPlanification/{idsession}/{idPlani}")
+	public ResponseEntity<PlanificationResponse> DropSessionToPlanification(@PathVariable Long idsession,@PathVariable Long idPlani){
+		ModelMapper modelMapper=new ModelMapper();
+		
+		PlanificationDto planificationDto=planificationService.SupperimerSessionToPlanification(idsession, idPlani);
+		PlanificationResponse planificationResponse=modelMapper.map(planificationDto, PlanificationResponse.class);
+		
+		
+	return new ResponseEntity<PlanificationResponse>(planificationResponse,HttpStatus.ACCEPTED);
+	}
 }

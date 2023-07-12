@@ -15,6 +15,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.transaction.Transactional;
 
 @Entity
 public class Session implements Serializable {
@@ -40,6 +41,12 @@ public class Session implements Serializable {
 	@JsonIgnore
 	@OneToMany(mappedBy = "session",cascade = CascadeType.ALL)
 	private List<Detail> details;
+	
+	@Transactional
+	public void AddDetails(Detail detail,Session session ) {
+		details.add(detail);
+		detail.setSession(session);
+	}
 
 	public Session(Long idsession, String nomsession, LocalTime heureD, LocalTime heureF, Planification planification,
 			List<Detail> details) {

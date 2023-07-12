@@ -13,6 +13,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.transaction.Transactional;
 
 @Entity
 public class Projet implements Serializable {
@@ -32,8 +33,28 @@ public class Projet implements Serializable {
 	private LocalDate datelivraison;
 	
 	@JsonIgnore
-	@OneToMany(cascade = CascadeType.ALL,mappedBy = "projet")
+	@OneToMany(cascade = CascadeType.ALL,mappedBy = "projet",orphanRemoval = true)
 	private List<Detail> details;
+	
+	
+	@Transactional
+	public void AddDetails(Detail detail,Projet projet) {
+		details.add(detail);
+		detail.setProjet(projet);
+	}
+	@Transactional
+	public void RemoveDetails(Detail detail) {
+		Detail detailAsupperimer=null;
+		for(Detail d: details) {
+			if(d.equals(detail)) {
+				detailAsupperimer=d;
+				break;
+			}
+		}
+		if(detailAsupperimer!=null) {
+			details.remove(detailAsupperimer);
+		}
+	}
 
 	public Projet(Long idprojet, String nomprojet, String description, LocalDate datedemarrage, LocalDate datelivraison,
 			List<Detail> details) {

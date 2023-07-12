@@ -11,7 +11,9 @@ import com.example.hps.Exceptions.RestException;
 import com.example.hps.dto.PlanificationDto;
 import com.example.hps.dto.SessionDto;
 import com.example.hps.entity.Planification;
+import com.example.hps.entity.Session;
 import com.example.hps.repository.PlanificationRepository;
+import com.example.hps.repository.SessionRepository;
 import com.example.hps.service.PlanificationService;
 
 @Service
@@ -19,6 +21,8 @@ public class PlanificationImpl implements PlanificationService {
 	
 	@Autowired
 	PlanificationRepository planificationRepository;
+	@Autowired
+	SessionRepository sessionRepository;
 
 	@Override
 	public PlanificationDto AjouterPlanification(PlanificationDto planificationDto) {
@@ -84,5 +88,38 @@ public class PlanificationImpl implements PlanificationService {
 		}
 		return planificationDtos;
 	}
+
+	@Override
+	public PlanificationDto AffecteSessionToplanification(Long idsession, Long idplanification) {
+		// TODO Auto-generated method stub
+		
+		ModelMapper modelMapper=new ModelMapper();
+		Session session=sessionRepository.findByidsession(idsession);
+		Planification planification=planificationRepository.findByidPlanification(idplanification);
+		
+		planification.AjouterSession(session, planification);
+		planificationRepository.save(planification);
+		
+		PlanificationDto planificationDto=modelMapper.map(planification, PlanificationDto.class);
+		
+		return planificationDto;
+	}
+
+	@Override
+	public PlanificationDto SupperimerSessionToPlanification(Long idsession, Long idplanification) {
+		// TODO Auto-generated method stub
+		ModelMapper modelMapper=new ModelMapper();
+		
+		Session session=sessionRepository.findByidsession(idsession);
+		Planification planification=planificationRepository.findByidPlanification(idplanification);
+		
+		planification.SupperimerSession(session);
+		
+		PlanificationDto planificationDto=modelMapper.map(planification, PlanificationDto.class);
+
+		return planificationDto;
+	}
+	
+	
 	
 }

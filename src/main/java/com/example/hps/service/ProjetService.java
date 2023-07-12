@@ -10,4 +10,6 @@ public interface ProjetService {
     ProjetDto ModifierProjet(ProjetDto projetDto,Long id);
 	void SupperimerProjet(Long id);
 	List<ProjetDto> GetAllProjet();
+	ProjetDto AjouterDetailToProjet(Long iddetail,Long idprojet);
+	ProjetDto SupperimerDetailToProjet(Long iddetail,Long idprojet);
 }

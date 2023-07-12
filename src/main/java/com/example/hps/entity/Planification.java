@@ -12,6 +12,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.transaction.Transactional;
 
 
 @Entity
@@ -26,8 +27,31 @@ public class Planification implements Serializable {
 	@Column(nullable = false)
 	private LocalDate datePlanification;
 
-	@OneToMany(cascade = CascadeType.ALL,mappedBy = "planification")
+	@OneToMany(cascade = CascadeType.ALL,mappedBy = "planification",orphanRemoval = true)
 	private List<Session> sessions;
+	
+	
+	@Transactional
+	public void AjouterSession(Session session,Planification planification) {
+		sessions.add(session);
+		session.setPlanification(planification);
+	}
+	@Transactional
+	public void SupperimerSession(Session session) {
+		Session sessionSupperimer=null;
+		
+		for(Session s : sessions) {
+			if(s.equals(session)) {
+				sessionSupperimer=s;
+				break;
+			}
+		}
+		if(sessionSupperimer !=null) {
+			sessions.remove(sessionSupperimer);
+		}
+	}
+	
+	
 
 	public Planification(Long idPlanification, LocalDate datePlanification, List<Session> sessions) {
 		super();
