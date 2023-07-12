@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.hps.dto.GroupeDto;
+import com.example.hps.entity.Sous_Groupe;
 import com.example.hps.entity.Utilisateur;
 import com.example.hps.request.GroupeRequest;
 import com.example.hps.response.GroupeResponse;
@@ -108,7 +109,28 @@ public class GroupeController {
 		
 		return new ResponseEntity<GroupeResponse>(groupeResponse,HttpStatus.ACCEPTED);
 	}
+	
+	@GetMapping("/AfecteSous_Groupetogroupe/{id}")
+	public ResponseEntity<GroupeResponse> AffecteSous_GroupToGroupe(@RequestBody Sous_Groupe sous_Groupe, @PathVariable Long id ){
+		
+		ModelMapper modelMapper=new ModelMapper();
 
+		GroupeDto groupeDto=groupeService.Affecte_Sous_Group_Groupe(sous_Groupe, id);
+		GroupeResponse groupeResponse=modelMapper.map(groupeDto, GroupeResponse.class);
+		
+		return new ResponseEntity<GroupeResponse>(groupeResponse,HttpStatus.ACCEPTED);
+	}
+
+	@DeleteMapping("/RemoveSoustogroupe/{idgroupe}/{idsousgroupe}")
+	public ResponseEntity<GroupeResponse> RemoveSousGroupeInGroupe(@PathVariable Long idgroupe,@PathVariable Long idsousgroupe) {
+		
+		ModelMapper modelMapper=new ModelMapper();
+		
+		GroupeDto groupeDto=groupeService.Supperimer_Sous_groupe_Groupe(idgroupe, idsousgroupe);
+		GroupeResponse groupeResponse=modelMapper.map(groupeDto, GroupeResponse.class);
+		
+		return new ResponseEntity<GroupeResponse>(groupeResponse,HttpStatus.ACCEPTED);
+	}
 
 	
 

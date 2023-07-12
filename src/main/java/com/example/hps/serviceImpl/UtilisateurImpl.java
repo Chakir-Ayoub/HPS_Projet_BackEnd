@@ -2,26 +2,17 @@ package com.example.hps.serviceImpl;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.function.Function;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.repository.query.FluentQuery.FetchableFluentQuery;
 import org.springframework.stereotype.Service;
 
 import com.example.hps.Exceptions.RestException;
-import com.example.hps.dto.GroupeDto;
 import com.example.hps.dto.UtilisateurDto;
-import com.example.hps.entity.Groupe;
+import com.example.hps.entity.Absence;
 import com.example.hps.entity.Utilisateur;
-import com.example.hps.repository.GroupeRepository;
+import com.example.hps.repository.AbsenceRepository;
 import com.example.hps.repository.UtilisateurRepository;
-import com.example.hps.request.UtilisateurRequest;
 import com.example.hps.service.UtilisateurService;
 
 @Service
@@ -30,7 +21,7 @@ public class UtilisateurImpl implements UtilisateurService {
 	@Autowired
 	UtilisateurRepository utilisateurRepository;
 	@Autowired
-	GroupeRepository groupeRepository;
+	AbsenceRepository absenceRepository;
 
 	@Override
 	public UtilisateurDto AjouterUtilisateur(UtilisateurDto utilisateurDto) {
@@ -103,13 +94,36 @@ public class UtilisateurImpl implements UtilisateurService {
 		return utilisateurDtos;
 	}
 
+
 	@Override
-	public void AffecteUserToGroupe(String emailutilisateur, String nomgroupe) {
+	public UtilisateurDto AjouterAbsenceToUtilisateur(Long iduser, Long idabsence) {
 		// TODO Auto-generated method stub
-		Utilisateur utilisateur=utilisateurRepository.findByemail(emailutilisateur);
-		Groupe groupe=groupeRepository.findBynomgroupe(nomgroupe);
-		groupe.setUtilisateurs((List<Utilisateur>) utilisateur);
-		 
+		ModelMapper modelMapper=new ModelMapper();
+		
+		Utilisateur utilisateur=utilisateurRepository.findByidutilisateur(iduser);
+		Absence absence=absenceRepository.findByidAbsence(idabsence);
+		
+		utilisateur.AjouterAbsence(utilisateur, absence);
+		utilisateurRepository.save(utilisateur);
+		
+		UtilisateurDto utilisateurDto=modelMapper.map(utilisateur, UtilisateurDto.class);
+		
+		return utilisateurDto;
+	}
+
+	@Override
+	public UtilisateurDto SupperimerAbsenceToUtilisateur(Long iduser, Long idabsence) {
+		// TODO Auto-generated method stub
+		ModelMapper modelMapper=new ModelMapper();
+		
+		Utilisateur utilisateur=utilisateurRepository.findByidutilisateur(iduser);
+		Absence absence=absenceRepository.findByidAbsence(idabsence);
+		
+		utilisateur.SupperimerAbsence(absence);
+		utilisateurRepository.save(utilisateur);
+		
+		UtilisateurDto utilisateurDto=modelMapper.map(utilisateur, UtilisateurDto.class);		
+		return utilisateurDto;
 	}
 	
 

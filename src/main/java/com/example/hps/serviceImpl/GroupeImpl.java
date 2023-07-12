@@ -11,8 +11,10 @@ import com.example.hps.Exceptions.RestException;
 import com.example.hps.dto.GroupeDto;
 import com.example.hps.dto.Sous_GroupeDto;
 import com.example.hps.entity.Groupe;
+import com.example.hps.entity.Sous_Groupe;
 import com.example.hps.entity.Utilisateur;
 import com.example.hps.repository.GroupeRepository;
+import com.example.hps.repository.Sous_GroupeRepository;
 import com.example.hps.repository.UtilisateurRepository;
 import com.example.hps.service.GroupeService;
 
@@ -24,6 +26,8 @@ public class GroupeImpl implements GroupeService {
 	GroupeRepository groupeRepository;
 	@Autowired
 	UtilisateurRepository utilisateurRepository;
+	@Autowired
+	Sous_GroupeRepository sous_GroupeRepository;
 	@Override
 	public GroupeDto AjouterGroupe(GroupeDto groupeDto) {
 		// TODO Auto-generated method stub
@@ -131,6 +135,38 @@ public class GroupeImpl implements GroupeService {
 	    } else {
 	        throw new RestException("Ce utilisateur n'xiste pas dans Ce groupe");
 	    }
+	}
+
+	@Override
+	public GroupeDto Affecte_Sous_Group_Groupe(Sous_Groupe sousGroupe, Long id) {
+		// TODO Auto-generated method stub
+		ModelMapper modelMapper=new ModelMapper();
+		
+		Groupe groupe=groupeRepository.findByidgroup(id);
+		groupe.AddSousGroupe(sousGroupe, groupe);
+		
+		groupeRepository.save(groupe);
+		
+		GroupeDto groupeDto=modelMapper.map(groupe, GroupeDto.class);
+		return groupeDto;
+	}
+
+	@Override
+	public GroupeDto Supperimer_Sous_groupe_Groupe(Long idgroupe, Long idsousgroupe) {
+		// TODO Auto-generated method stub
+		 ModelMapper modelMapper = new ModelMapper();
+		    Groupe groupe = groupeRepository.findByidgroup(idgroupe);
+		    
+		    if (groupe != null) {
+		        Sous_Groupe sous_Groupe = sous_GroupeRepository.findByidsousgroupe(idsousgroupe);
+		        groupe.Removesous_groupe(sous_Groupe);
+		        groupeRepository.save(groupe);
+		        
+		        GroupeDto groupeDto = modelMapper.map(groupe, GroupeDto.class);
+		        return groupeDto;
+		    } else {
+		        throw new RestException("Ce Sous Groupe n'xiste pas dans Ce groupe");
+		    }
 	}
 	
 	

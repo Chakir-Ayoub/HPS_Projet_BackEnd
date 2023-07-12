@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 import com.example.hps.Exceptions.RestException;
 import com.example.hps.dto.AbsenceDto;
 import com.example.hps.entity.Absence;
+import com.example.hps.entity.Utilisateur;
 import com.example.hps.repository.AbsenceRepository;
+import com.example.hps.repository.UtilisateurRepository;
 import com.example.hps.service.AbsenceService;
 
 @Service
@@ -18,6 +20,8 @@ public class AbsenceImpl implements AbsenceService {
 	
 	@Autowired
 	AbsenceRepository absenceRepository;
+	@Autowired
+	UtilisateurRepository utilisateurRepository;
 	@Override
 	public AbsenceDto AjouterAbsence(AbsenceDto absenceDto) {
 		// TODO Auto-generated method stub
@@ -71,5 +75,7 @@ public class AbsenceImpl implements AbsenceService {
 		}
 		return absenceDtos;
 	}
+
+
 
 }

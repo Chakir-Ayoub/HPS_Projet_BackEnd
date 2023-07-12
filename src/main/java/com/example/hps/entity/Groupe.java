@@ -14,7 +14,6 @@ import jakarta.persistence.OneToMany;
 import jakarta.transaction.Transactional;
 
 @Entity
-
 public class Groupe implements Serializable{
 
 	private static final long serialVersionUID = -3553270484426239443L;
@@ -29,6 +28,11 @@ public class Groupe implements Serializable{
 	
 	@OneToMany(cascade = CascadeType.ALL,mappedBy = "groupe",orphanRemoval = true)
 	private List<Utilisateur> utilisateurs;
+	
+	@OneToMany(cascade = CascadeType.ALL,mappedBy = "groupe",orphanRemoval = true)
+	private List<Sous_Groupe> sous_Groupes;
+
+	
 	
 	@Transactional
 	public void AddUtilisateur(Utilisateur utilisateur,Groupe groupe) {
@@ -49,13 +53,28 @@ public class Groupe implements Serializable{
 	        utilisateurs.remove(utilisateurASupprimer);
 	    }
 	}
+	
+	@Transactional
+	public void AddSousGroupe(Sous_Groupe sous_Groupe,Groupe groupe) {
+		sous_Groupes.add(sous_Groupe);
+		sous_Groupe.setGroupe(groupe);
+	}
+	
+	@Transactional
+	public void Removesous_groupe(Sous_Groupe sous_Groupe) {
+	    Sous_Groupe sousgroupeASupprimer = null;
+	    for (Sous_Groupe s : sous_Groupes) {
+	        if (s.equals(sous_Groupe)) {
+	        	sousgroupeASupprimer = s;
+	            break;
+	        }
+	    }
+	    if (sousgroupeASupprimer != null) {
+	    	sous_Groupes.remove(sousgroupeASupprimer);
+	    }
+	}
 
 	
-	
-	
-	@OneToMany(cascade = CascadeType.ALL,mappedBy = "groupe")
-	private List<Sous_Groupe> sous_Groupes;
-
 	public Groupe(Long idgroup, String nomgroupe, List<Utilisateur> utilisateurs, List<Sous_Groupe> sous_Groupes) {
 		super();
 		this.idgroup = idgroup;

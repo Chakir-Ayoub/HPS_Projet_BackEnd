@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.hps.dto.UtilisateurDto;
+import com.example.hps.entity.Utilisateur;
 import com.example.hps.request.UtilisateurRequest;
 import com.example.hps.response.UtilisateurResponse;
 import com.example.hps.service.UtilisateurService;
@@ -77,5 +78,30 @@ public class UtilisateurController {
 		
 		
 		return new ResponseEntity<UtilisateurResponse>(utilisateurResponse,HttpStatus.CREATED);
+	}
+	
+	@GetMapping("/AffecteAbenceToUser/{iduser}/{idabs}")
+	public ResponseEntity<UtilisateurResponse> AffecteAbsenceToUtilisateur(@PathVariable Long iduser,@PathVariable Long idabs){
+		
+		ModelMapper modelMapper=new ModelMapper();
+		
+		UtilisateurDto utilisateurDto=utilisateurService.AjouterAbsenceToUtilisateur(iduser, idabs);
+		
+		UtilisateurResponse utilisateurResponse=modelMapper.map(utilisateurDto, UtilisateurResponse.class);
+		
+		return new ResponseEntity<UtilisateurResponse>(utilisateurResponse,HttpStatus.ACCEPTED);
+	}
+	
+	@DeleteMapping("/SupperimerAbenceToUser/{iduser}/{idabs}")
+	public ResponseEntity<UtilisateurResponse> DeleteAbenceToUse(@PathVariable Long iduser,@PathVariable Long idabs){
+		
+		ModelMapper modelMapper=new ModelMapper();
+		
+		UtilisateurDto utilisateurDto=utilisateurService.SupperimerAbsenceToUtilisateur(iduser, idabs);
+		
+		UtilisateurResponse utilisateurResponse=modelMapper.map(utilisateurDto, UtilisateurResponse.class);
+		
+		return new ResponseEntity<UtilisateurResponse>(utilisateurResponse,HttpStatus.ACCEPTED);
+		
 	}
 }

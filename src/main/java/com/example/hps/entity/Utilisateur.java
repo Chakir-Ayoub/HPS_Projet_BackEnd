@@ -1,13 +1,13 @@
 package com.example.hps.entity;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.*;
+import jakarta.transaction.Transactional;
 
 @Entity
 public class Utilisateur implements Serializable {
@@ -28,8 +28,8 @@ public class Utilisateur implements Serializable {
 	@Column(nullable = false)
 	private int telephone;
 	
-	@OneToMany(cascade = CascadeType.ALL,mappedBy = "utilisateur")
-	private List<Absence> absences=new ArrayList<>();
+	@OneToMany(cascade = CascadeType.ALL,mappedBy = "utilisateur",orphanRemoval = true)
+	private List<Absence> absences;
 	
 	@JsonIgnore
 	@ManyToOne(fetch =  FetchType.LAZY)
@@ -39,6 +39,31 @@ public class Utilisateur implements Serializable {
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_session")
 	private Session session;
+	
+	
+	
+	@Transactional
+	public void AjouterAbsence(Utilisateur utilisateur,Absence absence) {
+		absences.add(absence);
+		absence.setUtilisateur(utilisateur);
+	}
+	
+	@Transactional
+	public void SupperimerAbsence(Absence absence) {
+		Absence absencesupprimer=null;
+		for(Absence a: absences) {
+			if(a.equals(absence)) {
+				absencesupprimer=a;
+				break;
+			}
+		}
+		if(absencesupprimer!=null) {
+			absences.remove(absencesupprimer)	;
+		}
+	}
+	
+	
+	
 	
 	public Utilisateur(String nom_utilisateur, String prenom_utilisateur, Date date_naiss, String email,
 			String encryptionpassword, int telephone, List<Absence> absences) {
