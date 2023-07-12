@@ -2,6 +2,8 @@ package com.example.hps.request;
 
 import java.util.Date;
 
+import com.example.hps.entity.Utilisateur;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
@@ -16,6 +18,8 @@ public class AbsenceRequest {
 	private Date date_fin;
 	@NotBlank(message = "Ce champs ne doit pas etre Null !")
 	private boolean justification;
+	private Utilisateur utilisateur;
+	
 	public String getType() {
 		return Type;
 	}
@@ -40,7 +44,13 @@ public class AbsenceRequest {
 	public void setJustification(boolean justification) {
 		this.justification = justification;
 	}
-
+	public Utilisateur getUtilisateur() {
+		return utilisateur;
+	}
+	public void setUtilisateur(Utilisateur utilisateur) {
+		this.utilisateur = utilisateur;
+	}
+	
 	
 	
 

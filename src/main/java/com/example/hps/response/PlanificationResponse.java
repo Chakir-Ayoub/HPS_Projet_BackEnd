@@ -1,10 +1,8 @@
 package com.example.hps.response;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
-import com.example.hps.dto.SessionDto;
 
 
 public class PlanificationResponse {

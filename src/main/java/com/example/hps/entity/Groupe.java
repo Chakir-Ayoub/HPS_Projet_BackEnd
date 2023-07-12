@@ -11,8 +11,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.transaction.Transactional;
 
 @Entity
+
 public class Groupe implements Serializable{
 
 	private static final long serialVersionUID = -3553270484426239443L;
@@ -25,13 +27,30 @@ public class Groupe implements Serializable{
 	
 	
 	
-	@OneToMany(cascade = CascadeType.ALL,mappedBy = "groupe")
+	@OneToMany(cascade = CascadeType.ALL,mappedBy = "groupe",orphanRemoval = true)
 	private List<Utilisateur> utilisateurs;
 	
-	public void AddUtilisateur(Utilisateur utilisateur) {
+	@Transactional
+	public void AddUtilisateur(Utilisateur utilisateur,Groupe groupe) {
 		utilisateurs.add(utilisateur);
-		utilisateur.setGroupe(this);
+		utilisateur.setGroupe(groupe);
 	}
+	
+	@Transactional
+	public void Removeutilisateur(Utilisateur utilisateur) {
+	    Utilisateur utilisateurASupprimer = null;
+	    for (Utilisateur u : utilisateurs) {
+	        if (u.equals(utilisateur)) {
+	            utilisateurASupprimer = u;
+	            break;
+	        }
+	    }
+	    if (utilisateurASupprimer != null) {
+	        utilisateurs.remove(utilisateurASupprimer);
+	    }
+	}
+
+	
 	
 	
 	@OneToMany(cascade = CascadeType.ALL,mappedBy = "groupe")

@@ -1,6 +1,9 @@
 package com.example.hps.request;
 
 
+import com.example.hps.entity.Projet;
+import com.example.hps.entity.Session;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
@@ -18,8 +21,8 @@ public class DetailsRequest  {
 	@NotBlank(message = "Ce champs ne doit pas etre Null !")
 	@Size(min = 5,message = "Ce champs doit avoir au moins 3 Caracteres !")
 	private String commentaire;
-	private SessionRequest session;
-	private ProjetRequest projet;
+	private Session session;
+	private Projet projet;
 	
 	
 	public String getTodo() {
@@ -46,19 +49,20 @@ public class DetailsRequest  {
 	public void setCommentaire(String commentaire) {
 		this.commentaire = commentaire;
 	}
-	
-	public SessionRequest getSession() {
+	public Session getSession() {
 		return session;
 	}
-	public void setSession(SessionRequest session) {
+	public void setSession(Session session) {
 		this.session = session;
 	}
-	public ProjetRequest getProjet() {
+	public Projet getProjet() {
 		return projet;
 	}
-	public void setProjet(ProjetRequest projet) {
+	public void setProjet(Projet projet) {
 		this.projet = projet;
 	}
+	
+	
 
 	
 }

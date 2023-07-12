@@ -1,8 +1,8 @@
 package com.example.hps.request;
 
 import java.time.LocalTime;
-import java.util.List;
 
+import com.example.hps.entity.Planification;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -16,6 +16,7 @@ public class SessionRequest {
 	private LocalTime heureD;
 	@NotBlank(message = "Ce champs ne doit pas etre Null !")
 	private LocalTime heureF;
+	private Planification  planification;
 	
 	
 	public String getNomsession() {
@@ -36,7 +37,14 @@ public class SessionRequest {
 	public void setHeureF(LocalTime heureF) {
 		this.heureF = heureF;
 	}
-
+	public Planification getPlanification() {
+		return planification;
+	}
+	public void setPlanification(Planification planification) {
+		this.planification = planification;
+	}
+	
+	
     
 	
 }

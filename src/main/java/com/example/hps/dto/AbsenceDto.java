@@ -5,16 +5,16 @@ import java.util.Date;
 
 
 
+
 public class AbsenceDto {
 	private Long idAbsence;
 	private String Type;
 	private Date date_debut;
 	private Date date_fin;
 	private boolean justification;
-	
+	private UtilisateurDto utilisateur;
 
 	
-
 	public Long getIdAbsence() {
 		return idAbsence;
 	}
@@ -55,6 +55,15 @@ public class AbsenceDto {
 		this.justification = justification;
 	}
 
+	public UtilisateurDto getUtilisateur() {
+		return utilisateur;
+	}
+
+	public void setUtilisateur(UtilisateurDto utilisateur) {
+		this.utilisateur = utilisateur;
+	}
+	
+	
 	
 
 	

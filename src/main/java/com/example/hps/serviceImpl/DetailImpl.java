@@ -32,9 +32,26 @@ public class DetailImpl implements DetailsService {
 	}
 
 	@Override
-	public DetailDto ModifierDetail(DetailDto detailDto) {
+	public DetailDto ModifierDetail(DetailDto detailDto,Long id) {
 		// TODO Auto-generated method stub
-		return null;
+		ModelMapper modelMapper=new ModelMapper();
+		Detail detailcheck=detailRepository.findByiddetail(id);
+		
+		if(detailcheck==null) throw new RestException("Ce Detail n'existe pas ");
+		
+		Detail detailConvert=modelMapper.map(detailDto, Detail.class);
+		
+		detailcheck.setCommentaire(detailConvert.getCommentaire());
+		detailcheck.setDoing(detailConvert.getDoing());
+		detailcheck.setDone(detailConvert.getDone());
+		detailcheck.setTodo(detailConvert.getTodo());
+		detailcheck.setProjet(detailConvert.getProjet());
+		detailcheck.setSession(detailConvert.getSession());
+		
+		Detail detailModifier=detailRepository.save(detailcheck);
+		
+		DetailDto detailDto_Converte_A_DTO=modelMapper.map(detailModifier, DetailDto.class);
+		return detailDto_Converte_A_DTO;
 	}
 
 	@Override

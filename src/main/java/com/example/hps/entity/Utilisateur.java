@@ -24,7 +24,6 @@ public class Utilisateur implements Serializable {
 	private Date date_naiss;
 	@Column(length = 35 ,nullable = false,unique = true)
 	private String email;
-	@Column(nullable = false)
 	private String encryptionpassword;
 	@Column(nullable = false)
 	private int telephone;
@@ -33,7 +32,7 @@ public class Utilisateur implements Serializable {
 	private List<Absence> absences=new ArrayList<>();
 	
 	@JsonIgnore
-	@ManyToOne
+	@ManyToOne(fetch =  FetchType.LAZY)
 	@JoinColumn(name="id_Groupe")
 	private Groupe groupe;
 	
@@ -52,6 +51,7 @@ public class Utilisateur implements Serializable {
 		this.telephone = telephone;
 		this.absences = absences;
 	}
+	
 
 	public Utilisateur() {
 		super();

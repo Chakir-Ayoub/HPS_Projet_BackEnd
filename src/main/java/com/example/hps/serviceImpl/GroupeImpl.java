@@ -11,7 +11,9 @@ import com.example.hps.Exceptions.RestException;
 import com.example.hps.dto.GroupeDto;
 import com.example.hps.dto.Sous_GroupeDto;
 import com.example.hps.entity.Groupe;
+import com.example.hps.entity.Utilisateur;
 import com.example.hps.repository.GroupeRepository;
+import com.example.hps.repository.UtilisateurRepository;
 import com.example.hps.service.GroupeService;
 
 
@@ -20,7 +22,8 @@ public class GroupeImpl implements GroupeService {
 
 	@Autowired
 	GroupeRepository groupeRepository;
-	
+	@Autowired
+	UtilisateurRepository utilisateurRepository;
 	@Override
 	public GroupeDto AjouterGroupe(GroupeDto groupeDto) {
 		// TODO Auto-generated method stub
@@ -87,5 +90,49 @@ public class GroupeImpl implements GroupeService {
 		
 		return groupeDtos;
 	}
+
+	@Override
+	public GroupeDto Affecte_Utilisateur_Groupe(Utilisateur utilisateur,Long id) {
+		// TODO Auto-generated method stub
+		ModelMapper modelMapper=new ModelMapper();
+		
+		Groupe groupe=groupeRepository.findByidgroup(id);
+		utilisateur.setEncryptionpassword("dehdvr");
+		groupe.AddUtilisateur(utilisateur, groupe);
+		
+		groupeRepository.save(groupe);
+		GroupeDto groupeDto=modelMapper.map(groupe,GroupeDto.class);
+		return groupeDto;
+	}
+
+	@Override
+	public GroupeDto GetById(Long id) {
+		// TODO Auto-generated method stub
+		ModelMapper modelMapper=new ModelMapper();
+		
+		Groupe groupe=groupeRepository.findByidgroup(id);
+		GroupeDto groupeDto=modelMapper.map(groupe, GroupeDto.class);
+		return groupeDto;
+	}
+
+	@Override
+	public GroupeDto Supperimer_User_Groupe(Long idgroupe, Long iduser) {
+		// TODO Auto-generated method stub
+	    ModelMapper modelMapper = new ModelMapper();
+	    Groupe groupe = groupeRepository.findByidgroup(idgroupe);
+	    
+	    if (groupe != null) {
+	        Utilisateur utilisateur = utilisateurRepository.findByidutilisateur(iduser);
+	        groupe.Removeutilisateur(utilisateur);
+	        groupeRepository.save(groupe);
+	        
+	        GroupeDto groupeDto = modelMapper.map(groupe, GroupeDto.class);
+	        return groupeDto;
+	    } else {
+	        throw new RestException("Ce utilisateur n'xiste pas dans Ce groupe");
+	    }
+	}
+	
+	
 
 }

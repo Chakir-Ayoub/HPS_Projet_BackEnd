@@ -3,10 +3,15 @@ package com.example.hps.service;
 import java.util.List;
 
 import com.example.hps.dto.GroupeDto;
+import com.example.hps.entity.Utilisateur;
 
 public interface GroupeService {
 	GroupeDto AjouterGroupe(GroupeDto groupeDto);
 	GroupeDto ModifierGroupe(GroupeDto groupeDto, Long id);
 	void SupperimerGroupe(Long id);
 	List<GroupeDto> GetAllGroupe();
+	GroupeDto GetById(Long id);
+	GroupeDto Affecte_Utilisateur_Groupe(Utilisateur utilisateur,Long id);
+	GroupeDto Supperimer_User_Groupe(Long idgroupe,Long iduser);
+	
 }

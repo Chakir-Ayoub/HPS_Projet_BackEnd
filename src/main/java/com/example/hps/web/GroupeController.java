@@ -17,14 +17,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.hps.dto.GroupeDto;
-import com.example.hps.entity.Groupe;
 import com.example.hps.entity.Utilisateur;
-import com.example.hps.repository.GroupeRepository;
-import com.example.hps.repository.UtilisateurRepository;
 import com.example.hps.request.GroupeRequest;
 import com.example.hps.response.GroupeResponse;
-import com.example.hps.response.UtilisateurResponse;
 import com.example.hps.service.GroupeService;
+
 
 @RestController
 @RequestMapping("Groupe")
@@ -80,6 +77,38 @@ public class GroupeController {
 		return new ResponseEntity<Object>(HttpStatus.NO_CONTENT);
 	}
 	
+	
+	@GetMapping("/finduser/{id}")
+	public ResponseEntity<GroupeResponse> GetById(@PathVariable Long id){
+		GroupeDto groupeDto=groupeService.GetById(id);
+		ModelMapper modelMapper=new ModelMapper();
+		
+		GroupeResponse groupeResponse =modelMapper.map(groupeDto, GroupeResponse.class);
+		return new ResponseEntity<GroupeResponse>(groupeResponse,HttpStatus.OK);
+	}
+	
+	@GetMapping("/Afecteusettogroupe/{id}")
+	public ResponseEntity<GroupeResponse> AffecteUserToGroupe(@RequestBody Utilisateur utilisateur, @PathVariable Long id ){
+		
+		ModelMapper modelMapper=new ModelMapper();
+
+		GroupeDto groupeDto=groupeService.Affecte_Utilisateur_Groupe(utilisateur, id);
+		GroupeResponse groupeResponse=modelMapper.map(groupeDto, GroupeResponse.class);
+		
+		return new ResponseEntity<GroupeResponse>(groupeResponse,HttpStatus.ACCEPTED);
+	}
+	
+	@DeleteMapping("/RemoveUsertogroupe/{idgroup}/{iduser}")
+	public ResponseEntity<GroupeResponse> RemoveUserInGroupe(@PathVariable Long idgroup,@PathVariable Long iduser) {
+		
+		ModelMapper modelMapper=new ModelMapper();
+		
+		GroupeDto groupeDto=groupeService.Supperimer_User_Groupe(idgroup, iduser);
+		GroupeResponse groupeResponse=modelMapper.map(groupeDto, GroupeResponse.class);
+		
+		return new ResponseEntity<GroupeResponse>(groupeResponse,HttpStatus.ACCEPTED);
+	}
+
 
 	
 

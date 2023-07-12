@@ -34,7 +34,7 @@ public class Session implements Serializable {
 	
 	@JsonIgnore
 	@ManyToOne()
-	@JoinColumn(name = "id_planification")
+	@JoinColumn(name = "planification")
 	private Planification planification;
 	
 	@JsonIgnore

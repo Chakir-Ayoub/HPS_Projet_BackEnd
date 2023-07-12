@@ -1,8 +1,9 @@
 package com.example.hps.request;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import com.example.hps.entity.Groupe;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -31,7 +32,7 @@ public class UtilisateurRequest {
 	
 	private List<AbsenceRequest>  absences;
 	
-	private List<GroupeRequest> groupe ;
+	private Groupe groupe;
 	
 	private SessionRequest session;
 
@@ -93,13 +94,6 @@ public class UtilisateurRequest {
 		this.absences = absences;
 	}
 
-	public List<GroupeRequest> getGroupe() {
-		return groupe;
-	}
-
-	public void setGroupe(List<GroupeRequest> groupe) {
-		this.groupe = groupe;
-	}
 
 	public SessionRequest getSession() {
 		return session;
@@ -109,6 +103,15 @@ public class UtilisateurRequest {
 		this.session = session;
 	}
 
+	public Groupe getGroupe() {
+		return groupe;
+	}
+
+	public void setGroupe(Groupe groupe) {
+		this.groupe = groupe;
+	}
+	
+	
 
 	
 	

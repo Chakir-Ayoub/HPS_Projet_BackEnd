@@ -7,6 +7,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.hps.Exceptions.RestException;
 import com.example.hps.dto.DetailDto;
 import com.example.hps.dto.ProjetDto;
 import com.example.hps.entity.Projet;
@@ -23,7 +24,7 @@ public class ProjetImpl implements ProjetService {
 	public ProjetDto AjouterProjet(ProjetDto projet) {
 		// TODO Auto-generated method stub
 		Projet projetCheck = projetRepository.findBynomprojet(projet.getNomprojet());
-		if (projetCheck != null) throw new RuntimeException("Ce Projet existe déjà !");
+		if (projetCheck != null) throw new RestException("Ce Projet existe déjà !");
 
 		
 		

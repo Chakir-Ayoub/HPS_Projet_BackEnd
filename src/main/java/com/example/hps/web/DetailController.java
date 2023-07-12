@@ -11,17 +11,14 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.hps.dto.AbsenceDto;
 import com.example.hps.dto.DetailDto;
-import com.example.hps.dto.ProjetDto;
 import com.example.hps.request.DetailsRequest;
-import com.example.hps.response.AbsenceResponse;
 import com.example.hps.response.DetailResponse;
-import com.example.hps.service.AbsenceService;
 import com.example.hps.service.DetailsService;
 
 @RestController
@@ -44,6 +41,20 @@ public class DetailController {
 			detailResponses.add(detailResponse);
 		}
 		return new ResponseEntity<List<DetailResponse>>(detailResponses,HttpStatus.ACCEPTED);
+	}
+	
+	@PutMapping(path = "/{id}")
+	public ResponseEntity<DetailResponse> Update(@RequestBody DetailsRequest detailsRequest,@PathVariable Long id){
+		
+		ModelMapper modelMapper=new ModelMapper();
+		
+		DetailDto detailDto=modelMapper.map(detailsRequest, DetailDto.class);
+		DetailDto ModificationDetailDto=detailsService.ModifierDetail(detailDto, id);
+		
+		DetailResponse detailResponse=modelMapper.map(ModificationDetailDto, DetailResponse.class);
+		
+		
+		return new ResponseEntity<DetailResponse>(detailResponse,HttpStatus.CREATED);
 	}
 	
 	@PostMapping

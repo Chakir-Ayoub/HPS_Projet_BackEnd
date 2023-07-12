@@ -1,10 +1,15 @@
 package com.example.hps.dto;
 
+import java.io.Serializable;
 import java.time.LocalTime;
 import java.util.List;
 
-import com.example.hps.entity.Detail;
-public class SessionDto {
+public class SessionDto implements Serializable {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3315570845360016573L;
 	
 	private Long idsession;
 	private String nomsession;
@@ -14,12 +19,6 @@ public class SessionDto {
 	private List<DetailDto> details;
 
 	
-	public List<DetailDto> getDetails() {
-		return details;
-	}
-	public void setDetails(List<DetailDto> details) {
-		this.details = details;
-	}
 	public Long getIdsession() {
 		return idsession;
 	}
@@ -50,6 +49,13 @@ public class SessionDto {
 	public void setPlanification(PlanificationDto planification) {
 		this.planification = planification;
 	}
+	public List<DetailDto> getDetails() {
+		return details;
+	}
+	public void setDetails(List<DetailDto> details) {
+		this.details = details;
+	}
+	
 
 	
 

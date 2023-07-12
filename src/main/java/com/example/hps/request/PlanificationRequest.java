@@ -3,13 +3,15 @@ package com.example.hps.request;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.example.hps.dto.PlanificationDto;
+
 import jakarta.validation.constraints.NotBlank;
 
 public class PlanificationRequest {
 	@NotBlank(message = "Ce champs ne doit pas etre Null !")
 	private LocalDate datePlanification;
 	private List<SessionRequest> sessions;
-	
+
 	public LocalDate getDatePlanification() {
 		return datePlanification;
 	}
@@ -22,6 +24,8 @@ public class PlanificationRequest {
 	public void setSessions(List<SessionRequest> sessions) {
 		this.sessions = sessions;
 	}
+	
+	
 	
 	
 	
