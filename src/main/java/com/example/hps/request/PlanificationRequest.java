@@ -3,10 +3,12 @@ package com.example.hps.request;
 import java.time.LocalDate;
 import java.util.List;
 
-import com.example.hps.dto.PlanificationDto;
 
 import jakarta.validation.constraints.NotBlank;
+import lombok.Data;
 
+
+@Data
 public class PlanificationRequest {
 	@NotBlank(message = "Ce champs ne doit pas etre Null !")
 	private LocalDate datePlanification;

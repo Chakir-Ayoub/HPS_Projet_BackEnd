@@ -13,9 +13,15 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Planification implements Serializable {
 
 
@@ -50,44 +56,4 @@ public class Planification implements Serializable {
 			sessions.remove(sessionSupperimer);
 		}
 	}
-	
-	
-
-	public Planification(Long idPlanification, LocalDate datePlanification, List<Session> sessions) {
-		super();
-		this.idPlanification = idPlanification;
-		this.datePlanification = datePlanification;
-		this.sessions = sessions;
-	}
-
-	public Planification() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	public Long getIdPlanification() {
-		return idPlanification;
-	}
-
-	public void setIdPlanification(Long idPlanification) {
-		this.idPlanification = idPlanification;
-	}
-
-	public LocalDate getDatePlanification() {
-		return datePlanification;
-	}
-
-	public void setDatePlanification(LocalDate datePlanification) {
-		this.datePlanification = datePlanification;
-	}
-
-	public List<Session> getSessions() {
-		return sessions;
-	}
-
-	public void setSessions(List<Session> sessions) {
-		this.sessions = sessions;
-	}
-
-	
 }

@@ -9,8 +9,14 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Sous_Groupe implements Serializable {
 
 
@@ -26,31 +32,5 @@ public class Sous_Groupe implements Serializable {
 	@JoinColumn(name = "groupe")
 	private Groupe groupe;
 
-	public Long getIdsousgroupe() {
-		return idsousgroupe;
-	}
 
-	public void setIdsousgroupe(Long idsousgroupe) {
-		this.idsousgroupe = idsousgroupe;
-	}
-
-	public String getNomsousgroupe() {
-		return nomsousgroupe;
-	}
-
-	public void setNomsousgroupe(String nomsousgroupe) {
-		this.nomsousgroupe = nomsousgroupe;
-	}
-
-	public Groupe getGroupe() {
-		return groupe;
-	}
-
-	public void setGroupe(Groupe groupe) {
-		this.groupe = groupe;
-	}
-
-	
-	
-	
 }

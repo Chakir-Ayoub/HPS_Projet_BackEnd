@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.hps.Exceptions.RestException;
+import com.example.hps.dto.SessionDto;
 import com.example.hps.dto.UtilisateurDto;
 import com.example.hps.entity.Absence;
 import com.example.hps.entity.Utilisateur;
@@ -35,6 +36,10 @@ public class UtilisateurImpl implements UtilisateurService {
 		
 		Utilisateur utilisateur=modelMapper.map(utilisateurDto, Utilisateur.class);
 		utilisateur.setEncryptionpassword("dekebfrhgfuyrgi");
+		
+		SessionDto sessionDto=utilisateurDto.getSession();
+		utilisateurDto.setSession(sessionDto);
+		
 		Utilisateur utilisateur2=utilisateurRepository.save(utilisateur);
 		
 		UtilisateurDto utilisateurDto2=modelMapper.map(utilisateur2, UtilisateurDto.class);
@@ -103,6 +108,8 @@ public class UtilisateurImpl implements UtilisateurService {
 		Utilisateur utilisateur=utilisateurRepository.findByidutilisateur(iduser);
 		Absence absence=absenceRepository.findByidAbsence(idabsence);
 		
+		if(utilisateur==null) {throw new RestException("Ce utilisateur n'existe pas ");}
+		if(absence==null) {throw new RestException("Ce Absence n'existe pas");}
 		utilisateur.AjouterAbsence(utilisateur, absence);
 		utilisateurRepository.save(utilisateur);
 		
@@ -118,6 +125,9 @@ public class UtilisateurImpl implements UtilisateurService {
 		
 		Utilisateur utilisateur=utilisateurRepository.findByidutilisateur(iduser);
 		Absence absence=absenceRepository.findByidAbsence(idabsence);
+		
+		if(utilisateur==null) {throw new RestException("Ce utilisateur n'existe pas ");}
+		if(absence==null) {throw new RestException("Ce Absence n'existe pas");}
 		
 		utilisateur.SupperimerAbsence(absence);
 		utilisateurRepository.save(utilisateur);

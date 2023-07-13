@@ -101,6 +101,8 @@ public class GroupeImpl implements GroupeService {
 		ModelMapper modelMapper=new ModelMapper();
 		
 		Groupe groupe=groupeRepository.findByidgroup(id);
+		
+		if(groupe==null) {throw new RestException("Ce groupe n'existe pas ");}
 		utilisateur.setEncryptionpassword("dehdvr");
 		groupe.AddUtilisateur(utilisateur, groupe);
 		
@@ -143,8 +145,9 @@ public class GroupeImpl implements GroupeService {
 		ModelMapper modelMapper=new ModelMapper();
 		
 		Groupe groupe=groupeRepository.findByidgroup(id);
+		if(groupe==null) {throw new RestException("Ce groupe n'existe pas ");}
 		groupe.AddSousGroupe(sousGroupe, groupe);
-		
+
 		groupeRepository.save(groupe);
 		
 		GroupeDto groupeDto=modelMapper.map(groupe, GroupeDto.class);

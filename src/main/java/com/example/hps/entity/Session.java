@@ -16,8 +16,14 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Session implements Serializable {
 
 	private static final long serialVersionUID = -8646960453346110640L;
@@ -48,69 +54,7 @@ public class Session implements Serializable {
 		detail.setSession(session);
 	}
 
-	public Session(Long idsession, String nomsession, LocalTime heureD, LocalTime heureF, Planification planification,
-			List<Detail> details) {
-		super();
-		this.idsession = idsession;
-		this.nomsession = nomsession;
-		this.heureD = heureD;
-		this.heureF = heureF;
-		this.planification = planification;
-		this.details = details;
-	}
 
-	public Session() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	public Long getIdsession() {
-		return idsession;
-	}
-
-	public void setIdsession(Long idsession) {
-		this.idsession = idsession;
-	}
-
-	public String getNomsession() {
-		return nomsession;
-	}
-
-	public void setNomsession(String nomsession) {
-		this.nomsession = nomsession;
-	}
-
-	public LocalTime getHeureD() {
-		return heureD;
-	}
-
-	public void setHeureD(LocalTime heureD) {
-		this.heureD = heureD;
-	}
-
-	public LocalTime getHeureF() {
-		return heureF;
-	}
-
-	public void setHeureF(LocalTime heureF) {
-		this.heureF = heureF;
-	}
-
-	public Planification getPlanification() {
-		return planification;
-	}
-
-	public void setPlanification(Planification planification) {
-		this.planification = planification;
-	}
-
-	public List<Detail> getDetails() {
-		return details;
-	}
-
-	public void setDetails(List<Detail> details) {
-		this.details = details;
-	}
 
 	
 }

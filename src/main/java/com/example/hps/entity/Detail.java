@@ -10,9 +10,15 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Detail implements Serializable {
 
 	private static final long serialVersionUID = -3489310410191800962L;
@@ -38,109 +44,4 @@ public class Detail implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "projet")
 	private Projet projet;
-
-	public Detail(Long iddetail, String todo, String done, String doing, String commentaire, LocalDate dateCommentaire,
-			Session session, Projet projet) {
-		super();
-		this.iddetail = iddetail;
-		Todo = todo;
-		Done = done;
-		Doing = doing;
-		this.commentaire = commentaire;
-		this.dateCommentaire = dateCommentaire;
-		this.session = session;
-		this.projet = projet;
-	}
-	
-	
-
-
-	public Detail() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-
-
-
-	public LocalDate getDateCommentaire() {
-		return dateCommentaire;
-	}
-
-
-	public void setDateCommentaire(LocalDate dateCommentaire) {
-		this.dateCommentaire = dateCommentaire;
-	}
-
-
-	public Long getIddetail() {
-		return iddetail;
-	}
-
-
-	public void setIddetail(Long iddetail) {
-		this.iddetail = iddetail;
-	}
-
-
-	public String getTodo() {
-		return Todo;
-	}
-
-
-	public void setTodo(String todo) {
-		Todo = todo;
-	}
-
-
-	public String getDone() {
-		return Done;
-	}
-
-
-	public void setDone(String done) {
-		Done = done;
-	}
-
-
-	public String getDoing() {
-		return Doing;
-	}
-
-
-	public void setDoing(String doing) {
-		Doing = doing;
-	}
-
-
-	public String getCommentaire() {
-		return commentaire;
-	}
-
-
-	public void setCommentaire(String commentaire) {
-		this.commentaire = commentaire;
-	}
-
-
-	public Session getSession() {
-		return session;
-	}
-
-
-	public void setSession(Session session) {
-		this.session = session;
-	}
-
-
-	public Projet getProjet() {
-		return projet;
-	}
-
-
-	public void setProjet(Projet projet) {
-		this.projet = projet;
-	}
-	
-	
 }

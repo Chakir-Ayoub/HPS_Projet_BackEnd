@@ -2,6 +2,9 @@ package com.example.hps.response;
 
 import java.time.LocalDate;
 
+import lombok.Data;
+
+@Data
 public class DetailResponse {
 	
 	private Long iddetail;
@@ -10,46 +13,4 @@ public class DetailResponse {
 	private String Doing;
 	private String commentaire;
 	private LocalDate dateCommentaire;
-
-
-	
-	public Long getIddetail() {
-		return iddetail;
-	}
-	public void setIddetail(Long iddetail) {
-		this.iddetail = iddetail;
-	}
-	public String getTodo() {
-		return Todo;
-	}
-	public void setTodo(String todo) {
-		Todo = todo;
-	}
-	public String getDone() {
-		return Done;
-	}
-	public void setDone(String done) {
-		Done = done;
-	}
-	public String getDoing() {
-		return Doing;
-	}
-	public void setDoing(String doing) {
-		Doing = doing;
-	}
-	public String getCommentaire() {
-		return commentaire;
-	}
-	public void setCommentaire(String commentaire) {
-		this.commentaire = commentaire;
-	}
-	public LocalDate getDateCommentaire() {
-		return dateCommentaire;
-	}
-	public void setDateCommentaire(LocalDate dateCommentaire) {
-		this.dateCommentaire = dateCommentaire;
-	}
-
-	
-	
 }

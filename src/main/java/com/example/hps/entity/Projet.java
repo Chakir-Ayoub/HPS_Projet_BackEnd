@@ -14,8 +14,14 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Projet implements Serializable {
 
 	private static final long serialVersionUID = -6994354253010287858L;
@@ -55,72 +61,4 @@ public class Projet implements Serializable {
 			details.remove(detailAsupperimer);
 		}
 	}
-
-	public Projet(Long idprojet, String nomprojet, String description, LocalDate datedemarrage, LocalDate datelivraison,
-			List<Detail> details) {
-		super();
-		this.idprojet = idprojet;
-		this.nomprojet = nomprojet;
-		this.description = description;
-		this.datedemarrage = datedemarrage;
-		this.datelivraison = datelivraison;
-		this.details = details;
-	}
-
-	public Projet() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	public Long getIdprojet() {
-		return idprojet;
-	}
-
-	public void setIdprojet(Long idprojet) {
-		this.idprojet = idprojet;
-	}
-
-	public String getNomprojet() {
-		return nomprojet;
-	}
-
-	public void setNomprojet(String nomprojet) {
-		this.nomprojet = nomprojet;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public LocalDate getDatedemarrage() {
-		return datedemarrage;
-	}
-
-	public void setDatedemarrage(LocalDate datedemarrage) {
-		this.datedemarrage = datedemarrage;
-	}
-
-	public LocalDate getDatelivraison() {
-		return datelivraison;
-	}
-
-	public void setDatelivraison(LocalDate datelivraison) {
-		this.datelivraison = datelivraison;
-	}
-
-	public List<Detail> getDetails() {
-		return details;
-	}
-
-	public void setDetails(List<Detail> details) {
-		this.details = details;
-	}
-	
-	
-	
-	
 }

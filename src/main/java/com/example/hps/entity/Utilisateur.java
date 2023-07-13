@@ -64,7 +64,6 @@ public class Utilisateur implements Serializable {
 	
 	
 	
-	
 	public Utilisateur(String nom_utilisateur, String prenom_utilisateur, Date date_naiss, String email,
 			String encryptionpassword, int telephone, List<Absence> absences) {
 		super();
