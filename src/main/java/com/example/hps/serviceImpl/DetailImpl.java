@@ -1,5 +1,6 @@
 package com.example.hps.serviceImpl;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +25,8 @@ public class DetailImpl implements DetailsService {
 		// TODO Auto-generated method stub
 		ModelMapper modelMapper=new ModelMapper();
 		Detail detail=modelMapper.map(detailDto, Detail.class);
-		
+		LocalDate currentdate=LocalDate.now();
+		detail.setDateCommentaire(currentdate);
 		Detail detail2=detailRepository.save(detail);
 		
 		DetailDto detailDto2=modelMapper.map(detail2, DetailDto.class);

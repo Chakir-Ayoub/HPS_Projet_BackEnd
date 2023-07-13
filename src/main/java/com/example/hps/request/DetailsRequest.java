@@ -1,6 +1,8 @@
 package com.example.hps.request;
 
 
+import java.time.LocalDate;
+
 import com.example.hps.entity.Projet;
 import com.example.hps.entity.Session;
 
@@ -21,6 +23,7 @@ public class DetailsRequest  {
 	@NotBlank(message = "Ce champs ne doit pas etre Null !")
 	@Size(min = 5,message = "Ce champs doit avoir au moins 3 Caracteres !")
 	private String commentaire;
+	@NotBlank(message = "Ce champs ne doit pas etre Null !")
 	private Session session;
 	private Projet projet;
 	
@@ -61,7 +64,7 @@ public class DetailsRequest  {
 	public void setProjet(Projet projet) {
 		this.projet = projet;
 	}
-	
+
 	
 
 	

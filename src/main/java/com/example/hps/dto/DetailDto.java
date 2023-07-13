@@ -1,6 +1,7 @@
 package com.example.hps.dto;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 public class DetailDto implements Serializable {
 	/**
@@ -14,8 +15,16 @@ public class DetailDto implements Serializable {
 	private String commentaire;
 	private SessionDto session;
 	private ProjetDto projet;
+	private LocalDate dateCommentaire;
+
 	public Long getIddetail() {
 		return iddetail;
+	}
+	public LocalDate getDateCommentaire() {
+		return dateCommentaire;
+	}
+	public void setDateCommentaire(LocalDate dateCommentaire) {
+		this.dateCommentaire = dateCommentaire;
 	}
 	public void setIddetail(Long iddetail) {
 		this.iddetail = iddetail;

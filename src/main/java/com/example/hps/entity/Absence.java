@@ -1,6 +1,7 @@
 package com.example.hps.entity;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 
 import jakarta.persistence.Column;
@@ -22,9 +23,9 @@ public class Absence implements Serializable {
 	@Column(length = 35,nullable = false)
 	private String Type;
 	@Column(nullable = false)
-	private Date date_debut;
+	private LocalDate date_debut;
 	@Column(nullable = false)
-	private Date date_fin;
+	private LocalDate date_fin;
 	@Column(nullable = false)
 	private boolean justification;
 	
@@ -32,21 +33,27 @@ public class Absence implements Serializable {
 	@JoinColumn(name = "utilisateur_id")
 	private Utilisateur utilisateur;
 
-	public Absence(Long id_Absence, String type, Date date_debut, Date date_fin, boolean justification,
+	
+
+	public Absence(Long idAbsence, String type, LocalDate date_debut, LocalDate date_fin, boolean justification,
 			Utilisateur utilisateur) {
 		super();
-		this.idAbsence = id_Absence;
+		this.idAbsence = idAbsence;
 		Type = type;
 		this.date_debut = date_debut;
 		this.date_fin = date_fin;
 		this.justification = justification;
 		this.utilisateur = utilisateur;
 	}
+	
+	
 
 	public Absence() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+
+
 
 	public Long getIdAbsence() {
 		return idAbsence;
@@ -64,19 +71,21 @@ public class Absence implements Serializable {
 		Type = type;
 	}
 
-	public Date getDate_debut() {
+	
+
+	public LocalDate getDate_debut() {
 		return date_debut;
 	}
 
-	public void setDate_debut(Date date_debut) {
+	public void setDate_debut(LocalDate date_debut) {
 		this.date_debut = date_debut;
 	}
 
-	public Date getDate_fin() {
+	public LocalDate getDate_fin() {
 		return date_fin;
 	}
 
-	public void setDate_fin(Date date_fin) {
+	public void setDate_fin(LocalDate date_fin) {
 		this.date_fin = date_fin;
 	}
 

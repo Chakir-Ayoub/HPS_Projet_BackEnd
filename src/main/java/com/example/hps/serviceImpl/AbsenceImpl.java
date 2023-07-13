@@ -1,5 +1,6 @@
 package com.example.hps.serviceImpl;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +29,12 @@ public class AbsenceImpl implements AbsenceService {
 		ModelMapper modelMapper=new ModelMapper();
 		Absence absence=modelMapper.map(absenceDto, Absence.class);
 		
+		LocalDate currentdate=LocalDate.now();
+		
+		if(currentdate.isAfter(absenceDto.getDate_debut())) {throw new RestException("La date de Debut n'est pas acceptée ");}
+		if(currentdate.isAfter(absenceDto.getDate_fin())) {throw new RestException("La date de Fin n'est pas acceptée ");}
+		if (currentdate.isEqual(absenceDto.getDate_fin())) { throw new RestException("La date de Fin  est la même que la date actuelle.");}
+
 		Absence absenceAjoute=absenceRepository.save(absence);
 		AbsenceDto absenceDto2=modelMapper.map(absenceAjoute,AbsenceDto.class);
 		

@@ -1,7 +1,7 @@
 package com.example.hps.entity;
 
 import java.io.Serializable;
-
+import java.time.LocalDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -28,6 +28,7 @@ public class Detail implements Serializable {
 	private String Doing;
 	@Column(nullable = false,length = 250)
 	private String commentaire;
+	private LocalDate dateCommentaire;
 	
 	@ManyToOne
 	@JoinColumn(name = "id_session")
@@ -38,23 +39,37 @@ public class Detail implements Serializable {
 	@JoinColumn(name = "projet")
 	private Projet projet;
 
-
-	public Detail(Long iddetail, String todo, String done, String doing, String commentaire, Session session,
-			Projet projet) {
+	public Detail(Long iddetail, String todo, String done, String doing, String commentaire, LocalDate dateCommentaire,
+			Session session, Projet projet) {
 		super();
 		this.iddetail = iddetail;
 		Todo = todo;
 		Done = done;
 		Doing = doing;
 		this.commentaire = commentaire;
+		this.dateCommentaire = dateCommentaire;
 		this.session = session;
 		this.projet = projet;
 	}
+	
+	
 
 
 	public Detail() {
 		super();
 		// TODO Auto-generated constructor stub
+	}
+
+
+
+
+	public LocalDate getDateCommentaire() {
+		return dateCommentaire;
+	}
+
+
+	public void setDateCommentaire(LocalDate dateCommentaire) {
+		this.dateCommentaire = dateCommentaire;
 	}
 
 

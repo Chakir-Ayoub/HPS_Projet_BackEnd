@@ -1,5 +1,6 @@
 package com.example.hps.response;
 
+import java.time.LocalDate;
 
 public class DetailResponse {
 	
@@ -8,6 +9,8 @@ public class DetailResponse {
 	private String Done;
 	private String Doing;
 	private String commentaire;
+	private LocalDate dateCommentaire;
+
 
 	
 	public Long getIddetail() {
@@ -39,6 +42,12 @@ public class DetailResponse {
 	}
 	public void setCommentaire(String commentaire) {
 		this.commentaire = commentaire;
+	}
+	public LocalDate getDateCommentaire() {
+		return dateCommentaire;
+	}
+	public void setDateCommentaire(LocalDate dateCommentaire) {
+		this.dateCommentaire = dateCommentaire;
 	}
 
 	
