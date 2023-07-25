@@ -47,11 +47,18 @@ public class AbsenceImpl implements AbsenceService {
 		Absence absencecheck=absenceRepository.findByidAbsence(id);
 		if(absencecheck==null) throw new RestException("Ce Absence n'existe pas ! ");
 		
+
+		LocalDate currentdate=LocalDate.now();
+		
+		if(currentdate.isAfter(absenceDto.getDate_debut())) {throw new RestException("La date de Debut n'est pas acceptée ");}
+		if(currentdate.isAfter(absenceDto.getDate_fin())) {throw new RestException("La date de Fin n'est pas acceptée ");}
+		if (currentdate.isEqual(absenceDto.getDate_fin())) { throw new RestException("La date de Fin  est la même que la date actuelle.");}
+		
+		ModelMapper modelMapper=new ModelMapper();
+		
 		absencecheck.setDate_debut(absenceDto.getDate_debut());
 		absencecheck.setDate_fin(absenceDto.getDate_fin());
 		absencecheck.setType(absenceDto.getType());
-		
-		ModelMapper modelMapper=new ModelMapper();
 		
 		AbsenceDto absenceDto2=modelMapper.map(absencecheck, AbsenceDto.class);
 		

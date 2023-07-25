@@ -56,7 +56,7 @@ public class ProjetImpl implements ProjetService {
 	public ProjetDto ModifierProjet(ProjetDto projetDto,Long id) {
 		// TODO Auto-generated method stub
 		Projet projetCheck=projetRepository.findByidprojet(id);
-		if(projetCheck==null) throw new RuntimeException("Ce Projet il n'existe pas !");
+		if(projetCheck==null) throw new RestException("Ce Projet il n'existe pas !");
 		
 		ModelMapper modelMapper=new ModelMapper();
 		Projet modifierObjetProjet= modelMapper.map(projetDto, Projet.class);
@@ -70,7 +70,7 @@ public class ProjetImpl implements ProjetService {
 	
 		}
 		else {
-			 throw new RuntimeException("Ce Nom de Projet Il existe Déja ");
+			 throw new RestException("Ce Nom de Projet Il existe Déja ");
 
 		}
 		

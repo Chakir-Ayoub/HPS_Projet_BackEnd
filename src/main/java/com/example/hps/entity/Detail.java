@@ -27,11 +27,11 @@ public class Detail implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long iddetail;
 	@Column(nullable = false,length = 250)
-	private String Todo;
+	private String todo;
 	@Column(nullable = false,length = 250)
-	private String Done;
+	private String done;
 	@Column(nullable = false,length = 250)
-	private String Doing;
+	private String doing;
 	@Column(nullable = false,length = 250)
 	private String commentaire;
 	private LocalDate dateCommentaire;

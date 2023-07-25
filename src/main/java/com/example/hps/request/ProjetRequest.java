@@ -1,6 +1,9 @@
 package com.example.hps.request;
 
 import java.time.LocalDate;
+import java.util.List;
+
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
@@ -17,4 +20,7 @@ public class ProjetRequest {
 	private LocalDate datedemarrage;
 	@NotBlank(message = "Ce champs ne doit pas etre Null !")
 	private LocalDate datelivraison;
+	@NotBlank(message = "Ce champs ne doit pas etre Null !")
+	private List<DetailsRequest> details;
+
 }

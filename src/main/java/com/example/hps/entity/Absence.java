@@ -27,7 +27,7 @@ public class Absence implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idAbsence;
 	@Column(length = 35,nullable = false)
-	private String Type;
+	private String type;
 	@Column(nullable = false)
 	private LocalDate date_debut;
 	@Column(nullable = false)

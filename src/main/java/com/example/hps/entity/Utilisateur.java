@@ -8,8 +8,14 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.*;
 import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Utilisateur implements Serializable {
 
 	private static final long serialVersionUID = 801544110262708169L;
@@ -61,109 +67,4 @@ public class Utilisateur implements Serializable {
 			absences.remove(absencesupprimer)	;
 		}
 	}
-	
-	
-	
-	public Utilisateur(String nom_utilisateur, String prenom_utilisateur, Date date_naiss, String email,
-			String encryptionpassword, int telephone, List<Absence> absences) {
-		super();
-		this.nom_utilisateur = nom_utilisateur;
-		this.prenom_utilisateur = prenom_utilisateur;
-		this.date_naiss = date_naiss;
-		this.email = email;
-		this.encryptionpassword = encryptionpassword;
-		this.telephone = telephone;
-		this.absences = absences;
-	}
-	
-
-	public Utilisateur() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-
-
-
-	public Long getIdutilisateur() {
-		return idutilisateur;
-	}
-
-	public void setIdutilisateur(Long idutilisateur) {
-		this.idutilisateur = idutilisateur;
-	}
-
-	public Groupe getGroupe() {
-		return groupe;
-	}
-
-	public void setGroupe(Groupe groupe) {
-		this.groupe = groupe;
-	}
-
-	public Session getSession() {
-		return session;
-	}
-
-	public void setSession(Session session) {
-		this.session = session;
-	}
-
-	public String getNom_utilisateur() {
-		return nom_utilisateur;
-	}
-
-	public void setNom_utilisateur(String nom_utilisateur) {
-		this.nom_utilisateur = nom_utilisateur;
-	}
-
-	public String getPrenom_utilisateur() {
-		return prenom_utilisateur;
-	}
-
-	public void setPrenom_utilisateur(String prenom_utilisateur) {
-		this.prenom_utilisateur = prenom_utilisateur;
-	}
-
-	public Date getDate_naiss() {
-		return date_naiss;
-	}
-
-	public void setDate_naiss(Date date_naiss) {
-		this.date_naiss = date_naiss;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getEncryptionpassword() {
-		return encryptionpassword;
-	}
-
-	public void setEncryptionpassword(String encryptionpassword) {
-		this.encryptionpassword = encryptionpassword;
-	}
-
-	public int getTelephone() {
-		return telephone;
-	}
-
-	public void setTelephone(int telephone) {
-		this.telephone = telephone;
-	}
-
-	public List<Absence> getAbsences() {
-		return absences;
-	}
-
-	public void setAbsences(List<Absence> absences) {
-		this.absences = absences;
-	}
-	
-	
 }

@@ -35,11 +35,12 @@ public class GroupeImpl implements GroupeService {
 		Groupe groupecheck=groupeRepository.findBynomgroupe(groupeDto.getNomgroupe());
 		if(groupecheck!=null) throw new RestException("Ce groupe il existe déja");
 		
-		for(int i=0;i<groupeDto.getSous_Groupes().size();i++) {
-			Sous_GroupeDto sous_GroupeDto=groupeDto.getSous_Groupes().get(i);
-			sous_GroupeDto.setGroupe(groupeDto);
-			groupeDto.getSous_Groupes().set(i, sous_GroupeDto);
-		}
+		/*
+		 * for(int i=0;i<groupeDto.getSous_Groupes().size();i++) { Sous_GroupeDto
+		 * sous_GroupeDto=groupeDto.getSous_Groupes().get(i);
+		 * sous_GroupeDto.setGroupe(groupeDto); groupeDto.getSous_Groupes().set(i,
+		 * sous_GroupeDto); }
+		 */
 		ModelMapper modelMapper=new ModelMapper();
 		Groupe groupe=modelMapper.map(groupeDto, Groupe.class);
 		

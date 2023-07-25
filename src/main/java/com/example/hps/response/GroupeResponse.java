@@ -8,6 +8,5 @@ import lombok.Data;
 public class GroupeResponse {
 	private Long idgroup;
 	private String nomgroupe;
-	private List<Sous_GroupeResponse> sous_Groupes;
 	private List<UtilisateurResponse> utilisateurs;
 }

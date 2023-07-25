@@ -3,6 +3,7 @@ package com.example.hps.request;
 import java.time.LocalTime;
 
 import com.example.hps.entity.Planification;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;

@@ -8,9 +8,9 @@ import lombok.Data;
 public class DetailResponse {
 	
 	private Long iddetail;
-	private String Todo;
-	private String Done;
-	private String Doing;
+	private String todo;
+	private String done;
+	private String doing;
 	private String commentaire;
 	private LocalDate dateCommentaire;
 }

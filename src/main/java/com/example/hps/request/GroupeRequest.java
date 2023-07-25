@@ -16,5 +16,4 @@ public class GroupeRequest {
 	@NotEmpty(message = "ce champs ne doit pas etre vide")
 	@Size(min = 3,message = "Ce champs doit avoir au moins 3 Caracteres !")
 	private String nomgroupe;
-	private List<Sous_Groupe> sous_Groupes;	
 }

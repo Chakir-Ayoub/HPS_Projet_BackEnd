@@ -1,5 +1,6 @@
 package com.example.hps.serviceImpl;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,9 +67,9 @@ public class PlanificationImpl implements PlanificationService {
 	}
 
 	@Override
-	public void SupperimerPlanification(Long id) {
+	public void SupperimerPlanification(LocalDate date) {
 		// TODO Auto-generated method stub
-		Planification planification=planificationRepository.findByidPlanification(id);
+		Planification planification=planificationRepository.findBydatePlanification(date);
 		if(planification==null) throw new RestException("Cette Planification n'existe pas ! ");
 		planificationRepository.delete(planification);
 	}
@@ -114,6 +115,8 @@ public class PlanificationImpl implements PlanificationService {
 		Planification planification=planificationRepository.findByidPlanification(idplanification);
 		
 		planification.SupperimerSession(session);
+		planificationRepository.save(planification);
+
 		
 		PlanificationDto planificationDto=modelMapper.map(planification, PlanificationDto.class);
 

@@ -13,13 +13,13 @@ import lombok.Data;
 public class DetailsRequest  {
 	@NotBlank(message = "Ce champs ne doit pas etre Null !")
 	@Size(min = 5,message = "Ce champs doit avoir au moins 3 Caracteres !")
-	private String Todo;
+	private String todo;
 	@NotBlank(message = "Ce champs ne doit pas etre Null !")
 	@Size(min = 5,message = "Ce champs doit avoir au moins 3 Caracteres !")
-	private String Done;
+	private String done;
 	@NotBlank(message = "Ce champs ne doit pas etre Null !")
 	@Size(min = 5,message = "Ce champs doit avoir au moins 3 Caracteres !")
-	private String Doing;
+	private String doing;
 	@NotBlank(message = "Ce champs ne doit pas etre Null !")
 	@Size(min = 5,message = "Ce champs doit avoir au moins 3 Caracteres !")
 	private String commentaire;
