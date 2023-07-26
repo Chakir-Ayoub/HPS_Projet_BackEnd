@@ -61,21 +61,21 @@ public class PlanificationController {
 		return new ResponseEntity<PlanificationResponse>(planificationResponse,HttpStatus.ACCEPTED);
 	}
 	
-	@PutMapping(path = "/{id}")
-	public ResponseEntity<PlanificationResponse> Modifier(@RequestBody PlanificationRequest planificationRequest,@PathVariable Long id){
+	@PutMapping(path = "/{date}")
+	public ResponseEntity<PlanificationResponse> Modifier(@RequestBody PlanificationRequest planificationRequest,@PathVariable LocalDate date){
 		
 		ModelMapper modelMapper=new ModelMapper();
 		
 		PlanificationDto planificationDto=modelMapper.map(planificationRequest, PlanificationDto.class);
 		
-		PlanificationDto planificationModifier= planificationService.ModifierPlanification(planificationDto, id);
+		PlanificationDto planificationModifier= planificationService.ModifierPlanification(planificationDto, date);
 		
 		PlanificationResponse planificationResponse=modelMapper.map(planificationModifier, PlanificationResponse.class);
 		return new ResponseEntity<PlanificationResponse>(planificationResponse,HttpStatus.CREATED);
 	}
 	
 	
-	  @DeleteMapping(path = "/{id}") public ResponseEntity<Object>
+	  @DeleteMapping(path = "/{date}") public ResponseEntity<Object>
 	  Delete(@PathVariable LocalDate date) throws Exception{
 	  
 	  planificationService.SupperimerPlanification(date); return new

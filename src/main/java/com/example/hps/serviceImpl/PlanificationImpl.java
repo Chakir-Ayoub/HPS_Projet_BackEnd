@@ -49,9 +49,9 @@ public class PlanificationImpl implements PlanificationService {
 	}
 
 	@Override
-	public PlanificationDto ModifierPlanification(PlanificationDto planificationDto,Long id) {
+	public PlanificationDto ModifierPlanification(PlanificationDto planificationDto,LocalDate date) {
 		// TODO Auto-generated method stub
-		Planification planificationCheck=planificationRepository.findByidPlanification(id);
+		Planification planificationCheck=planificationRepository.findBydatePlanification(date);
 		if(planificationCheck==null) throw new RestException("Cette planification n'existe pas ! ");
 		
 		ModelMapper modelMapper=new ModelMapper();

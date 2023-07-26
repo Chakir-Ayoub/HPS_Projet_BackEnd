@@ -7,7 +7,7 @@ import com.example.hps.dto.PlanificationDto;
 
 public interface PlanificationService {
 	PlanificationDto AjouterPlanification(PlanificationDto planificationDto);
-	PlanificationDto ModifierPlanification(PlanificationDto planificationDto,Long id);
+	PlanificationDto ModifierPlanification(PlanificationDto planificationDto,LocalDate date);
 	void SupperimerPlanification(LocalDate date);
 	List<PlanificationDto> GetAllPlaning();
 	PlanificationDto AffecteSessionToplanification(Long idsession,Long idplanification);

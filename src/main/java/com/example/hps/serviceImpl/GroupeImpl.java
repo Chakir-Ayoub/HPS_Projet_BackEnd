@@ -172,6 +172,13 @@ public class GroupeImpl implements GroupeService {
 		        throw new RestException("Ce Sous Groupe n'xiste pas dans Ce groupe");
 		    }
 	}
+
+	@Override
+	public Long GetCountUserInGroupe(Long id) {
+		// TODO Auto-generated method stub
+		if(groupeRepository.findByidgroup(id)==null) throw new RestException("Ce groupe n'existe pas");
+		return groupeRepository.getCountUserInGroupe(id) ;
+	}
 	
 	
 
