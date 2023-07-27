@@ -1,7 +1,7 @@
 package com.example.hps.entity;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -27,7 +27,7 @@ public class Utilisateur implements Serializable {
 	@Column(length = 35 ,nullable = false)
 	private String prenom_utilisateur;
 	@Column(nullable = false)
-	private Date date_naiss;
+	private LocalDate date_naiss;
 	@Column(length = 35 ,nullable = false,unique = true)
 	private String email;
 	private String encryptionpassword;

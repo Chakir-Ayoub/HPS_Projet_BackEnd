@@ -1,5 +1,6 @@
 package com.example.hps.request;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class UtilisateurRequest {
 	@Size(min = 3,message = "Ce champs doit avoir au moins 3 Caracteres !")
 	private String prenom_utilisateur;
 	@NotBlank(message = "Ce champs ne doit pas etre Null !")
-	private Date date_naiss;
+	private LocalDate date_naiss;
 	@NotBlank(message = "Ce champs ne doit pas etre Null !")
 	@Email(message = "Ce champs doit respecter la format email !")
 	private String email;

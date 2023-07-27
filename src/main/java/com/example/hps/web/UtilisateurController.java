@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.hps.dto.UtilisateurDto;
-import com.example.hps.entity.Utilisateur;
 import com.example.hps.request.UtilisateurRequest;
 import com.example.hps.response.UtilisateurResponse;
 import com.example.hps.service.UtilisateurService;
@@ -103,7 +102,37 @@ public class UtilisateurController {
 		
 		UtilisateurResponse utilisateurResponse=modelMapper.map(utilisateurDto, UtilisateurResponse.class);
 		
-		return new ResponseEntity<UtilisateurResponse>(utilisateurResponse,HttpStatus.ACCEPTED);
+		return new ResponseEntity<UtilisateurResponse>(utilisateurResponse,HttpStatus.ACCEPTED);	
+	}
+	
+	@GetMapping("/{id}")
+	public ResponseEntity<UtilisateurResponse> GetById(@PathVariable Long id){
+		ModelMapper modelMapper=new ModelMapper();
 		
+		UtilisateurDto utilisateurDto=utilisateurService.GetById(id);
+		
+		UtilisateurResponse utilisateurResponse=modelMapper.map(utilisateurDto, UtilisateurResponse.class);
+		
+		return new ResponseEntity<UtilisateurResponse>(utilisateurResponse,HttpStatus.ACCEPTED);
+	}
+	
+	@GetMapping("absenceNonJ/{id}")
+	public ResponseEntity<Long> GetAbsenceNonJ(@PathVariable Long id){
+		return new ResponseEntity<Long>(utilisateurService.NombreAbsenceNonJustifier(id),HttpStatus.ACCEPTED);
+	}
+	
+	@GetMapping("absenceJ/{id}")
+	public ResponseEntity<Long> GetAbsenceJ(@PathVariable Long id){
+		return new ResponseEntity<Long>(utilisateurService.NombreAbsenceJustifier(id),HttpStatus.ACCEPTED);
+	}
+	
+	@GetMapping("GetCount")
+	public ResponseEntity<Long> GetCountProject(){
+		return new ResponseEntity<Long>(utilisateurService.GetCountUser(),HttpStatus.OK);
+	}
+	
+	@GetMapping("GetCountAbsence")
+	public ResponseEntity<Long> GeyCountAbsence(){
+		return new ResponseEntity<Long>(utilisateurService.GetCountAbsence(),HttpStatus.OK);
 	}
 }

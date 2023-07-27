@@ -1,5 +1,6 @@
 package com.example.hps.dto;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -12,7 +13,7 @@ public class UtilisateurDto {
 	private Long idutilisateur;
 	private String nom_utilisateur;
 	private String prenom_utilisateur;
-	private Date date_naiss;
+	private LocalDate date_naiss;
 	private String email;
 	private String encryptionpassword;
 	private int telephone;

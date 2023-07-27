@@ -138,6 +138,5 @@ public class GroupeController {
 	public ResponseEntity<Long> GetCountUserInGroupe(@PathVariable Long id){
 	return new ResponseEntity<Long>(groupeService.GetCountUserInGroupe(id),HttpStatus.OK);	
 	}
-	
 
 }

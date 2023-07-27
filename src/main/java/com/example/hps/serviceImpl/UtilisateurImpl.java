@@ -23,6 +23,7 @@ public class UtilisateurImpl implements UtilisateurService {
 	UtilisateurRepository utilisateurRepository;
 	@Autowired
 	AbsenceRepository absenceRepository;
+	
 
 	@Override
 	public UtilisateurDto AjouterUtilisateur(UtilisateurDto utilisateurDto) {
@@ -134,6 +135,43 @@ public class UtilisateurImpl implements UtilisateurService {
 		
 		UtilisateurDto utilisateurDto=modelMapper.map(utilisateur, UtilisateurDto.class);		
 		return utilisateurDto;
+	}
+
+	@Override
+	public UtilisateurDto GetById(Long id) {
+		// TODO Auto-generated method stub
+		ModelMapper modelMapper=new ModelMapper();
+		
+		Utilisateur utilisateur=utilisateurRepository.findByidutilisateur(id);
+		if(utilisateur==null) throw new RestException("Ce Utilisateur n'existe pas");
+		
+		UtilisateurDto utilisateurDto=modelMapper.map(utilisateur, UtilisateurDto.class);
+		return utilisateurDto;
+	}
+
+	@Override
+	public Long NombreAbsenceNonJustifier(Long id) {
+		// TODO Auto-generated method stub
+		return absenceRepository.AbsenceNonJustifier(id);
+	}
+
+	@Override
+	public Long NombreAbsenceJustifier(Long id) {
+		// TODO Auto-generated method stub
+		
+		return absenceRepository.AbsenceJustifier(id);
+	}
+
+	@Override
+	public Long GetCountUser() {
+		// TODO Auto-generated method stub
+		return utilisateurRepository.getCountUser();
+	}
+
+	@Override
+	public Long GetCountAbsence() {
+		// TODO Auto-generated method stub
+		return absenceRepository.GetCountAbsence();
 	}
 	
 

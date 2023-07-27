@@ -16,6 +16,8 @@ import com.example.hps.repository.DetailRepository;
 import com.example.hps.repository.ProjetRepository;
 import com.example.hps.service.ProjetService;
 
+import ch.qos.logback.core.model.Model;
+
 @Service
 public class ProjetImpl implements ProjetService {
 	
@@ -32,11 +34,12 @@ public class ProjetImpl implements ProjetService {
 
 		
 		
-		for (int i = 0; i < projet.getDetails().size(); i++) {
-		    DetailDto detailDto = projet.getDetails().get(i);
-			detailDto.setProjet(projet);
-		    projet.getDetails().set(i, detailDto);
-		}
+		/*
+		 * for (int i = 0; i < projet.getDetails().size(); i++) { DetailDto detailDto =
+		 * projet.getDetails().get(i); detailDto.setProjet(projet);
+		 * projet.getDetails().set(i, detailDto); }
+		 */
+		 
 		
 		ModelMapper modelMapper = new ModelMapper();
 
@@ -143,6 +146,29 @@ public class ProjetImpl implements ProjetService {
 		
 		
 		return projetDto;
+	}
+
+	@Override
+	public ProjetDto GetById(Long id) {
+		// TODO Auto-generated method stub
+		ModelMapper modelMapper=new ModelMapper();
+		
+		Projet projet=projetRepository.findByidprojet(id);
+		ProjetDto projetDto=modelMapper.map(projet, ProjetDto.class);
+		
+		return projetDto;
+	}
+
+	@Override
+	public Long GetCountProject() {
+		// TODO Auto-generated method stub
+		return projetRepository.GetCountProject();
+	}
+
+	@Override
+	public Long GetProjectStar() {
+		// TODO Auto-generated method stub
+		return projetRepository.GetStartProject();
 	}
 
 	

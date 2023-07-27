@@ -12,4 +12,7 @@ public interface ProjetService {
 	List<ProjetDto> GetAllProjet();
 	ProjetDto AjouterDetailToProjet(Long iddetail,Long idprojet);
 	ProjetDto SupperimerDetailToProjet(Long iddetail,Long idprojet);
+	ProjetDto GetById(Long id);
+	Long GetCountProject();
+	Long GetProjectStar();
 }

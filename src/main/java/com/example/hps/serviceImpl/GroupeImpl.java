@@ -118,6 +118,7 @@ public class GroupeImpl implements GroupeService {
 		ModelMapper modelMapper=new ModelMapper();
 		
 		Groupe groupe=groupeRepository.findByidgroup(id);
+		if(groupe==null) throw new RestException("Ce Groupe n'existe pas");
 		GroupeDto groupeDto=modelMapper.map(groupe, GroupeDto.class);
 		return groupeDto;
 	}
