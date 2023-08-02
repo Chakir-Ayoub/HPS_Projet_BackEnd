@@ -19,7 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.hps.dto.PlanificationDto;
+import com.example.hps.dto.SessionDto;
 import com.example.hps.entity.Planification;
+import com.example.hps.entity.Session;
 import com.example.hps.repository.PlanificationRepository;
 import com.example.hps.request.PlanificationRequest;
 import com.example.hps.response.PlanificationResponse;
@@ -82,12 +84,12 @@ public class PlanificationController {
 	  ResponseEntity<>(HttpStatus.NO_CONTENT); }
 	 
 	
-	@GetMapping("/AffecteSessionToPlanification/{idsession}/{idPlani}")
-	public ResponseEntity<PlanificationResponse> AffecteSessionToPlanification(@PathVariable Long idsession,@PathVariable Long idPlani){
+	@GetMapping("/AffecteSessionToPlanification/{date}")
+	public ResponseEntity<PlanificationResponse> AffecteSessionToPlanification(@RequestBody SessionDto session,@PathVariable LocalDate date){
 		
 		ModelMapper modelMapper=new ModelMapper();
 		
-		PlanificationDto planificationDto=planificationService.AffecteSessionToplanification(idsession, idPlani);
+		PlanificationDto planificationDto=planificationService.AffecteSessionToplanification(session, date);
 		PlanificationResponse planificationResponse=modelMapper.map(planificationDto, PlanificationResponse.class);
 		
 		return new ResponseEntity<PlanificationResponse>(planificationResponse,HttpStatus.ACCEPTED);

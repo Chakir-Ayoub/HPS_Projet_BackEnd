@@ -28,9 +28,24 @@ public class PlanificationImpl implements PlanificationService {
 	@Override
 	public PlanificationDto AjouterPlanification(PlanificationDto planificationDto) {
 		// TODO Auto-generated method stub
-		Planification planificationCheck=planificationRepository.findBydatePlanification(planificationDto.getDatePlanification());
-		if(planificationCheck!=null) throw new RestException("Cette planification il existe déja ! ");
 		
+		Planification planificationCheck=planificationRepository.findBydatePlanification(planificationDto.getDatePlanification());
+		
+		if(planificationCheck!=null) {
+			/*
+			 * for(int i=0;i<planificationDto.getSessions().size();i++) { SessionDto
+			 * sessionDto=planificationDto.getSessions().get(i);
+			 * sessionDto.setPlanification(planificationDto);
+			 * planificationDto.getSessions().set(i, sessionDto); }
+			 */
+
+			PlanificationDto planificationDto2=new PlanificationDto();
+			for(int i=0;i<planificationDto.getSessions().size();i++) {
+				planificationDto2= AffecteSessionToplanification(planificationDto.getSessions().get(i), planificationCheck.getDatePlanification());
+			}
+			
+			return planificationDto2;
+		}		
 		
 		for(int i=0;i<planificationDto.getSessions().size();i++) {
 			SessionDto sessionDto=planificationDto.getSessions().get(i);
@@ -91,14 +106,15 @@ public class PlanificationImpl implements PlanificationService {
 	}
 
 	@Override
-	public PlanificationDto AffecteSessionToplanification(Long idsession, Long idplanification) {
+	public PlanificationDto AffecteSessionToplanification(SessionDto session, LocalDate Date) {
 		// TODO Auto-generated method stub
 		
 		ModelMapper modelMapper=new ModelMapper();
-		Session session=sessionRepository.findByidsession(idsession);
-		Planification planification=planificationRepository.findByidPlanification(idplanification);
-		
-		planification.AjouterSession(session, planification);
+	//	Session session=sessionRepository.findByidsession(idsession);
+		Planification planification=planificationRepository.findBydatePlanification(Date);
+
+		Session session2=modelMapper.map(session, Session.class);
+		planification.AjouterSession(session2, planification);
 		planificationRepository.save(planification);
 		
 		PlanificationDto planificationDto=modelMapper.map(planification, PlanificationDto.class);

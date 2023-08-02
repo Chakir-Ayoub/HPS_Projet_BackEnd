@@ -90,12 +90,12 @@ public class GroupeController {
 		return new ResponseEntity<GroupeResponse>(groupeResponse,HttpStatus.OK);
 	}
 	
-	@GetMapping("/Afecteusettogroupe/{id}")
-	public ResponseEntity<GroupeResponse> AffecteUserToGroupe(@RequestBody Utilisateur utilisateur, @PathVariable Long id ){
+	@GetMapping("/{iduser}/{id}")
+	public ResponseEntity<GroupeResponse> AffecteUserToGroupe(@PathVariable Long iduser, @PathVariable Long id ){
 		
 		ModelMapper modelMapper=new ModelMapper();
 
-		GroupeDto groupeDto=groupeService.Affecte_Utilisateur_Groupe(utilisateur, id);
+		GroupeDto groupeDto=groupeService.Affecte_Utilisateur_Groupe(iduser, id);
 		GroupeResponse groupeResponse=modelMapper.map(groupeDto, GroupeResponse.class);
 		
 		return new ResponseEntity<GroupeResponse>(groupeResponse,HttpStatus.ACCEPTED);

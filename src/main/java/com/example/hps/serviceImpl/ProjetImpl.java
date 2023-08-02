@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.hps.Exceptions.RestException;
-import com.example.hps.dto.DetailDto;
 import com.example.hps.dto.ProjetDto;
 import com.example.hps.entity.Detail;
 import com.example.hps.entity.Projet;
@@ -16,7 +15,6 @@ import com.example.hps.repository.DetailRepository;
 import com.example.hps.repository.ProjetRepository;
 import com.example.hps.service.ProjetService;
 
-import ch.qos.logback.core.model.Model;
 
 @Service
 public class ProjetImpl implements ProjetService {
@@ -42,11 +40,11 @@ public class ProjetImpl implements ProjetService {
 		 
 		
 		ModelMapper modelMapper = new ModelMapper();
-
+		projet.setSoftdelete(true);
 		Projet projett = modelMapper.map(projet, Projet.class);
 
 
-
+		
 		Projet newProjet = projetRepository.save(projett); //DAO 
 		
 		ProjetDto projetDto2 = modelMapper.map(newProjet, ProjetDto.class);
@@ -169,6 +167,23 @@ public class ProjetImpl implements ProjetService {
 	public Long GetProjectStar() {
 		// TODO Auto-generated method stub
 		return projetRepository.GetStartProject();
+	}
+
+	@Override
+	public ProjetDto GetProjectBysesssion(Long idsession) {
+		// TODO Auto-generated method stub
+		ModelMapper modelMapper=new ModelMapper();
+		Projet projet=projetRepository.GetProjectBySession(idsession);
+		if(projet==null) throw new RestException("Aucun projet n'est affecté à cette session.");
+		ProjetDto projetDto=modelMapper.map(projet, ProjetDto.class);
+		
+		return projetDto;
+	}
+
+	@Override
+	public void DropProjectByDate() {
+		// TODO Auto-generated method stub
+		this.projetRepository.DropProjectByDate();	
 	}
 
 	

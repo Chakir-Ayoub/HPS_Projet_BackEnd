@@ -4,8 +4,10 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
+import com.example.hps.dto.SessionDto;
 import com.example.hps.entity.Groupe;
 import com.example.hps.entity.Session;
+import com.example.hps.entity.Utilisateur;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -21,8 +23,7 @@ public class UtilisateurRequest {
 	@NotBlank(message = "Ce champs ne doit pas etre Null !")
 	@Size(min = 3,message = "Ce champs doit avoir au moins 3 Caracteres !")
 	private String prenom_utilisateur;
-	@NotBlank(message = "Ce champs ne doit pas etre Null !")
-	private LocalDate date_naiss;
+
 	@NotBlank(message = "Ce champs ne doit pas etre Null !")
 	@Email(message = "Ce champs doit respecter la format email !")
 	private String email;
@@ -37,6 +38,7 @@ public class UtilisateurRequest {
 	private List<AbsenceRequest>  absences;
 	
 	private Groupe groupe;
-	
-	private Session session;
+	private List<SessionRequest> session;	
+	private UtilisateurRequest utilisateur;
+
 }

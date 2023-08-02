@@ -1,6 +1,7 @@
 package com.example.hps.web;
 
 
+import java.io.Console;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -135,4 +136,50 @@ public class UtilisateurController {
 	public ResponseEntity<Long> GeyCountAbsence(){
 		return new ResponseEntity<Long>(utilisateurService.GetCountAbsence(),HttpStatus.OK);
 	}
+	
+	@GetMapping("GetUserwhereGroupIsNull")
+	public ResponseEntity<List<UtilisateurResponse>> GetUserWhereGroupNull(){
+		List<UtilisateurDto> utilisateurDtos=utilisateurService.GetUserWhereGroupeNull();
+		List<UtilisateurResponse> utilisateurResponses=new ArrayList<>();
+		ModelMapper modelMapper=new ModelMapper();
+		for (UtilisateurDto utilisateurDto : utilisateurDtos) {
+			UtilisateurResponse utilisateurResponse=modelMapper.map(utilisateurDto, UtilisateurResponse.class);
+			utilisateurResponses.add(utilisateurResponse);
+		}
+		return new ResponseEntity<List<UtilisateurResponse>>(utilisateurResponses,HttpStatus.ACCEPTED);
+	}
+	
+	@GetMapping("GetUserGroup/{id}")
+	public ResponseEntity<List<UtilisateurResponse>> GetUser_Group(@PathVariable Long id){
+		List<UtilisateurDto> utilisateurDtos=utilisateurService.GetUser_Group(id);
+		List<UtilisateurResponse> utilisateurResponses=new ArrayList<>();
+		ModelMapper modelMapper=new ModelMapper();
+		for (UtilisateurDto utilisateurDto : utilisateurDtos) {
+			UtilisateurResponse utilisateurResponse=modelMapper.map(utilisateurDto, UtilisateurResponse.class);
+			utilisateurResponses.add(utilisateurResponse);
+		}
+		return new ResponseEntity<List<UtilisateurResponse>>(utilisateurResponses,HttpStatus.ACCEPTED);
+	}
+	
+	
+	@GetMapping("/AffecteSessionToUser/{iduser}/{idsesion}")
+	public ResponseEntity<UtilisateurResponse> AffecteUtilisateurToSession(@PathVariable Long iduser,@PathVariable Long idsesion){
+		ModelMapper modelMapper=new ModelMapper();
+		UtilisateurDto utilisateurDto=utilisateurService.AjouterSessionToUtilisateur(iduser, idsesion);
+		UtilisateurResponse utilisateurResponse=modelMapper.map(utilisateurDto, UtilisateurResponse.class);
+		return new ResponseEntity<UtilisateurResponse>(utilisateurResponse,HttpStatus.ACCEPTED);
+	}
+
+	@DeleteMapping("/SupperimerSessionToUse/{iduser}/{idsesion}")
+	public ResponseEntity<UtilisateurResponse> DeleteSessionToUser(@PathVariable Long iduser,@PathVariable Long idsesion){
+		ModelMapper  modelMapper=new ModelMapper();
+		
+		UtilisateurDto utilisateurDto=utilisateurService.SupperimerSessionToUser(iduser, idsesion);
+		
+		UtilisateurResponse utilisateurResponse=modelMapper.map(utilisateurDto, UtilisateurResponse.class);
+		
+		return new ResponseEntity<UtilisateurResponse>(utilisateurResponse,HttpStatus.ACCEPTED);
+	}
+	
+	
 }

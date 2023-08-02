@@ -16,4 +16,8 @@ public interface UtilisateurService {
 	Long NombreAbsenceJustifier(Long id);
 	Long GetCountUser();
 	Long GetCountAbsence();
+	List<UtilisateurDto> GetUserWhereGroupeNull();
+	List<UtilisateurDto> GetUser_Group(Long id);
+	UtilisateurDto AjouterSessionToUtilisateur(long iduser,Long idsession);
+	UtilisateurDto SupperimerSessionToUser(long iduser,long idsession);
 }

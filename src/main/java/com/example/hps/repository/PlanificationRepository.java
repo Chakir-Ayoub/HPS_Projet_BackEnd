@@ -8,6 +8,6 @@ import com.example.hps.entity.Planification;
 
 public interface PlanificationRepository extends JpaRepository<Planification, Long> {
 	
-	Planification findBydatePlanification(LocalDate date );
+	Planification findBydatePlanification(LocalDate date);
 	Planification findByidPlanification(Long id);
 }

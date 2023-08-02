@@ -25,7 +25,7 @@ public class SessionImpl implements SessionService {
 	public SessionDto AjouterSession(SessionDto sessionDto) {
 		// TODO Auto-generated method stub
 		Session sessioncheck=sessionRepository.findBynomsession(sessionDto.getNomsession());
-		if(sessioncheck!=null) throw new RestException("Cette Session il existe déja !");
+	//	if(sessioncheck!=null) throw new RestException("Cette Session il existe déja !");
 		
 		ModelMapper modelMapper =new ModelMapper();
 		Session session=modelMapper.map(sessionDto, Session.class);

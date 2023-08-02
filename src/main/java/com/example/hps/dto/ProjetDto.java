@@ -15,4 +15,6 @@ public class ProjetDto {
 	private LocalDate datedemarrage;
 	private LocalDate datelivraison;
 	private List<DetailDto> details;
+	private Boolean softdelete;
+
 }

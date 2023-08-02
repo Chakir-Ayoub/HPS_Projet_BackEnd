@@ -13,4 +13,5 @@ public class ProjetResponse {
 	private LocalDate datedemarrage;
 	private LocalDate datelivraison;	
 	private List<DetailResponse> details;
+	private Boolean softdelete;
 }

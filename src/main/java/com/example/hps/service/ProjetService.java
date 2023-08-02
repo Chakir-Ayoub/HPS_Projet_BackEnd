@@ -15,4 +15,6 @@ public interface ProjetService {
 	ProjetDto GetById(Long id);
 	Long GetCountProject();
 	Long GetProjectStar();
+	ProjetDto GetProjectBysesssion(Long idsession);
+	void DropProjectByDate();
 }

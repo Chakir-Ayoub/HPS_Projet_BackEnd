@@ -97,12 +97,12 @@ public class GroupeImpl implements GroupeService {
 	}
 
 	@Override
-	public GroupeDto Affecte_Utilisateur_Groupe(Utilisateur utilisateur,Long id) {
+	public GroupeDto Affecte_Utilisateur_Groupe(Long iduser,Long id) {
 		// TODO Auto-generated method stub
 		ModelMapper modelMapper=new ModelMapper();
 		
 		Groupe groupe=groupeRepository.findByidgroup(id);
-		
+		Utilisateur utilisateur=utilisateurRepository.findByidutilisateur(iduser);
 		if(groupe==null) {throw new RestException("Ce groupe n'existe pas ");}
 		utilisateur.setEncryptionpassword("dehdvr");
 		groupe.AddUtilisateur(utilisateur, groupe);

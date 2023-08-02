@@ -37,6 +37,7 @@ public class Projet implements Serializable {
 	private LocalDate datedemarrage;
 	@Column(nullable = false)
 	private LocalDate datelivraison;
+	private Boolean softdelete;
 	
 	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL,mappedBy = "projet",orphanRemoval = true)

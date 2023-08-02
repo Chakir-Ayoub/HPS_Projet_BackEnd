@@ -8,11 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.hps.Exceptions.RestException;
-import com.example.hps.dto.SessionDto;
 import com.example.hps.dto.UtilisateurDto;
 import com.example.hps.entity.Absence;
+import com.example.hps.entity.Session;
 import com.example.hps.entity.Utilisateur;
 import com.example.hps.repository.AbsenceRepository;
+import com.example.hps.repository.SessionRepository;
 import com.example.hps.repository.UtilisateurRepository;
 import com.example.hps.service.UtilisateurService;
 
@@ -23,6 +24,8 @@ public class UtilisateurImpl implements UtilisateurService {
 	UtilisateurRepository utilisateurRepository;
 	@Autowired
 	AbsenceRepository absenceRepository;
+	@Autowired
+	SessionRepository sessionRepository;
 	
 
 	@Override
@@ -38,9 +41,8 @@ public class UtilisateurImpl implements UtilisateurService {
 		Utilisateur utilisateur=modelMapper.map(utilisateurDto, Utilisateur.class);
 		utilisateur.setEncryptionpassword("dekebfrhgfuyrgi");
 		
-		SessionDto sessionDto=utilisateurDto.getSession();
-		utilisateurDto.setSession(sessionDto);
-		
+		 
+
 		Utilisateur utilisateur2=utilisateurRepository.save(utilisateur);
 		
 		UtilisateurDto utilisateurDto2=modelMapper.map(utilisateur2, UtilisateurDto.class);
@@ -62,7 +64,6 @@ public class UtilisateurImpl implements UtilisateurService {
 		
 
 		
-		utilisateurcheck.setDate_naiss(utilisateurDto.getDate_naiss());
 		utilisateurcheck.setEmail(utilisateurDto.getEmail());
 		utilisateurcheck.setNom_utilisateur(utilisateurDto.getNom_utilisateur());
 		utilisateurcheck.setPrenom_utilisateur(utilisateurcheck.getPrenom_utilisateur());
@@ -172,6 +173,71 @@ public class UtilisateurImpl implements UtilisateurService {
 	public Long GetCountAbsence() {
 		// TODO Auto-generated method stub
 		return absenceRepository.GetCountAbsence();
+	}
+
+	@Override
+	public List<UtilisateurDto> GetUserWhereGroupeNull() {
+		// TODO Auto-generated method stub
+		List<Utilisateur> utilisateurs= utilisateurRepository.GetUserwhereGroupeIsNull();
+		List<UtilisateurDto> utilisateurDtos=new ArrayList<>();
+		ModelMapper modelMapper=new ModelMapper();
+		
+		for (Utilisateur utilisateur : utilisateurs) {
+			UtilisateurDto utilisateurDto= modelMapper.map(utilisateur, UtilisateurDto.class);
+			utilisateurDtos.add(utilisateurDto);
+		}
+		return utilisateurDtos;
+	}
+
+	@Override
+	public List<UtilisateurDto> GetUser_Group(Long id) {
+		// TODO Auto-generated method stub
+		List<Utilisateur> utilisateurs=utilisateurRepository.GetUser_Group(id);
+		List<UtilisateurDto> utilisateurDtos=new ArrayList<>();
+		ModelMapper modelMapper=new ModelMapper();
+		
+		for(Utilisateur utilisateur: utilisateurs) {
+			UtilisateurDto utilisateurDto=modelMapper.map(utilisateur, UtilisateurDto.class);
+			utilisateurDtos.add(utilisateurDto);
+		}
+		return utilisateurDtos;
+	}
+
+	@Override
+	public UtilisateurDto AjouterSessionToUtilisateur(long iduser, Long idsession) {
+		// TODO Auto-generated method stub
+		ModelMapper modelMapper=new ModelMapper();
+		Utilisateur utilisateur=utilisateurRepository.findByidutilisateur(iduser);
+		Session session=sessionRepository.findByidsession(idsession);
+		
+		if(utilisateur==null) {throw new RestException("Ce utilisateur n'existe pas ");}
+		if(session==null) {throw new RestException("Cetet session n'existe pas");}	
+		
+		utilisateur.AjouterSession(utilisateur, session);
+		utilisateurRepository.save(utilisateur);
+		
+		UtilisateurDto utilisateurDto=modelMapper.map(utilisateur, UtilisateurDto.class);
+		
+		return utilisateurDto;
+	}
+
+	@Override
+	public UtilisateurDto SupperimerSessionToUser(long iduser,long idsession) {
+		// TODO Auto-generated method stub
+		ModelMapper modelMapper=new ModelMapper();
+		
+		Utilisateur utilisateur=utilisateurRepository.findByidutilisateur(iduser);
+		Session session=sessionRepository.findByidsession(idsession);
+		
+		if(utilisateur==null) {throw new RestException("Ce utilisateur n'existe pas ");}
+		if(session==null) {throw new RestException("Cetet session n'existe pas");}	
+		
+		utilisateur.SupperimerSession(session);
+		utilisateurRepository.save(utilisateur);
+		
+		UtilisateurDto utilisateurDto=modelMapper.map(utilisateur,UtilisateurDto.class );
+		return utilisateurDto;
+		
 	}
 	
 

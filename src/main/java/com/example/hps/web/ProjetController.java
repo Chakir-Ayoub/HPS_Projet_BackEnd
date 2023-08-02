@@ -100,7 +100,7 @@ public class ProjetController {
 		return new ResponseEntity<ProjetResponse>(projetResponse,HttpStatus.ACCEPTED);
 	}
 	
-	@GetMapping("/{id}")
+	@GetMapping("getByid/{id}")
 	public ResponseEntity<ProjetResponse> GetByid(@PathVariable Long id){
 		ModelMapper modelMapper=new ModelMapper();
 		ProjetDto projetDto=projetService.GetById(id);
@@ -117,6 +117,22 @@ public class ProjetController {
 	@GetMapping("getstartproject")
 	public ResponseEntity<Long> GetStartProject(){
 		return new ResponseEntity<Long>(projetService.GetProjectStar(),HttpStatus.OK);
+	}
+	
+	@GetMapping("getprojectbysession/{id}")
+	public ResponseEntity<ProjetResponse> ProjetBySession(@PathVariable Long id){
+		ModelMapper modelMapper=new ModelMapper();
+		ProjetDto projetDto=projetService.GetProjectBysesssion(id);
+		
+		ProjetResponse projetResponse=modelMapper.map(projetDto, ProjetResponse.class);
+		
+		return new ResponseEntity<ProjetResponse>(projetResponse,HttpStatus.OK);
+		
+	}
+	
+	@DeleteMapping("/dropBydate")
+	public void DropByDate(){
+		projetService.DropProjectByDate();
 	}
 
 }

@@ -22,5 +22,7 @@ public class ProjetRequest {
 	private LocalDate datelivraison;
 	@NotBlank(message = "Ce champs ne doit pas etre Null !")
 	private List<DetailsRequest> details;
+	private Boolean softdelete;
+
 
 }

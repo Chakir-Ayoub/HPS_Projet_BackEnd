@@ -26,8 +26,7 @@ public class Utilisateur implements Serializable {
 	private String nom_utilisateur;
 	@Column(length = 35 ,nullable = false)
 	private String prenom_utilisateur;
-	@Column(nullable = false)
-	private LocalDate date_naiss;
+
 	@Column(length = 35 ,nullable = false,unique = true)
 	private String email;
 	private String encryptionpassword;
@@ -42,9 +41,9 @@ public class Utilisateur implements Serializable {
 	@JoinColumn(name="id_Groupe")
 	private Groupe groupe;
 	
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_session")
-	private Session session;
+	
+	@OneToMany(cascade = CascadeType.ALL,mappedBy = "utilisateur",orphanRemoval = true)
+	private List<Session> session;
 	
 	
 	
@@ -67,4 +66,28 @@ public class Utilisateur implements Serializable {
 			absences.remove(absencesupprimer)	;
 		}
 	}
+	
+	@Transactional
+	public void AjouterSession(Utilisateur utilisateur,Session sessions) {
+		session.add(sessions);
+		sessions.setUtilisateur(utilisateur);
+	}
+	
+	@Transactional
+	public void SupperimerSession(Session sessions) {
+		Session sessionsupperimer=null;
+		for(Session s : session) {
+			if(s.equals(sessions)) {
+				sessionsupperimer=s;
+				break;
+			}
+		}
+		if(sessionsupperimer!=null) {
+			session.remove(sessionsupperimer);
+		}
+	}
+	
+
+	
+	
 }
