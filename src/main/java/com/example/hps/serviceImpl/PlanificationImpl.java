@@ -32,18 +32,12 @@ public class PlanificationImpl implements PlanificationService {
 		Planification planificationCheck=planificationRepository.findBydatePlanification(planificationDto.getDatePlanification());
 		
 		if(planificationCheck!=null) {
-			/*
-			 * for(int i=0;i<planificationDto.getSessions().size();i++) { SessionDto
-			 * sessionDto=planificationDto.getSessions().get(i);
-			 * sessionDto.setPlanification(planificationDto);
-			 * planificationDto.getSessions().set(i, sessionDto); }
-			 */
+
 
 			PlanificationDto planificationDto2=new PlanificationDto();
 			for(int i=0;i<planificationDto.getSessions().size();i++) {
 				planificationDto2= AffecteSessionToplanification(planificationDto.getSessions().get(i), planificationCheck.getDatePlanification());
 			}
-			
 			return planificationDto2;
 		}		
 		

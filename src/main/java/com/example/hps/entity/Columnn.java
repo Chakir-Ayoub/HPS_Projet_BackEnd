@@ -1,14 +1,12 @@
 package com.example.hps.entity;
 
 import java.io.Serializable;
-import java.time.LocalDate;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -22,27 +20,53 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Projet implements Serializable {
-
-	private static final long serialVersionUID = -6994354253010287858L;
+@Data
+public class Columnn implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -784887287736132657L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long idprojet;
-	@Column(nullable = false,length = 35)
-	private String nomprojet;
-	@Column(nullable = false,length = 35)
-	private String description;
-	@Column(nullable = false)
-	private Date datedemarrage;
-	/*@Column(nullable = false)
-	private LocalDate datelivraison;*/
-	private Boolean softdelete;
-	@JsonIgnore
+	private Long idcolumn;
+	private String name;
+	
+	
 	@ManyToOne
 	@JoinColumn(name = "board")
+	@JsonIgnore
 	private Board board;
+	
+	@OneToMany(    cascade = CascadeType.ALL, mappedBy = "columnn")
+	private List<Task> tasks=new ArrayList<>();
+	
+	@Transactional
+	public void AjouterTask(Task task,Columnn columnn) {
+		tasks.add(task);
+		task.setColumnn(columnn);
+	}
+
+	
+	@Transactional
+	public void SupperimerTask(Task task) {
+		Task taskSupprimer=null;
+		
+		for(Task t :tasks) {
+			if(t.equals(task)) {
+				taskSupprimer=t;
+				break;
+			}
+		}
+		if(taskSupprimer!=null) {
+			tasks.remove(taskSupprimer);
+		}
+	}
+	
+
+	
+
+
 }

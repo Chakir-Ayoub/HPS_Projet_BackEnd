@@ -2,8 +2,8 @@ package com.example.hps.request;
 
 import java.time.LocalTime;
 
+import com.example.hps.dto.UtilisateurDto;
 import com.example.hps.entity.Planification;
-import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -19,4 +19,5 @@ public class SessionRequest {
 	@NotBlank(message = "Ce champs ne doit pas etre Null !")
 	private LocalTime heureF;
 	private Planification  planification;
+	private UtilisateurDto utilisateur;
 }

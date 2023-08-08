@@ -77,28 +77,7 @@ public class ProjetController {
        return new ResponseEntity<>(HttpStatus.NO_CONTENT);		
 	}
 	
-	@GetMapping("/AffecteDetailToProjet/{iddetail}/{idProjet}")
-	public ResponseEntity<ProjetResponse> AffecteDetailToProjet(@PathVariable Long iddetail,@PathVariable Long idProjet){
-		
-		ModelMapper modelMapper=new ModelMapper();
-		
-		ProjetDto projetDto=projetService.AjouterDetailToProjet(iddetail, idProjet);
-		ProjetResponse projetResponse=modelMapper.map(projetDto, ProjetResponse.class);
-		
-		return new ResponseEntity<ProjetResponse>(projetResponse,HttpStatus.ACCEPTED);
-	}
-	
-	@DeleteMapping("/DeleteDetailToProjet/{iddetail}/{idProjet}")
-	public ResponseEntity<ProjetResponse> DeleteDetailToProjet(@PathVariable Long iddetail,@PathVariable Long idProjet){
-	
-		ModelMapper modelMapper=new ModelMapper();
-		
-		ProjetDto projetDto=projetService.SupperimerDetailToProjet(iddetail, idProjet);
-		ProjetResponse projetResponse=modelMapper.map(projetDto, ProjetResponse.class);
-		
-		
-		return new ResponseEntity<ProjetResponse>(projetResponse,HttpStatus.ACCEPTED);
-	}
+
 	
 	@GetMapping("getByid/{id}")
 	public ResponseEntity<ProjetResponse> GetByid(@PathVariable Long id){

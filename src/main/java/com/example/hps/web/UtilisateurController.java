@@ -181,5 +181,15 @@ public class UtilisateurController {
 		return new ResponseEntity<UtilisateurResponse>(utilisateurResponse,HttpStatus.ACCEPTED);
 	}
 	
+	@GetMapping("/userbysession/{id}")
+	public ResponseEntity<UtilisateurResponse> GetUserBySession(@PathVariable Long id){
+		ModelMapper modelMapper=new ModelMapper();
+		
+		UtilisateurDto utilisateurDto=utilisateurService.GetUserBySession(id);
+		
+		UtilisateurResponse utilisateurResponse=modelMapper.map(utilisateurDto, UtilisateurResponse.class);
+		
+		return new ResponseEntity<UtilisateurResponse>(utilisateurResponse,HttpStatus.OK);
+	}
 	
 }

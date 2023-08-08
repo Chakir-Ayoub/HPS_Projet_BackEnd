@@ -18,7 +18,6 @@ public class SessionDto implements Serializable {
 	private LocalTime heureD;
 	private LocalTime heureF;
 	private PlanificationDto planification;
-	private List<DetailDto> details;
 	private UtilisateurDto utilisateur;
 	
 }

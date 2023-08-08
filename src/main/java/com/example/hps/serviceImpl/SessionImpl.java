@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import com.example.hps.Exceptions.RestException;
 import com.example.hps.dto.SessionDto;
-import com.example.hps.entity.Detail;
 import com.example.hps.entity.Session;
 import com.example.hps.repository.SessionRepository;
 import com.example.hps.service.SessionService;
@@ -28,6 +27,7 @@ public class SessionImpl implements SessionService {
 	//	if(sessioncheck!=null) throw new RestException("Cette Session il existe déja !");
 		
 		ModelMapper modelMapper =new ModelMapper();
+		sessionDto.setUtilisateur(sessionDto.getUtilisateur());
 		Session session=modelMapper.map(sessionDto, Session.class);
 		
 		

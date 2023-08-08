@@ -239,6 +239,23 @@ public class UtilisateurImpl implements UtilisateurService {
 		return utilisateurDto;
 		
 	}
+
+	@Override
+	public UtilisateurDto GetUserBySession(Long idsession) {
+		// TODO Auto-generated method stub
+		
+		  ModelMapper modelMapper=new ModelMapper();
+		  
+		  Utilisateur utilisateur=utilisateurRepository.getUser_Session(idsession);
+		  
+		  if(utilisateur==null) throw new RestException("Ce Utilisateur n'existe pas");
+		  
+		  UtilisateurDto utilisateurDto=modelMapper.map(utilisateur,
+		  UtilisateurDto.class);
+		  
+		  return utilisateurDto;
+		 
+	}
 	
 
 }

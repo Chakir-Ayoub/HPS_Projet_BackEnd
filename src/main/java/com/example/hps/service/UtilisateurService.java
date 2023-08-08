@@ -20,4 +20,5 @@ public interface UtilisateurService {
 	List<UtilisateurDto> GetUser_Group(Long id);
 	UtilisateurDto AjouterSessionToUtilisateur(long iduser,Long idsession);
 	UtilisateurDto SupperimerSessionToUser(long iduser,long idsession);
+	UtilisateurDto GetUserBySession(Long idsession);
 }

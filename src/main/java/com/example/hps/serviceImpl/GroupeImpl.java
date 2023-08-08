@@ -84,10 +84,10 @@ public class GroupeImpl implements GroupeService {
 		// TODO Auto-generated method stub
 		List<Groupe> groupes;
 		groupes = groupeRepository.findAll();
-		
+		ModelMapper modelMapper=new ModelMapper();
+
 		List<GroupeDto> groupeDtos=new ArrayList<>();
 		for(Groupe groupe: groupes) {
-			ModelMapper modelMapper=new ModelMapper();
 			GroupeDto groupeDto=modelMapper.map(groupe, GroupeDto.class);
 			
 			groupeDtos.add(groupeDto);

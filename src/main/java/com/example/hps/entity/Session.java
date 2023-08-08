@@ -44,20 +44,13 @@ public class Session implements Serializable {
 	@JoinColumn(name = "planification")
 	private Planification planification;
 	
-	@JsonIgnore
-	@OneToMany(mappedBy = "session",cascade = CascadeType.ALL)
-	private List<Detail> details;
 	
 	@JsonIgnore
 	@ManyToOne()
 	@JoinColumn(name="utilisateur")
 	private Utilisateur utilisateur;
 	
-	@Transactional
-	public void AddDetails(Detail detail,Session session ) {
-		details.add(detail);
-		detail.setSession(session);
-	}
+
 	
 	
 
