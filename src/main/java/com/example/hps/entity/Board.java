@@ -1,11 +1,7 @@
 package com.example.hps.entity;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -36,6 +32,29 @@ public class Board implements Serializable {
 	@OneToMany(cascade = CascadeType.ALL,mappedBy = "board")
 	private List<Projet> projet;
 	
+	@OneToMany(cascade = CascadeType.ALL,mappedBy = "board")
+	private List<Session> sessions;
+	
+	
+	@Transactional
+	public void AjouterBoardASessions(Board board,Session session) {
+		sessions.add(session);
+		session.setBoard(board);
+	}
+	
+	@Transactional
+	public void SupperimerSessions(Session session) {
+		Session sessionSupperimer=null;
+		for(Session s: sessions) {
+			if(s.equals(session)) {
+				sessionSupperimer=s;
+				break;
+			}
+		}
+		if(sessionSupperimer!=null) {
+			sessions.remove(sessionSupperimer);
+		}
+	}
 	
 	@Transactional
 	public void AjouterColumns(Board board,Columnn columnn) {

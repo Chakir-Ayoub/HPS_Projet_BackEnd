@@ -1,7 +1,8 @@
 package com.example.hps.response;
 
 import java.time.LocalTime;
-import java.util.List;
+
+import com.example.hps.entity.Board;
 
 import lombok.Data;
 
@@ -13,5 +14,5 @@ public class SessionResponse {
 	private String nomsession;
 	private LocalTime heureD;
 	private LocalTime heureF;
-	private List<DetailResponse> details;
+	private Board board;
 }

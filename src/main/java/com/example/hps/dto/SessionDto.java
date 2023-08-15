@@ -2,10 +2,6 @@ package com.example.hps.dto;
 
 import java.io.Serializable;
 import java.time.LocalTime;
-import java.util.List;
-
-import com.example.hps.entity.Utilisateur;
-
 import lombok.Data;
 
 @Data
@@ -19,5 +15,6 @@ public class SessionDto implements Serializable {
 	private LocalTime heureF;
 	private PlanificationDto planification;
 	private UtilisateurDto utilisateur;
-	
+	private BoardDto board;
+
 }

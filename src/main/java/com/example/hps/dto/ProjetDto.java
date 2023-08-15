@@ -12,7 +12,7 @@ public class ProjetDto {
 	private Long idprojet;
 	private String nomprojet;
 	private String description;
-	private Date datedemarrage;
+	private LocalDate datedemarrage;
 	private Boolean softdelete;
 	private BoardDto board;
 

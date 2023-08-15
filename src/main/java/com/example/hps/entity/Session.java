@@ -2,11 +2,7 @@ package com.example.hps.entity;
 
 import java.io.Serializable;
 import java.time.LocalTime;
-import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -14,8 +10,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -45,14 +39,15 @@ public class Session implements Serializable {
 	private Planification planification;
 	
 	
+	
 	@JsonIgnore
 	@ManyToOne()
 	@JoinColumn(name="utilisateur")
 	private Utilisateur utilisateur;
 	
-
-	
-	
+	@JsonIgnore
+	@ManyToOne
+	private Board board;
 
 
 	

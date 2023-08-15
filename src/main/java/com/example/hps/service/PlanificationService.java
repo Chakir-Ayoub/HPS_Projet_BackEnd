@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.example.hps.dto.PlanificationDto;
 import com.example.hps.dto.SessionDto;
-import com.example.hps.entity.Session;
 
 public interface PlanificationService {
 	PlanificationDto AjouterPlanification(PlanificationDto planificationDto);

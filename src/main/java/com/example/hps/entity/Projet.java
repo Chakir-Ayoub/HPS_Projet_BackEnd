@@ -3,11 +3,9 @@ package com.example.hps.entity;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Date;
-import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,8 +13,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -37,7 +33,7 @@ public class Projet implements Serializable {
 	@Column(nullable = false,length = 35)
 	private String description;
 	@Column(nullable = false)
-	private Date datedemarrage;
+	private LocalDate datedemarrage;
 	/*@Column(nullable = false)
 	private LocalDate datelivraison;*/
 	private Boolean softdelete;
@@ -45,4 +41,5 @@ public class Projet implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "board")
 	private Board board;
+	
 }

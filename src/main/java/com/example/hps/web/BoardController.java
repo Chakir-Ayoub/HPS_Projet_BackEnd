@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.hps.dto.BoardDto;
 import com.example.hps.dto.ColumnnDto;
+import com.example.hps.dto.SessionDto;
 import com.example.hps.request.BoardRequest;
 import com.example.hps.request.ColumnnRequest;
 import com.example.hps.response.BoardResponse;
+import com.example.hps.response.SessionResponse;
 import com.example.hps.service.BoardService;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -103,4 +105,26 @@ public class BoardController {
 		return new ResponseEntity<BoardResponse>(boardResponse,HttpStatus.ACCEPTED);
 	}
 	
+	@GetMapping("AffecteBoardTosession/{idboard}/{idsession}")
+	public ResponseEntity<SessionResponse> AffecteBoardToSession(@PathVariable Long idboard,@PathVariable Long idsession){
+		
+		ModelMapper modelMapper=new ModelMapper();
+		
+		SessionDto sessionDto=boardService.AffectBoardToSession(idboard, idsession);
+		
+		SessionResponse sessionResponse=modelMapper.map(sessionDto, SessionResponse.class);
+		
+		return new ResponseEntity<SessionResponse>(sessionResponse,HttpStatus.ACCEPTED);
+	}
+	
+	@GetMapping(path = "getboardbysession/{idsession}")
+	public ResponseEntity<BoardResponse> GetBoardBySession(@PathVariable Long idsession){
+		
+		BoardDto boardDto=boardService.GetBoardBySession(idsession);
+		ModelMapper modelMapper=new ModelMapper();
+		
+		BoardResponse boardResponse=modelMapper.map(boardDto, BoardResponse.class);
+		
+		return new ResponseEntity<BoardResponse>(boardResponse,HttpStatus.OK);
+	}
 }

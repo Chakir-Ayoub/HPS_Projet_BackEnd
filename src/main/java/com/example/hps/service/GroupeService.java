@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.example.hps.dto.GroupeDto;
 import com.example.hps.entity.Sous_Groupe;
-import com.example.hps.entity.Utilisateur;
 
 public interface GroupeService {
 	GroupeDto AjouterGroupe(GroupeDto groupeDto);

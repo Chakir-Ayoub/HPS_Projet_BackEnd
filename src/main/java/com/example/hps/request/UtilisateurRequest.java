@@ -1,21 +1,21 @@
 package com.example.hps.request;
 
-import java.time.LocalDate;
-import java.util.Date;
+
 import java.util.List;
 
-import com.example.hps.dto.SessionDto;
 import com.example.hps.entity.Groupe;
-import com.example.hps.entity.Session;
-import com.example.hps.entity.Utilisateur;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class UtilisateurRequest {
 	@NotBlank(message = "Ce champs ne doit pas etre Null !")
 	@Size(min = 3,message = "Ce champs doit avoir au moins 3 Caracteres !")

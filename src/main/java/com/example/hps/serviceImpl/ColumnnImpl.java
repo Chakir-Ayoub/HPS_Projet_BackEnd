@@ -10,8 +10,10 @@ import org.springframework.stereotype.Service;
 import com.example.hps.Exceptions.RestException;
 import com.example.hps.dto.ColumnnDto;
 import com.example.hps.dto.TaskDto;
+import com.example.hps.entity.Board;
 import com.example.hps.entity.Columnn;
 import com.example.hps.entity.Task;
+import com.example.hps.repository.BoardRepository;
 import com.example.hps.repository.ColumnnRepository;
 import com.example.hps.repository.TaskRepository;
 import com.example.hps.service.ColumnnService;
@@ -23,6 +25,8 @@ public class ColumnnImpl implements ColumnnService {
 	ColumnnRepository columnnRepository;
 	@Autowired
 	TaskRepository taskRepository;
+	@Autowired
+	BoardRepository boardRepository;
 	@Override
 	public List<ColumnnDto> GetAll() {
 		// TODO Auto-generated method stub
@@ -53,9 +57,13 @@ public class ColumnnImpl implements ColumnnService {
 		Columnn columnn=modelMapper.map(columnnDto, Columnn.class);
 		
 		for(int i=0;i<columnnDto.getTasks().size();i++) {
-			TaskDto taskDto=columnnDto.getTasks().get(i);
-			taskDto.setColumnn(columnnDto);
-			columnnDto.getTasks().set(i, taskDto);
+			if(columnnDto.getTasks().size()==0) {
+				break;
+			}else {
+				TaskDto taskDto=columnnDto.getTasks().get(i);
+				taskDto.setColumnn(columnnDto);
+				columnnDto.getTasks().set(i, taskDto);	
+			}
 		}
 		
 		Columnn columnn2=columnnRepository.save(columnn);
@@ -118,5 +126,45 @@ public class ColumnnImpl implements ColumnnService {
 
 		return columnnDto2;
 	}
+
+	@Override
+	public List<ColumnnDto> GetColumnByProject(Long id) {
+		// TODO Auto-generated method stub
+		List<Columnn> columnn=columnnRepository.GetColumnByIdproject(id);
+		if(columnn==null) throw new RestException("Cette Board est vide");
+		
+		List<ColumnnDto> columnnDtos=new ArrayList<>();
+		ModelMapper modelMapper=new ModelMapper();
+		for (Columnn columnn2 : columnn) {
+			ColumnnDto columnnDto=modelMapper.map(columnn2, ColumnnDto.class);
+			columnnDtos.add(columnnDto);
+		}
+		return columnnDtos;
+	}
+
+	@Override
+	public Long getCountTask(Long id, String name) {
+		// TODO Auto-generated method stub
+		
+		Long num=columnnRepository.getcounttask(id, name);
+		
+		return num;
+	}
+
+	@Override
+	public void AddColumnToBoard(Long idboard, ColumnnDto columnnDto) {
+		// TODO Auto-generated method stub
+		Board board=boardRepository.getboardbycolumn(idboard);
+		ModelMapper modelMapper=new ModelMapper();
+		if(board==null) throw new RestException("Cette Board n'existe pas");
+		
+		Columnn columnn=modelMapper.map(columnnDto, Columnn.class);
+		board.AjouterColumns(board, columnn);
+		
+		boardRepository.save(board);
+	}
+	
+	
+	
 
 }

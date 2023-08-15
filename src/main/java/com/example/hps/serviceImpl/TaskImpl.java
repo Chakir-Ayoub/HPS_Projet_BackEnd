@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import com.example.hps.Exceptions.RestException;
 import com.example.hps.dto.TaskDto;
 import com.example.hps.entity.Task;
-import com.example.hps.repository.ColumnnRepository;
 import com.example.hps.repository.TaskRepository;
 import com.example.hps.service.TaskService;
 
@@ -86,6 +85,22 @@ public class TaskImpl implements TaskService {
 	public TaskDto AddTaskToColumn() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public List<TaskDto> GetColumnTask(Long idcolumn) {
+		// TODO Auto-generated method stub
+		List<Task> tasks=taskRepository.GetTaskByColumn(idcolumn);
+		List<TaskDto> taskDtos=new ArrayList<>();
+		ModelMapper mapper=new ModelMapper();
+		
+		for (Task task : tasks) {
+			
+			TaskDto taskDto=mapper.map(task, TaskDto.class);
+			taskDtos.add(taskDto);
+		}
+		
+		return taskDtos;
 	}
 
 }

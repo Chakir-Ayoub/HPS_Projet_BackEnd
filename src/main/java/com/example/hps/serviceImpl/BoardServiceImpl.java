@@ -1,7 +1,6 @@
 package com.example.hps.serviceImpl;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
@@ -11,11 +10,14 @@ import org.springframework.stereotype.Service;
 import com.example.hps.Exceptions.RestException;
 import com.example.hps.dto.BoardDto;
 import com.example.hps.dto.ColumnnDto;
+import com.example.hps.dto.SessionDto;
 import com.example.hps.entity.Board;
 import com.example.hps.entity.Columnn;
+import com.example.hps.entity.Session;
 import com.example.hps.entity.Task;
 import com.example.hps.repository.BoardRepository;
 import com.example.hps.repository.ColumnnRepository;
+import com.example.hps.repository.SessionRepository;
 import com.example.hps.repository.TaskRepository;
 import com.example.hps.service.BoardService;
 @Service
@@ -27,6 +29,8 @@ public class BoardServiceImpl implements BoardService  {
 	ColumnnRepository columnnRepository;
 	@Autowired
 	TaskRepository taskRepository;
+	@Autowired
+	SessionRepository sessionRepository;
 	@Override
 	public List<BoardDto> GetAll() {
 		// TODO Auto-generated method stub
@@ -59,8 +63,13 @@ public class BoardServiceImpl implements BoardService  {
 		for(int i=0;i<boardDto.getColumns().size();i++) {
 			board.AjouterColumns(board, boardDto.getColumns().get(i));
 			for(int j=0;j<boardDto.getColumns().get(i).getTasks().size();j++) {
-				board.getColumns().get(i).setTasks(boardDto.getColumns().get(i).getTasks());
-				board.getColumns().get(i).getTasks().get(j).setColumnn(board.getColumns().get(i));
+				if(board.getColumns().get(i).getTasks().size()!=0) {
+					board.getColumns().get(i).setTasks(boardDto.getColumns().get(i).getTasks());
+					board.getColumns().get(i).getTasks().get(j).setColumnn(board.getColumns().get(i));									}
+				else {
+					break;
+				}
+
 			}
 		}
 		
@@ -147,6 +156,35 @@ public class BoardServiceImpl implements BoardService  {
 		
 		return boardDto;
 	}
+
+	@Override
+	public SessionDto AffectBoardToSession(Long idboard, Long idSession) {
+		// TODO Auto-generated method stub
+		ModelMapper modelMapper=new ModelMapper();
+		Session session=sessionRepository.findByidsession(idSession);
+		Board board=boardRepository.findByidboard(idboard);
+		
+		board.AjouterBoardASessions(board, session);
+		
+		boardRepository.save(board);
+		SessionDto sessionDto=modelMapper.map(session,SessionDto.class);
+		return sessionDto;
+	}
+
+	@Override
+	public BoardDto GetBoardBySession(Long idsession) {
+		// TODO Auto-generated method stub
+
+		Board board=boardRepository.boardbysession(idsession);
+		if(board==null) throw new RestException("Cette Board n'existe pas"); 
+		
+		ModelMapper modelMapper=new ModelMapper();
+
+		BoardDto boardDto=modelMapper.map(board, BoardDto.class);
+		return boardDto;
+	}
+	
+	
 
 
 }

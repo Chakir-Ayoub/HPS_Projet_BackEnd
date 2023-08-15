@@ -11,4 +11,5 @@ public interface TaskService {
 	TaskDto UpdateTask(Long id,TaskDto task);
 	void RemoveTask(Long id);
 	TaskDto AddTaskToColumn();
+	List<TaskDto> GetColumnTask(Long idcolumn);
 }

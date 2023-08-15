@@ -13,4 +13,7 @@ public interface ColumnnService {
 	void RemoveColumnn(Long id);
 	ColumnnDto AddTaskToColumn(Long idTask,TaskDto taskDto);
 	ColumnnDto DeleteTaskFromColumn(Long IdTask,Long IdColumn);
+	List<ColumnnDto> GetColumnByProject(Long id);
+	Long getCountTask(Long id,String ame);
+	void AddColumnToBoard(Long idboard,ColumnnDto columnnDto);
 }

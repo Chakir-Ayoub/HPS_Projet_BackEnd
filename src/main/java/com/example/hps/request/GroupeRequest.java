@@ -1,10 +1,6 @@
 package com.example.hps.request;
 
 
-import java.util.List;
-
-import com.example.hps.entity.Sous_Groupe;
-
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;

@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import com.example.hps.Exceptions.RestException;
 import com.example.hps.dto.AbsenceDto;
 import com.example.hps.entity.Absence;
-import com.example.hps.entity.Utilisateur;
 import com.example.hps.repository.AbsenceRepository;
 import com.example.hps.repository.UtilisateurRepository;
 import com.example.hps.service.AbsenceService;
@@ -60,6 +59,8 @@ public class AbsenceImpl implements AbsenceService {
 		absencecheck.setDate_fin(absenceDto.getDate_fin());
 		absencecheck.setType(absenceDto.getType());
 		
+		absenceRepository.save(absencecheck);
+		
 		AbsenceDto absenceDto2=modelMapper.map(absencecheck, AbsenceDto.class);
 		
 		return absenceDto2;
@@ -88,6 +89,16 @@ public class AbsenceImpl implements AbsenceService {
 			absenceDtos.add(absenceDto);
 		}
 		return absenceDtos;
+	}
+
+	@Override
+	public AbsenceDto GetById(Long id) {
+		// TODO Auto-generated method stub
+		ModelMapper modelMapper=new ModelMapper();
+		Absence absence=this.absenceRepository.findByidAbsence(id);
+		if(absence==null) throw new RestException("Ce Absence N'existe pas ");
+		AbsenceDto absenceDto=modelMapper.map(absence, AbsenceDto.class);
+		return absenceDto;
 	}
 
 

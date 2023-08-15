@@ -85,7 +85,7 @@ public class ColumnnController {
 		return new ResponseEntity<Object>(HttpStatus.OK);
 	}
 	
-	@GetMapping("/AffecteTasktoColumn/{idcol}")
+	@PostMapping("/AffecteTasktoColumn/{idcol}")
 	public ResponseEntity<ColumnnResponse> AddTaskToColumn(@PathVariable Long idcol,@RequestBody TaskRequest taskRequest){
 		
 		ModelMapper modelMapper=new ModelMapper();
@@ -103,5 +103,34 @@ public class ColumnnController {
 		
 		ColumnnResponse columnnResponse=modelMapper.map(columnnDto, ColumnnResponse.class);
 		return new ResponseEntity<ColumnnResponse>(columnnResponse,HttpStatus.ACCEPTED);
+	}
+	
+	
+	@GetMapping("getcolumnbysession/{id}")
+	public ResponseEntity<List<ColumnnResponse>> GetColumnByProject(@PathVariable Long id){
+		ModelMapper modelMapper=new ModelMapper();
+		List<ColumnnDto> columnnDtos=columnnService.GetColumnByProject(id);
+		List<ColumnnResponse> columnnResponses=new ArrayList<>();
+		for (ColumnnDto columnnDto : columnnDtos) {
+			ColumnnResponse columnnResponse=modelMapper.map(columnnDto, ColumnnResponse.class);
+			columnnResponses.add(columnnResponse);
+		}
+		return new ResponseEntity<List<ColumnnResponse>>(columnnResponses,HttpStatus.OK);
+	}
+	
+	@GetMapping("getcounttask/{id}/{name}")
+	public ResponseEntity<Long> GetCountTask(@PathVariable Long id,@PathVariable String name){
+		Long count=columnnService.getCountTask(id, name);
+		return new ResponseEntity<Long>(count,HttpStatus.ACCEPTED);
+	}
+	
+	
+	@PostMapping("Addcolumntoboard/{id}")
+	public ResponseEntity<Object> AddColumnToBoard(@PathVariable Long id,@RequestBody ColumnnRequest columnnRequest){
+		ModelMapper modelMapper=new ModelMapper();
+		ColumnnDto columnnDto=modelMapper.map(columnnRequest, ColumnnDto.class);
+	
+		columnnService.AddColumnToBoard(id, columnnDto);
+		return new ResponseEntity<Object>(HttpStatus.CREATED);
 	}
 }

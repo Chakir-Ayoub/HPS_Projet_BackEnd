@@ -8,12 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.hps.Exceptions.RestException;
-import com.example.hps.dto.GroupeDto;
 import com.example.hps.dto.Sous_GroupeDto;
 import com.example.hps.entity.Sous_Groupe;
-import com.example.hps.repository.GroupeRepository;
 import com.example.hps.repository.Sous_GroupeRepository;
-import com.example.hps.response.Sous_GroupeResponse;
 import com.example.hps.service.Sous_GroupeService;
 
 @Service

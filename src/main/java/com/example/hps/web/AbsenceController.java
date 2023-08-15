@@ -7,7 +7,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -74,5 +73,13 @@ public class AbsenceController {
 		return new ResponseEntity<Object>(HttpStatus.NO_CONTENT);
 	}
 	
+	@GetMapping("/{id}")
+	public ResponseEntity<AbsenceResponse> GetById(@PathVariable Long id){
+		AbsenceDto absenceDto= absenceService.GetById(id);
+		ModelMapper modelMapper=new ModelMapper();
+		AbsenceResponse absenceResponse=modelMapper.map(absenceDto, AbsenceResponse.class);
+		
+		return new ResponseEntity<AbsenceResponse>(absenceResponse,HttpStatus.OK);
+	}
 	
 }

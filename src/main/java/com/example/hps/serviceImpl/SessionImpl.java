@@ -46,17 +46,11 @@ public class SessionImpl implements SessionService {
 		if(sessionCheck==null) throw new RestException("Cette Session il n'existe pas !");
 
 		ModelMapper modelMapper=new ModelMapper();
-		Session modifierObjectSession=modelMapper.map(sessionDto, Session.class);
 		
-	
-		if(sessionRepository.findBynomsession(sessionDto.getNomsession())!=null) {
 			sessionCheck.setNomsession(sessionDto.getNomsession());
 			sessionCheck.setHeureD(sessionDto.getHeureD());
 			sessionCheck.setHeureF(sessionDto.getHeureF());
-		}
-		else { 
-			 throw new RuntimeException("Ce Nom de Projet Il existe Déja ");
-		}
+
 			
 		Session ObjetModifier=sessionRepository.save(sessionCheck);
 		

@@ -1,7 +1,6 @@
 package com.example.hps.web;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
@@ -81,5 +80,18 @@ public class TaskController {
 		taskService.RemoveTask(id);
 		
 		return new ResponseEntity<Object>(HttpStatus.OK);
+	}
+	
+	@GetMapping("gettaskbycolumn/{idcolumn}")
+	public ResponseEntity<List<TaskResponse>> GetTaskBYColumn(@PathVariable Long idcolumn){
+		
+		List<TaskDto> taskDtos=taskService.GetColumnTask(idcolumn);
+		List<TaskResponse> taskResponses=new ArrayList<>();
+		ModelMapper modelMapper=new ModelMapper();
+		for (TaskDto taskDto : taskDtos) {
+			TaskResponse taskResponse=modelMapper.map(taskDto, TaskResponse.class);
+			taskResponses.add(taskResponse);
+		}
+		return new ResponseEntity<List<TaskResponse>>(taskResponses,HttpStatus.ACCEPTED);
 	}
 }

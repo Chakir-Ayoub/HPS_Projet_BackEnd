@@ -119,6 +119,7 @@ public class ProjetImpl implements ProjetService {
 		ModelMapper modelMapper=new ModelMapper();
 		
 		Projet projet=projetRepository.findByidprojet(id);
+		
 		ProjetDto projetDto=modelMapper.map(projet, ProjetDto.class);
 		
 		return projetDto;

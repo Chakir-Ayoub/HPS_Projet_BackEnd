@@ -22,7 +22,7 @@ public interface UtilisateurRepository extends JpaRepository<Utilisateur, Long> 
 	List<Utilisateur> GetUser_Group(Long idgroup);
 	
 	
-	@Query(value ="SELECT u.* FROM Utilisateur u INNER JOIN session s ON(u.idutilisateur=s.utilisateur)  WHERE s.idsession = ?1",nativeQuery = true)
+	@Query(value ="SELECT u.* FROM Utilisateur u INNER JOIN session s ON(u.idutilisateur=s.utilisateur)  WHERE s.idsession=?1",nativeQuery = true)
 	Utilisateur getUser_Session(Long idsession);
 	 
 }

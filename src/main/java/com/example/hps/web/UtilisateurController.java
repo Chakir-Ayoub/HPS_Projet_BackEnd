@@ -33,7 +33,7 @@ public class UtilisateurController {
 
 	
 	@PostMapping
-	public ResponseEntity<UtilisateurResponse> AjouterUtilisateur(@RequestBody UtilisateurRequest utilisateurRequest){
+	public ResponseEntity<UtilisateurResponse> AjouterUtilisateur(@RequestBody UtilisateurRequest utilisateurRequest) throws Exception{
 		
 		ModelMapper modelMapper=new ModelMapper();
 		UtilisateurDto utilisateurDto=modelMapper.map(utilisateurRequest, UtilisateurDto.class);

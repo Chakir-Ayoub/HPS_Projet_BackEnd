@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import com.example.hps.Exceptions.RestException;
 import com.example.hps.dto.GroupeDto;
-import com.example.hps.dto.Sous_GroupeDto;
 import com.example.hps.entity.Groupe;
 import com.example.hps.entity.Sous_Groupe;
 import com.example.hps.entity.Utilisateur;

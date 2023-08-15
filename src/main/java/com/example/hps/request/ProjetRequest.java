@@ -1,8 +1,6 @@
 package com.example.hps.request;
 
-import java.util.Date;
-
-
+import java.time.LocalDate;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -20,11 +18,8 @@ public class ProjetRequest {
 	@Size(min = 3,message = "Ce champs doit avoir au moins 3 Caracteres !")
 	private String description;
 	@NotBlank(message = "Ce champs ne doit pas etre Null !")
-	private Date datedemarrage;
+	private LocalDate datedemarrage;
 	@NotBlank(message = "Ce champs ne doit pas etre Null !")
 	private Boolean softdelete;
 	private BoardRequest board;
-
-
-
 }
