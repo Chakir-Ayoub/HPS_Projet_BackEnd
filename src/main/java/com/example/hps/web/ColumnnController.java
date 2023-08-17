@@ -1,5 +1,6 @@
 package com.example.hps.web;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,9 +32,9 @@ public class ColumnnController {
 	ColumnnService columnnService;
 	
 	@GetMapping
-	public ResponseEntity<List<ColumnnResponse>> GetAll(){
+	public ResponseEntity<List<ColumnnResponse>> GetAll(Principal principal){
 		
-		List<ColumnnDto> columnns =columnnService.GetAll();
+		List<ColumnnDto> columnns =columnnService.GetAll(principal.getName());
 		List<ColumnnResponse> columnnResponses=new ArrayList<>();
 		ModelMapper modelMapper=new ModelMapper();
 		for (ColumnnDto columnnDto : columnns) {
@@ -45,8 +46,8 @@ public class ColumnnController {
 	}
 	
 	@GetMapping("{id}")
-	public ResponseEntity<ColumnnResponse> GetById(@PathVariable Long id){
-		ColumnnDto columnnDto=columnnService.GetById(id);
+	public ResponseEntity<ColumnnResponse> GetById(@PathVariable Long id,Principal principal){
+		ColumnnDto columnnDto=columnnService.GetById(id,principal.getName());
 		ModelMapper modelMapper=new ModelMapper();
 		ColumnnResponse columnnResponse=modelMapper.map(columnnDto, ColumnnResponse.class);
 		
@@ -54,10 +55,10 @@ public class ColumnnController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<ColumnnResponse> AddColumn(@RequestBody ColumnnRequest columnnRequest){
+	public ResponseEntity<ColumnnResponse> AddColumn(@RequestBody ColumnnRequest columnnRequest,Principal principal){
 		ModelMapper modelMapper=new ModelMapper();
 		ColumnnDto columnnDto=modelMapper.map(columnnRequest, ColumnnDto.class);
-		ColumnnDto columnnDto2=columnnService.AddColumnn(columnnDto);
+		ColumnnDto columnnDto2=columnnService.AddColumnn(columnnDto,principal.getName());
 
 		ColumnnResponse columnnResponse=modelMapper.map(columnnDto2, ColumnnResponse.class);
 		
@@ -65,12 +66,12 @@ public class ColumnnController {
 	}
 	
 	@PutMapping("{id}")
-	public ResponseEntity<ColumnnResponse> UpdateColumn(@PathVariable Long id,@RequestBody ColumnnRequest columnnRequest){
+	public ResponseEntity<ColumnnResponse> UpdateColumn(@PathVariable Long id,@RequestBody ColumnnRequest columnnRequest,Principal principal){
 		
 		ModelMapper modelMapper=new ModelMapper();
 		ColumnnDto columnnDto=modelMapper.map(columnnRequest, ColumnnDto.class);
 		
-		ColumnnDto columnnDto2=columnnService.UpdateColumnn(id, columnnDto);
+		ColumnnDto columnnDto2=columnnService.UpdateColumnn(id, columnnDto,principal.getName());
 		
 		ColumnnResponse columnnResponse=modelMapper.map(columnnDto2, ColumnnResponse.class);
 		
@@ -78,27 +79,27 @@ public class ColumnnController {
 	}
 	
 	@DeleteMapping("{id}")
-	public ResponseEntity<Object> Remove(@PathVariable Long id){
+	public ResponseEntity<Object> Remove(@PathVariable Long id,Principal principal){
 		
-		columnnService.RemoveColumnn(id);
+		columnnService.RemoveColumnn(id,principal.getName());
 		
 		return new ResponseEntity<Object>(HttpStatus.OK);
 	}
 	
 	@PostMapping("/AffecteTasktoColumn/{idcol}")
-	public ResponseEntity<ColumnnResponse> AddTaskToColumn(@PathVariable Long idcol,@RequestBody TaskRequest taskRequest){
+	public ResponseEntity<ColumnnResponse> AddTaskToColumn(@PathVariable Long idcol,@RequestBody TaskRequest taskRequest,Principal principal){
 		
 		ModelMapper modelMapper=new ModelMapper();
 		TaskDto taskDto=modelMapper.map(taskRequest, TaskDto.class);
-		ColumnnDto columnnObject=columnnService.AddTaskToColumn(idcol, taskDto);
+		ColumnnDto columnnObject=columnnService.AddTaskToColumn(idcol, taskDto,principal.getName());
 		
 		ColumnnResponse columnnResponse=modelMapper.map(columnnObject, ColumnnResponse.class);
 		return new ResponseEntity<ColumnnResponse>(columnnResponse,HttpStatus.ACCEPTED);
 	}
 	
 	@DeleteMapping("/DeleteTask/{idTask}/{idCol}")
-	public ResponseEntity<ColumnnResponse> RemoveTaskFromColumn(@PathVariable Long idTask,@PathVariable Long idCol){
-		ColumnnDto columnnDto=columnnService.DeleteTaskFromColumn(idTask, idCol);
+	public ResponseEntity<ColumnnResponse> RemoveTaskFromColumn(@PathVariable Long idTask,@PathVariable Long idCol,Principal principal){
+		ColumnnDto columnnDto=columnnService.DeleteTaskFromColumn(idTask, idCol,principal.getName());
 		ModelMapper modelMapper=new ModelMapper();
 		
 		ColumnnResponse columnnResponse=modelMapper.map(columnnDto, ColumnnResponse.class);
@@ -107,9 +108,9 @@ public class ColumnnController {
 	
 	
 	@GetMapping("getcolumnbysession/{id}")
-	public ResponseEntity<List<ColumnnResponse>> GetColumnByProject(@PathVariable Long id){
+	public ResponseEntity<List<ColumnnResponse>> GetColumnByProject(@PathVariable Long id,Principal principal){
 		ModelMapper modelMapper=new ModelMapper();
-		List<ColumnnDto> columnnDtos=columnnService.GetColumnByProject(id);
+		List<ColumnnDto> columnnDtos=columnnService.GetColumnByProject(id,principal.getName());
 		List<ColumnnResponse> columnnResponses=new ArrayList<>();
 		for (ColumnnDto columnnDto : columnnDtos) {
 			ColumnnResponse columnnResponse=modelMapper.map(columnnDto, ColumnnResponse.class);
@@ -126,11 +127,11 @@ public class ColumnnController {
 	
 	
 	@PostMapping("Addcolumntoboard/{id}")
-	public ResponseEntity<Object> AddColumnToBoard(@PathVariable Long id,@RequestBody ColumnnRequest columnnRequest){
+	public ResponseEntity<Object> AddColumnToBoard(@PathVariable Long id,@RequestBody ColumnnRequest columnnRequest,Principal principal){
 		ModelMapper modelMapper=new ModelMapper();
 		ColumnnDto columnnDto=modelMapper.map(columnnRequest, ColumnnDto.class);
 	
-		columnnService.AddColumnToBoard(id, columnnDto);
+		columnnService.AddColumnToBoard(id, columnnDto,principal.getName());
 		return new ResponseEntity<Object>(HttpStatus.CREATED);
 	}
 }

@@ -1,5 +1,6 @@
 package com.example.hps.web;
 
+import java.security.Principal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,11 +38,11 @@ public class PlanificationController {
 
 	
 	@GetMapping
-	public ResponseEntity<List<PlanificationResponse>> GetAll(){
+	public ResponseEntity<List<PlanificationResponse>> GetAll(Principal principal){
 		
 		List<PlanificationResponse> planificationResponses=new ArrayList<>();
 		
-		List<PlanificationDto> planificationDtos=planificationService.GetAllPlaning();
+		List<PlanificationDto> planificationDtos=planificationService.GetAllPlaning(principal.getName());
 		
 		for(PlanificationDto planificationDto: planificationDtos) {
 			ModelMapper modelMapper=new ModelMapper();
@@ -53,24 +54,24 @@ public class PlanificationController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<PlanificationResponse> Ajouter(@RequestBody PlanificationRequest planificationRequest) throws Exception{
+	public ResponseEntity<PlanificationResponse> Ajouter(@RequestBody PlanificationRequest planificationRequest,Principal principal) throws Exception{
 		ModelMapper modelMapper=new ModelMapper();
 		PlanificationDto planificationDto=modelMapper.map(planificationRequest, PlanificationDto.class);
 		
-		PlanificationDto createPlanification=planificationService.AjouterPlanification(planificationDto);
+		PlanificationDto createPlanification=planificationService.AjouterPlanification(planificationDto,principal.getName());
 		PlanificationResponse planificationResponse=modelMapper.map(createPlanification, PlanificationResponse.class);
 				
 		return new ResponseEntity<PlanificationResponse>(planificationResponse,HttpStatus.ACCEPTED);
 	}
 	
 	@PutMapping(path = "/{date}")
-	public ResponseEntity<PlanificationResponse> Modifier(@RequestBody PlanificationRequest planificationRequest,@PathVariable LocalDate date){
+	public ResponseEntity<PlanificationResponse> Modifier(@RequestBody PlanificationRequest planificationRequest,@PathVariable LocalDate date,Principal principal){
 		
 		ModelMapper modelMapper=new ModelMapper();
 		
 		PlanificationDto planificationDto=modelMapper.map(planificationRequest, PlanificationDto.class);
 		
-		PlanificationDto planificationModifier= planificationService.ModifierPlanification(planificationDto, date);
+		PlanificationDto planificationModifier= planificationService.ModifierPlanification(planificationDto, date,principal.getName());
 		
 		PlanificationResponse planificationResponse=modelMapper.map(planificationModifier, PlanificationResponse.class);
 		return new ResponseEntity<PlanificationResponse>(planificationResponse,HttpStatus.CREATED);
@@ -78,28 +79,28 @@ public class PlanificationController {
 	
 	
 	  @DeleteMapping(path = "/{date}") public ResponseEntity<Object>
-	  Delete(@PathVariable LocalDate date) throws Exception{
+	  Delete(@PathVariable LocalDate date,Principal principal) throws Exception{
 	  
-	  planificationService.SupperimerPlanification(date); return new
+	  planificationService.SupperimerPlanification(date,principal.getName()); return new
 	  ResponseEntity<>(HttpStatus.NO_CONTENT); }
 	 
 	
 	@GetMapping("/AffecteSessionToPlanification/{date}")
-	public ResponseEntity<PlanificationResponse> AffecteSessionToPlanification(@RequestBody SessionDto session,@PathVariable LocalDate date){
+	public ResponseEntity<PlanificationResponse> AffecteSessionToPlanification(@RequestBody SessionDto session,@PathVariable LocalDate date,Principal principal){
 		
 		ModelMapper modelMapper=new ModelMapper();
 		
-		PlanificationDto planificationDto=planificationService.AffecteSessionToplanification(session, date);
+		PlanificationDto planificationDto=planificationService.AffecteSessionToplanification(session, date,principal.getName());
 		PlanificationResponse planificationResponse=modelMapper.map(planificationDto, PlanificationResponse.class);
 		
 		return new ResponseEntity<PlanificationResponse>(planificationResponse,HttpStatus.ACCEPTED);
 	}
 	
 	@DeleteMapping("/SupperimerSessionToPlanification/{idsession}/{idPlani}")
-	public ResponseEntity<PlanificationResponse> DropSessionToPlanification(@PathVariable Long idsession,@PathVariable Long idPlani){
+	public ResponseEntity<PlanificationResponse> DropSessionToPlanification(@PathVariable Long idsession,@PathVariable Long idPlani,Principal principal){
 		ModelMapper modelMapper=new ModelMapper();
 		
-		PlanificationDto planificationDto=planificationService.SupperimerSessionToPlanification(idsession, idPlani);
+		PlanificationDto planificationDto=planificationService.SupperimerSessionToPlanification(idsession, idPlani,principal.getName());
 		PlanificationResponse planificationResponse=modelMapper.map(planificationDto, PlanificationResponse.class);
 		
 		

@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 import com.example.hps.Exceptions.RestException;
 import com.example.hps.dto.ProjetDto;
 import com.example.hps.entity.Projet;
+import com.example.hps.entity.Utilisateur;
 import com.example.hps.repository.ProjetRepository;
+import com.example.hps.repository.UtilisateurRepository;
 import com.example.hps.service.ProjetService;
 
 
@@ -19,21 +21,19 @@ public class ProjetImpl implements ProjetService {
 	
 	@Autowired
 	ProjetRepository projetRepository;
-
+	@Autowired
+	UtilisateurRepository utilisateurRepository;
 
 	@Override
-	public ProjetDto AjouterProjet(ProjetDto projet) {
+	public ProjetDto AjouterProjet(ProjetDto projet,String email) {
 		// TODO Auto-generated method stub
+		Utilisateur currentuser=utilisateurRepository.findByemail(email);
+		if(currentuser.getRole().getIdRole()==7 || currentuser.getRole().getIdRole()==8 ) {
 		Projet projetCheck = projetRepository.findBynomprojet(projet.getNomprojet());
+		
 		if (projetCheck != null) throw new RestException("Ce Projet existe déjà !");
 
 		
-		
-		/*
-		 * for (int i = 0; i < projet.getDetails().size(); i++) { DetailDto detailDto =
-		 * projet.getDetails().get(i); detailDto.setProjet(projet);
-		 * projet.getDetails().set(i, detailDto); }
-		 */
 		 
 		
 		ModelMapper modelMapper = new ModelMapper();
@@ -46,13 +46,20 @@ public class ProjetImpl implements ProjetService {
 		
 		ProjetDto projetDto2 = modelMapper.map(newProjet, ProjetDto.class);
 		return projetDto2;
+		}
+		else {
+			throw new RestException("Vous n'avez pas le droit d'exécuter cette requête");
+		}
 
 		
 	}
 
 	@Override
-	public ProjetDto ModifierProjet(ProjetDto projetDto,Long id) {
+	public ProjetDto ModifierProjet(ProjetDto projetDto,Long id,String email) {
+
 		// TODO Auto-generated method stub
+		Utilisateur currentuser=utilisateurRepository.findByemail(email);
+		if(currentuser.getRole().getIdRole()==7 || currentuser.getRole().getIdRole()==8 ) {
 		Projet projetCheck=projetRepository.findByidprojet(id);
 		if(projetCheck==null) throw new RestException("Ce Projet il n'existe pas !");
 		
@@ -77,23 +84,38 @@ public class ProjetImpl implements ProjetService {
 		ProjetDto projetDto2=modelMapper.map(ObjetModifier, ProjetDto.class);
 		
 		return projetDto2;
-		
+		}else {
+			throw new RestException("Vous n'avez pas le droit d'exécuter cette requête");
 		}
 
+
+}
+
+
 	@Override
-	public void SupperimerProjet(Long id) {
+	public void SupperimerProjet(Long id,String email) {
 		// TODO Auto-generated method stub
+		Utilisateur currentuser=utilisateurRepository.findByemail(email);
+		if(currentuser.getRole().getIdRole()==7 ) {
 		Projet projetCheck=projetRepository.findByidprojet(id);
 		if(projetCheck==null) throw new RuntimeException("Ce Projet il n'existe pas !");
 		
-		projetRepository.delete(projetCheck);
+		projetRepository.delete(projetCheck);}
+		else {
+			throw new RestException("Vous n'avez pas le droit d'exécuter cette requête");
+		}
 	}
 
 	@Override
-	public List<ProjetDto> GetAllProjet() {
+	public List<ProjetDto> GetAllProjet(String email) {
 		// TODO Auto-generated method stub
-		List<Projet> projets;
+		Utilisateur currentuser=utilisateurRepository.findByemail(email);
+		List<Projet> projets=new ArrayList<>();
+		if(currentuser.getRole().getIdRole()==7 ) {
 		projets=projetRepository.findAll();
+		}else {
+			projets=projetRepository.GetProjectByUser(currentuser.getIdutilisateur());	
+		}
 		
 		List<ProjetDto> projetsDtos=new ArrayList<>();
 		for (Projet projet : projets) {
@@ -107,22 +129,28 @@ public class ProjetImpl implements ProjetService {
 		}
 		
 		return projetsDtos;
-	}
+		}
+	
 
 
 
 
 
 	@Override
-	public ProjetDto GetById(Long id) {
+	public ProjetDto GetById(Long id,String email) {
 		// TODO Auto-generated method stub
+		Utilisateur currentuser=utilisateurRepository.findByemail(email);
+		if(currentuser.getRole().getIdRole()==7 || currentuser.getRole().getIdRole()==8 ) {
 		ModelMapper modelMapper=new ModelMapper();
 		
 		Projet projet=projetRepository.findByidprojet(id);
 		
 		ProjetDto projetDto=modelMapper.map(projet, ProjetDto.class);
 		
-		return projetDto;
+		return projetDto;}
+		else {
+			throw new RestException("Vous n'avez pas le droit d'exécuter cette requête");
+		}
 	}
 
 	@Override
@@ -138,7 +166,9 @@ public class ProjetImpl implements ProjetService {
 	}
 
 	@Override
-	public ProjetDto GetProjectBysesssion(Long idsession) {
+	public ProjetDto GetProjectBysesssion(Long idsession,String email) {
+		Utilisateur currentuser=utilisateurRepository.findByemail(email);
+		if(currentuser.getRole().getIdRole()==7 || currentuser.getRole().getIdRole()==8 ) {
 		// TODO Auto-generated method stub
 		ModelMapper modelMapper=new ModelMapper();
 		Projet projet=projetRepository.GetProjectBySession(idsession);
@@ -146,12 +176,22 @@ public class ProjetImpl implements ProjetService {
 		ProjetDto projetDto=modelMapper.map(projet, ProjetDto.class);
 		
 		return projetDto;
+		}
+		else {
+			throw new RestException("Vous n'avez pas le droit d'exécuter cette requête");
+		}
 	}
 
 	@Override
-	public void DropProjectByDate() {
+	public void DropProjectByDate(String email) {
 		// TODO Auto-generated method stub
+		Utilisateur currentuser=utilisateurRepository.findByemail(email);
+		if(currentuser.getRole().getIdRole()==7 || currentuser.getRole().getIdRole()==8 ) {
 		this.projetRepository.DropProjectByDate();	
+		}
+		else {
+			throw new RestException("Vous n'avez pas le droit d'exécuter cette requête");
+		}
 	}
 
 	

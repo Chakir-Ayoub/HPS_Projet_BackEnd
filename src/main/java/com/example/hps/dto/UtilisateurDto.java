@@ -12,7 +12,9 @@ public class UtilisateurDto {
 	private String email;
 	private String encryptionpassword;
 	private int telephone;
+	private String password;
 	private List<AbsenceDto> absences=new ArrayList<>();
 	private GroupeDto groupe ;
 	private List<SessionDto> session;	
+	private RoleDto role;
 }

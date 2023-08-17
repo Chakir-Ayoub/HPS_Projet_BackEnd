@@ -1,5 +1,6 @@
 package com.example.hps.web;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,12 +31,12 @@ public class GroupeController {
 	
 	
 	@PostMapping
-	public ResponseEntity<GroupeResponse> Ajouter(@RequestBody GroupeRequest groupeRequest){
+	public ResponseEntity<GroupeResponse> Ajouter(@RequestBody GroupeRequest groupeRequest,Principal principal){
 		
 		ModelMapper modelMapper=new ModelMapper();
 		GroupeDto groupeDto=modelMapper.map(groupeRequest, GroupeDto.class);
 		
-		GroupeDto createGroupe=groupeService.AjouterGroupe(groupeDto);
+		GroupeDto createGroupe=groupeService.AjouterGroupe(groupeDto,principal.getName());
 		GroupeResponse groupeResponse=modelMapper.map(createGroupe, GroupeResponse.class);
 		
 		
@@ -43,11 +44,11 @@ public class GroupeController {
 	}
 	
 	@PutMapping(path = "/{id}")
-	public ResponseEntity<GroupeResponse> Update(@RequestBody GroupeRequest groupeRequest,@PathVariable Long id){
+	public ResponseEntity<GroupeResponse> Update(@RequestBody GroupeRequest groupeRequest,@PathVariable Long id,Principal principal){
 		ModelMapper modelMapper=new ModelMapper();
 		
 		GroupeDto groupeDto=modelMapper.map(groupeRequest, GroupeDto.class);
-		GroupeDto ModificationGroupe=groupeService.ModifierGroupe(groupeDto, id);
+		GroupeDto ModificationGroupe=groupeService.ModifierGroupe(groupeDto, id,principal.getName());
 		
 		GroupeResponse groupeResponse=modelMapper.map(ModificationGroupe, GroupeResponse.class);
 		
@@ -55,10 +56,10 @@ public class GroupeController {
 	}
 	
 	@GetMapping
-	public ResponseEntity<List<GroupeResponse>> GetALLGroupe(){
+	public ResponseEntity<List<GroupeResponse>> GetALLGroupe(Principal principal){
 		List<GroupeResponse> groupeResponses=new ArrayList<>();
 		
-		List<GroupeDto> groupeDtos=groupeService.GetAllGroupe();
+		List<GroupeDto> groupeDtos=groupeService.GetAllGroupe(principal.getName());
 		
 		for(GroupeDto groupeDto:groupeDtos) {
 			ModelMapper modelMapper=new ModelMapper();
@@ -71,15 +72,15 @@ public class GroupeController {
 	}
 	
 	@DeleteMapping(path = "/{id}")
-	public ResponseEntity<Object> Supperimer(@PathVariable Long id){
-		groupeService.SupperimerGroupe(id);
+	public ResponseEntity<Object> Supperimer(@PathVariable Long id,Principal principal){
+		groupeService.SupperimerGroupe(id,principal.getName());
 		return new ResponseEntity<Object>(HttpStatus.NO_CONTENT);
 	}
 	
 	
 	@GetMapping("/finduser/{id}")
-	public ResponseEntity<GroupeResponse> GetById(@PathVariable Long id){
-		GroupeDto groupeDto=groupeService.GetById(id);
+	public ResponseEntity<GroupeResponse> GetById(@PathVariable Long id,Principal principal){
+		GroupeDto groupeDto=groupeService.GetById(id,principal.getName());
 		ModelMapper modelMapper=new ModelMapper();
 		
 		GroupeResponse groupeResponse =modelMapper.map(groupeDto, GroupeResponse.class);
@@ -87,22 +88,22 @@ public class GroupeController {
 	}
 	
 	@GetMapping("/{iduser}/{id}")
-	public ResponseEntity<GroupeResponse> AffecteUserToGroupe(@PathVariable Long iduser, @PathVariable Long id ){
+	public ResponseEntity<GroupeResponse> AffecteUserToGroupe(@PathVariable Long iduser, @PathVariable Long id,Principal principal ){
 		
 		ModelMapper modelMapper=new ModelMapper();
 
-		GroupeDto groupeDto=groupeService.Affecte_Utilisateur_Groupe(iduser, id);
+		GroupeDto groupeDto=groupeService.Affecte_Utilisateur_Groupe(iduser, id,principal.getName());
 		GroupeResponse groupeResponse=modelMapper.map(groupeDto, GroupeResponse.class);
 		
 		return new ResponseEntity<GroupeResponse>(groupeResponse,HttpStatus.ACCEPTED);
 	}
 	
 	@DeleteMapping("/RemoveUsertogroupe/{idgroup}/{iduser}")
-	public ResponseEntity<GroupeResponse> RemoveUserInGroupe(@PathVariable Long idgroup,@PathVariable Long iduser) {
+	public ResponseEntity<GroupeResponse> RemoveUserInGroupe(@PathVariable Long idgroup,@PathVariable Long iduser,Principal principal) {
 		
 		ModelMapper modelMapper=new ModelMapper();
 		
-		GroupeDto groupeDto=groupeService.Supperimer_User_Groupe(idgroup, iduser);
+		GroupeDto groupeDto=groupeService.Supperimer_User_Groupe(idgroup, iduser,principal.getName());
 		GroupeResponse groupeResponse=modelMapper.map(groupeDto, GroupeResponse.class);
 		
 		return new ResponseEntity<GroupeResponse>(groupeResponse,HttpStatus.ACCEPTED);

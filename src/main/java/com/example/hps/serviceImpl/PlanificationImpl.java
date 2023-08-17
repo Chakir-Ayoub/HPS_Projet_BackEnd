@@ -13,8 +13,10 @@ import com.example.hps.dto.PlanificationDto;
 import com.example.hps.dto.SessionDto;
 import com.example.hps.entity.Planification;
 import com.example.hps.entity.Session;
+import com.example.hps.entity.Utilisateur;
 import com.example.hps.repository.PlanificationRepository;
 import com.example.hps.repository.SessionRepository;
+import com.example.hps.repository.UtilisateurRepository;
 import com.example.hps.service.PlanificationService;
 
 @Service
@@ -24,11 +26,13 @@ public class PlanificationImpl implements PlanificationService {
 	PlanificationRepository planificationRepository;
 	@Autowired
 	SessionRepository sessionRepository;
-
+	@Autowired
+	UtilisateurRepository utilisateurRepository;
 	@Override
-	public PlanificationDto AjouterPlanification(PlanificationDto planificationDto) {
+	public PlanificationDto AjouterPlanification(PlanificationDto planificationDto,String email) {
 		// TODO Auto-generated method stub
-		
+		Utilisateur currentuser=utilisateurRepository.findByemail(email);
+		if(currentuser.getRole().getIdRole()==7 || currentuser.getRole().getIdRole()==8 ) {
 		Planification planificationCheck=planificationRepository.findBydatePlanification(planificationDto.getDatePlanification());
 		
 		if(planificationCheck!=null) {
@@ -36,7 +40,7 @@ public class PlanificationImpl implements PlanificationService {
 
 			PlanificationDto planificationDto2=new PlanificationDto();
 			for(int i=0;i<planificationDto.getSessions().size();i++) {
-				planificationDto2= AffecteSessionToplanification(planificationDto.getSessions().get(i), planificationCheck.getDatePlanification());
+				planificationDto2= AffecteSessionToplanification(planificationDto.getSessions().get(i), planificationCheck.getDatePlanification(),currentuser.getEmail());
 			}
 			return planificationDto2;
 		}		
@@ -54,12 +58,17 @@ public class PlanificationImpl implements PlanificationService {
 		
 		PlanificationDto planificationDto2=modelMapper.map(newplanification, PlanificationDto.class);
 		
-		return planificationDto2;
+		return planificationDto2;}
+		else {
+			throw new RestException("Vous n'avez pas le droit d'exécuter cette requête");
+		}
 	}
 
 	@Override
-	public PlanificationDto ModifierPlanification(PlanificationDto planificationDto,LocalDate date) {
+	public PlanificationDto ModifierPlanification(PlanificationDto planificationDto,LocalDate date,String email) {
 		// TODO Auto-generated method stub
+		Utilisateur currentuser=utilisateurRepository.findByemail(email);
+		if(currentuser.getRole().getIdRole()==7 || currentuser.getRole().getIdRole()==8 ) {
 		Planification planificationCheck=planificationRepository.findBydatePlanification(date);
 		if(planificationCheck==null) throw new RestException("Cette planification n'existe pas ! ");
 		
@@ -72,22 +81,37 @@ public class PlanificationImpl implements PlanificationService {
 	   planificationRepository.save(planificationCheck);
 	 
 	    PlanificationDto planificationDtoModifier = modelMapper.map(planificationCheck, PlanificationDto.class);
-		return planificationDtoModifier;
+		return planificationDtoModifier;}
+		else {
+			throw new RestException("Vous n'avez pas le droit d'exécuter cette requête");
+		}
 	}
 
 	@Override
-	public void SupperimerPlanification(LocalDate date) {
+	public void SupperimerPlanification(LocalDate date,String email) {
 		// TODO Auto-generated method stub
+		Utilisateur currentuser=utilisateurRepository.findByemail(email);
+		if(currentuser.getRole().getIdRole()==7 || currentuser.getRole().getIdRole()==8 ) {
 		Planification planification=planificationRepository.findBydatePlanification(date);
 		if(planification==null) throw new RestException("Cette Planification n'existe pas ! ");
 		planificationRepository.delete(planification);
+		}
+		else {
+			throw new RestException("Vous n'avez pas le droit d'exécuter cette requête");
+		}
 	}
 
 	@Override
-	public List<PlanificationDto> GetAllPlaning() {
+	public List<PlanificationDto> GetAllPlaning(String email) {
 		// TODO Auto-generated method stub
-		List<Planification> planifications;
+		Utilisateur currentuser=utilisateurRepository.findByemail(email);
+		List<Planification> planifications=new ArrayList<>();
+		if(currentuser.getRole().getIdRole()==7 || currentuser.getRole().getIdRole()==8 ) {
 		planifications=planificationRepository.findAll();
+		}
+		else {
+			planifications=planificationRepository.GetPlanificationbyuser(currentuser.getIdutilisateur());
+		}
 		
 		List<PlanificationDto> planificationDtos=new ArrayList<>();
 		for(Planification planification: planifications) {
@@ -97,12 +121,13 @@ public class PlanificationImpl implements PlanificationService {
 			planificationDtos.add(planificationDto);
 		}
 		return planificationDtos;
-	}
+		}
 
 	@Override
-	public PlanificationDto AffecteSessionToplanification(SessionDto session, LocalDate Date) {
+	public PlanificationDto AffecteSessionToplanification(SessionDto session, LocalDate Date,String email) {
 		// TODO Auto-generated method stub
-		
+		Utilisateur currentuser=utilisateurRepository.findByemail(email);
+		if(currentuser.getRole().getIdRole()==7 || currentuser.getRole().getIdRole()==8 ) {
 		ModelMapper modelMapper=new ModelMapper();
 	//	Session session=sessionRepository.findByidsession(idsession);
 		Planification planification=planificationRepository.findBydatePlanification(Date);
@@ -114,11 +139,17 @@ public class PlanificationImpl implements PlanificationService {
 		PlanificationDto planificationDto=modelMapper.map(planification, PlanificationDto.class);
 		
 		return planificationDto;
+		}
+		else {
+			throw new RestException("Vous n'avez pas le droit d'exécuter cette requête");
+		}
 	}
 
 	@Override
-	public PlanificationDto SupperimerSessionToPlanification(Long idsession, Long idplanification) {
+	public PlanificationDto SupperimerSessionToPlanification(Long idsession, Long idplanification,String email) {
 		// TODO Auto-generated method stub
+		Utilisateur currentuser=utilisateurRepository.findByemail(email);
+		if(currentuser.getRole().getIdRole()==8 ) {
 		ModelMapper modelMapper=new ModelMapper();
 		
 		Session session=sessionRepository.findByidsession(idsession);
@@ -131,6 +162,9 @@ public class PlanificationImpl implements PlanificationService {
 		PlanificationDto planificationDto=modelMapper.map(planification, PlanificationDto.class);
 
 		return planificationDto;
+		}else {
+			throw new RestException("Vous n'avez pas le droit d'exécuter cette requête");
+		}
 	}
 	
 	

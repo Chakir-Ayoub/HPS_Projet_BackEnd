@@ -1,5 +1,6 @@
 package com.example.hps.web;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,22 +32,22 @@ public class SessionController{
 	private SessionService sessionService;
 	
 	@PostMapping
-	public ResponseEntity<SessionResponse> Ajouter(@RequestBody SessionRequest sessionRequest) throws Exception{
+	public ResponseEntity<SessionResponse> Ajouter(@RequestBody SessionRequest sessionRequest,Principal principal) throws Exception{
 		
 		ModelMapper modelMapper=new ModelMapper();
 		SessionDto sessionDto=modelMapper.map(sessionRequest, SessionDto.class);
 		
-		SessionDto CreateSession=sessionService.AjouterSession(sessionDto);
+		SessionDto CreateSession=sessionService.AjouterSession(sessionDto,principal.getName());
 		SessionResponse sessionResponse=modelMapper.map(CreateSession, SessionResponse.class);
 		
 		return new ResponseEntity<SessionResponse>(sessionResponse,HttpStatus.ACCEPTED);
 	}
 	
 	@GetMapping
-	public ResponseEntity<List<SessionResponse>> GetAllSession(){
+	public ResponseEntity<List<SessionResponse>> GetAllSession(Principal principal){
 		List<SessionResponse> sessionResponses=new ArrayList<>();
 		
-		List<SessionDto> sessionDtos=sessionService.GetAllSession();
+		List<SessionDto> sessionDtos=sessionService.GetAllSession(principal.getName());
 		
 		for(SessionDto sessionDto: sessionDtos) {
 			ModelMapper modelMapper=new ModelMapper();
@@ -59,12 +60,12 @@ public class SessionController{
 	
 	
 	@PutMapping(path = "/{id}")
-	public ResponseEntity<SessionResponse> Update(@RequestBody SessionRequest sessionRequest,@PathVariable Long id){
+	public ResponseEntity<SessionResponse> Update(@RequestBody SessionRequest sessionRequest,@PathVariable Long id,Principal principal){
 		
 		ModelMapper modelMapper =new ModelMapper();
 		
 		SessionDto sessionDto=modelMapper.map(sessionRequest, SessionDto.class);
-		SessionDto ModificationSession=sessionService.ModifierSession(sessionDto, id);
+		SessionDto ModificationSession=sessionService.ModifierSession(sessionDto, id,principal.getName());
 		
 		SessionResponse sessionResponse =modelMapper.map(ModificationSession, SessionResponse.class);
 		
@@ -72,8 +73,8 @@ public class SessionController{
 	}
 	
 	@DeleteMapping(path = "/{id}")
-	public ResponseEntity<Object> Delete(@PathVariable long id) throws Exception{
-		sessionService.SupperimerSession(id);
+	public ResponseEntity<Object> Delete(@PathVariable long id,Principal principal) throws Exception{
+		sessionService.SupperimerSession(id,principal.getName());
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 }

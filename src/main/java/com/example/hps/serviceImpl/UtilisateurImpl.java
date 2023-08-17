@@ -2,9 +2,13 @@ package com.example.hps.serviceImpl;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.hps.Exceptions.RestException;
@@ -26,11 +30,13 @@ public class UtilisateurImpl implements UtilisateurService {
 	AbsenceRepository absenceRepository;
 	@Autowired
 	SessionRepository sessionRepository;
-	
-
+	@Autowired
+	BCryptPasswordEncoder bCryptPasswordEncoder;
 	@Override
-	public UtilisateurDto AjouterUtilisateur(UtilisateurDto utilisateurDto) {
+	public UtilisateurDto AjouterUtilisateur(UtilisateurDto utilisateurDto,String email) {
 		// TODO Auto-generated method stub
+		Utilisateur currentuser=utilisateurRepository.findByemail(email);
+		if(currentuser.getRole().getIdRole()==7 || currentuser.getRole().getIdRole()==8 ) {
 		Utilisateur utilisateurcheckemail=utilisateurRepository.findByemail(utilisateurDto.getEmail());
 		Utilisateur utilisateurChecktelephone=utilisateurRepository.findBytelephone(utilisateurDto.getTelephone());
 		
@@ -39,8 +45,7 @@ public class UtilisateurImpl implements UtilisateurService {
 		ModelMapper modelMapper=new ModelMapper();
 		
 		Utilisateur utilisateur=modelMapper.map(utilisateurDto, Utilisateur.class);
-		utilisateur.setEncryptionpassword("dekebfrhgfuyrgi");
-		
+		utilisateur.setEncryptionpassword(bCryptPasswordEncoder.encode(utilisateurDto.getPassword()));
 		 
 
 		Utilisateur utilisateur2=utilisateurRepository.save(utilisateur);
@@ -48,12 +53,17 @@ public class UtilisateurImpl implements UtilisateurService {
 		UtilisateurDto utilisateurDto2=modelMapper.map(utilisateur2, UtilisateurDto.class);
 		
 		return utilisateurDto2;
+		}
+		else {
+			throw new RestException("Vous n'avez pas le droit d'exécuter cette requête");
+		}
 	}
 
 	@Override
-	public UtilisateurDto ModifierUtilisateur(UtilisateurDto utilisateurDto,Long id) {
+	public UtilisateurDto ModifierUtilisateur(UtilisateurDto utilisateurDto,Long id,String email) {
 		// TODO Auto-generated method stub
-		
+		Utilisateur currentuser=utilisateurRepository.findByemail(email);
+		if(currentuser.getRole().getIdRole()==7 || currentuser.getRole().getIdRole()==8 ) {
 		Utilisateur utilisateurcheck=utilisateurRepository.findByidutilisateur(id);
 		if(utilisateurcheck==null) throw new RestException("Ce utiisateur n'existe pas ");
 		
@@ -74,23 +84,34 @@ public class UtilisateurImpl implements UtilisateurService {
 		ModelMapper modelMapper=new ModelMapper();
 		UtilisateurDto utilisateurDto2=modelMapper.map(ObjetModifier, UtilisateurDto.class);
 		
-		return utilisateurDto2;
+		return utilisateurDto2;}
+		else {
+			throw new RestException("Vous n'avez pas le droit d'exécuter cette requête");
+		}
 	}
 
 	@Override
-	public void SupperimerUtilisateur(Long id) {
+	public void SupperimerUtilisateur(Long id,String email) {
 		// TODO Auto-generated method stub
+		Utilisateur currentuser=utilisateurRepository.findByemail(email);
+		if(currentuser.getRole().getIdRole()==7 ) {
 		Utilisateur utilisateur=utilisateurRepository.findByidutilisateur(id);
 		if(utilisateur==null) throw new RestException("Ce Utilisateur il n'existe pas");
 		utilisateurRepository.delete(utilisateur);
+		}
+		else {
+			throw new RestException("Vous n'avez pas le droit d'exécuter cette requête");
+		}
 	}
 
 	@Override
 	public List<UtilisateurDto> GetAllUser() {
+		
 		// TODO Auto-generated method stub
-		List<Utilisateur> utilisateurs;
+		List<Utilisateur> utilisateurs=new ArrayList<>();
 		utilisateurs=utilisateurRepository.findAll();
 		
+
 		List<UtilisateurDto> utilisateurDtos=new ArrayList<>();
 		for(Utilisateur utilisateur: utilisateurs) {
 			ModelMapper modelMapper=new ModelMapper();
@@ -255,6 +276,28 @@ public class UtilisateurImpl implements UtilisateurService {
 		  
 		  return utilisateurDto;
 		 
+	}
+
+	@Override
+	public UtilisateurDto getUser(String email) {
+		// TODO Auto-generated method stub
+		Utilisateur userEntity=utilisateurRepository.findByemail(email);
+		if(userEntity==null) throw new RuntimeException("User Not Exist");
+
+		UtilisateurDto dto=new UtilisateurDto();
+		BeanUtils.copyProperties(userEntity, dto);
+		return dto;
+	}
+
+	@Override
+	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+		// TODO Auto-generated method stub
+		Utilisateur userEntity=utilisateurRepository.findByemail(email);
+		
+		if(userEntity==null) throw new RuntimeException(email);
+		
+		return new User(userEntity.getEmail(),userEntity.getEncryptionpassword(), new ArrayList<>());	
+		
 	}
 	
 

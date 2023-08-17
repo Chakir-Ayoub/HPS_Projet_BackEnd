@@ -4,7 +4,6 @@ package com.example.hps.request;
 import java.util.List;
 
 import com.example.hps.entity.Groupe;
-
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -34,11 +33,13 @@ public class UtilisateurRequest {
 	@Size(min = 10,message = "Ce champs doit avoir au moins 10 Caracteres !")
 	@Size(max = 10,message = "Ce champs doit avoir au max 10 Caracteres !")
 	private int telephone;
+
 	
 	private List<AbsenceRequest>  absences;
 	
 	private Groupe groupe;
 	private List<SessionRequest> session;	
 	private UtilisateurRequest utilisateur;
+	private RoleRequest role;
 
 }

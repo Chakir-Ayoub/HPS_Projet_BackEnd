@@ -6,8 +6,8 @@ import com.example.hps.dto.AbsenceDto;
 
 public interface AbsenceService {
 	AbsenceDto AjouterAbsence(AbsenceDto absenceDto);
-	AbsenceDto ModifierAbsence(AbsenceDto absenceDto,Long id);
-	void SupperimerAbsence(Long id);
-	List<AbsenceDto> GetAll();
-	AbsenceDto GetById(Long id);
+	AbsenceDto ModifierAbsence(AbsenceDto absenceDto,Long id,String email);
+	void SupperimerAbsence(Long id,String email);
+	List<AbsenceDto> GetAll(String email);
+	AbsenceDto GetById(Long id,String email);
 }

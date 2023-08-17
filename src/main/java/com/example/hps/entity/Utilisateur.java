@@ -44,6 +44,10 @@ public class Utilisateur implements Serializable {
 	@OneToMany(cascade = CascadeType.ALL,mappedBy = "utilisateur",orphanRemoval = true)
 	private List<Session> session;
 	
+	@JsonIgnore
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "role")
+	private Role role;
 	
 	
 	@Transactional

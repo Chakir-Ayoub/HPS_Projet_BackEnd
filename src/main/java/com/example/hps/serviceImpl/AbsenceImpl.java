@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.example.hps.Exceptions.RestException;
 import com.example.hps.dto.AbsenceDto;
 import com.example.hps.entity.Absence;
+import com.example.hps.entity.Utilisateur;
 import com.example.hps.repository.AbsenceRepository;
 import com.example.hps.repository.UtilisateurRepository;
 import com.example.hps.service.AbsenceService;
@@ -41,7 +42,7 @@ public class AbsenceImpl implements AbsenceService {
 	}
 
 	@Override
-	public AbsenceDto ModifierAbsence(AbsenceDto absenceDto,Long id) {
+	public AbsenceDto ModifierAbsence(AbsenceDto absenceDto,Long id,String email) {
 		// TODO Auto-generated method stub
 		Absence absencecheck=absenceRepository.findByidAbsence(id);
 		if(absencecheck==null) throw new RestException("Ce Absence n'existe pas ! ");
@@ -67,38 +68,60 @@ public class AbsenceImpl implements AbsenceService {
 	}
 
 	@Override
-	public void SupperimerAbsence(Long id) {
+	public void SupperimerAbsence(Long id,String email) {
 		// TODO Auto-generated method stub
-		Absence absencecheck=absenceRepository.findByidAbsence(id);
+		Utilisateur currentuser=utilisateurRepository.findByemail(email);
+		if(currentuser.getRole().getIdRole()==7) {
+			Absence absencecheck=absenceRepository.findByidAbsence(id);
 		if(absencecheck==null) throw new RestException("Ce Absence n'existe pas ! ");
 		
 		absenceRepository.delete(absencecheck);
 		}
+		else {
+			throw new RestException("Vous n'avez pas le droit d'exécuter cette requête ");
+		}
+			
+		}
 
 	@Override
-	public List<AbsenceDto> GetAll() {
+	public List<AbsenceDto> GetAll(String email) {
 		// TODO Auto-generated method stub
-		List<Absence> absences;
-		absences=absenceRepository.findAll();
 		
+		Utilisateur currentuser=utilisateurRepository.findByemail(email);
+		List<Absence> absences=new ArrayList<>();
+		if(currentuser.getRole().getIdRole()==7) {
+			absences=absenceRepository.findAll();
+		}
+		else if (currentuser.getRole().getIdRole()== 8) {
+			absences=absenceRepository.findAll();
+		}
+		else if (currentuser.getRole().getIdRole()== 9) {
+			absences=absenceRepository.findByIdUser(currentuser.getIdutilisateur());
+		}
 		List<AbsenceDto> absenceDtos=new ArrayList<>();
 		for(Absence absence: absences) {
 			ModelMapper modelMapper=new ModelMapper();
 			AbsenceDto absenceDto=modelMapper.map(absence, AbsenceDto.class);
-			
 			absenceDtos.add(absenceDto);
 		}
 		return absenceDtos;
 	}
 
 	@Override
-	public AbsenceDto GetById(Long id) {
+	public AbsenceDto GetById(Long id,String email) {
+		
 		// TODO Auto-generated method stub
+		Utilisateur currentuser=utilisateurRepository.findByemail(email);
+		if(currentuser.getRole().getIdRole()==7 || currentuser.getRole().getIdRole()==8 ) {
 		ModelMapper modelMapper=new ModelMapper();
 		Absence absence=this.absenceRepository.findByidAbsence(id);
 		if(absence==null) throw new RestException("Ce Absence N'existe pas ");
 		AbsenceDto absenceDto=modelMapper.map(absence, AbsenceDto.class);
 		return absenceDto;
+		}
+		else {
+			throw new RestException("Vous n'avez pas le droit d'exécuter cette requête");
+		}
 	}
 
 

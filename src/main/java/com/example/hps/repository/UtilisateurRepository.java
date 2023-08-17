@@ -24,5 +24,7 @@ public interface UtilisateurRepository extends JpaRepository<Utilisateur, Long> 
 	
 	@Query(value ="SELECT u.* FROM Utilisateur u INNER JOIN session s ON(u.idutilisateur=s.utilisateur)  WHERE s.idsession=?1",nativeQuery = true)
 	Utilisateur getUser_Session(Long idsession);
+	
+
 	 
 }

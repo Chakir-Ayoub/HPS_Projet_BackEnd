@@ -28,18 +28,13 @@ public class GroupeImpl implements GroupeService {
 	@Autowired
 	Sous_GroupeRepository sous_GroupeRepository;
 	@Override
-	public GroupeDto AjouterGroupe(GroupeDto groupeDto) {
+	public GroupeDto AjouterGroupe(GroupeDto groupeDto,String email) {
 		// TODO Auto-generated method stub
-		
+		Utilisateur currentuser=utilisateurRepository.findByemail(email);
+		if(currentuser.getRole().getIdRole()==7 ) {
 		Groupe groupecheck=groupeRepository.findBynomgroupe(groupeDto.getNomgroupe());
 		if(groupecheck!=null) throw new RestException("Ce groupe il existe déja");
 		
-		/*
-		 * for(int i=0;i<groupeDto.getSous_Groupes().size();i++) { Sous_GroupeDto
-		 * sous_GroupeDto=groupeDto.getSous_Groupes().get(i);
-		 * sous_GroupeDto.setGroupe(groupeDto); groupeDto.getSous_Groupes().set(i,
-		 * sous_GroupeDto); }
-		 */
 		ModelMapper modelMapper=new ModelMapper();
 		Groupe groupe=modelMapper.map(groupeDto, Groupe.class);
 		
@@ -48,11 +43,17 @@ public class GroupeImpl implements GroupeService {
 		
 		
 		return groupeDto2;
+		}
+		else {
+			throw new RestException("Vous n'avez pas le droit d'exécuter cette requête");
+		}
 	}
 
 	@Override
-	public GroupeDto ModifierGroupe(GroupeDto groupeDto,Long id) {
+	public GroupeDto ModifierGroupe(GroupeDto groupeDto,Long id,String email) {
 		// TODO Auto-generated method stub
+		Utilisateur currentuser=utilisateurRepository.findByemail(email);
+		if(currentuser.getRole().getIdRole()==7 || currentuser.getRole().getIdRole()==8 ) {
 		Groupe groupecheck=groupeRepository.findByidgroup(id);
 		if(groupecheck==null) throw new RestException("Ce groupe n'existe pas ");
 		
@@ -66,23 +67,39 @@ public class GroupeImpl implements GroupeService {
 		
 				
 		return groupeDto2;
+		}
+		else {
+			throw new RestException("Vous n'avez pas le droit d'exécuter cette requête");
+		}
 	}
 
 	@Override
-	public void SupperimerGroupe(Long id) {
+	public void SupperimerGroupe(Long id,String email) {
 		// TODO Auto-generated method stub
+		Utilisateur currentuser=utilisateurRepository.findByemail(email);
+		if(currentuser.getRole().getIdRole()==7) {
 		Groupe groupe=groupeRepository.findByidgroup(id);
 		if(groupe==null) throw new RestException("Ce groupe n'existe pas ");
 		
 		groupeRepository.delete(groupe);
+		}
+		else {
+			throw new RestException("Vous n'avez pas le droit d'exécuter cette requête");
+		}
 
 	}
 
 	@Override
-	public List<GroupeDto> GetAllGroupe() {
+	public List<GroupeDto> GetAllGroupe(String email) {
 		// TODO Auto-generated method stub
-		List<Groupe> groupes;
+		List<Groupe> groupes=new ArrayList<>();
+		Utilisateur currentuser=utilisateurRepository.findByemail(email);
+		if(currentuser.getRole().getIdRole()==7 || currentuser.getRole().getIdRole()==7 ) {
 		groupes = groupeRepository.findAll();
+		}
+		else {
+			groupes=groupeRepository.getgroupbyuser(currentuser.getIdutilisateur());
+		}
 		ModelMapper modelMapper=new ModelMapper();
 
 		List<GroupeDto> groupeDtos=new ArrayList<>();
@@ -96,8 +113,10 @@ public class GroupeImpl implements GroupeService {
 	}
 
 	@Override
-	public GroupeDto Affecte_Utilisateur_Groupe(Long iduser,Long id) {
+	public GroupeDto Affecte_Utilisateur_Groupe(Long iduser,Long id,String email) {
 		// TODO Auto-generated method stub
+		Utilisateur currentuser=utilisateurRepository.findByemail(email);
+		if(currentuser.getRole().getIdRole()==7 || currentuser.getRole().getIdRole()==7 ) {
 		ModelMapper modelMapper=new ModelMapper();
 		
 		Groupe groupe=groupeRepository.findByidgroup(id);
@@ -108,23 +127,34 @@ public class GroupeImpl implements GroupeService {
 		
 		groupeRepository.save(groupe);
 		GroupeDto groupeDto=modelMapper.map(groupe,GroupeDto.class);
-		return groupeDto;
+		return groupeDto;}
+		else {
+			throw new RestException("Vous n'avez pas le droit d'exécuter cette requête");
+		}
 	}
 
 	@Override
-	public GroupeDto GetById(Long id) {
+	public GroupeDto GetById(Long id,String email) {
 		// TODO Auto-generated method stub
+		Utilisateur currentuser=utilisateurRepository.findByemail(email);
+		if(currentuser.getRole().getIdRole()==7 || currentuser.getRole().getIdRole()==7 ) {
 		ModelMapper modelMapper=new ModelMapper();
 		
 		Groupe groupe=groupeRepository.findByidgroup(id);
 		if(groupe==null) throw new RestException("Ce Groupe n'existe pas");
 		GroupeDto groupeDto=modelMapper.map(groupe, GroupeDto.class);
 		return groupeDto;
+		}else {
+			throw new RestException("Vous n'avez pas le droit d'exécuter cette requête");
+		}
 	}
 
 	@Override
-	public GroupeDto Supperimer_User_Groupe(Long idgroupe, Long iduser) {
+	public GroupeDto Supperimer_User_Groupe(Long idgroupe, Long iduser,String email) {
 		// TODO Auto-generated method stub
+		Utilisateur currentuser=utilisateurRepository.findByemail(email);
+		if(currentuser.getRole().getIdRole()==7 || currentuser.getRole().getIdRole()==7 ) {
+
 	    ModelMapper modelMapper = new ModelMapper();
 	    Groupe groupe = groupeRepository.findByidgroup(idgroupe);
 	    
@@ -138,6 +168,10 @@ public class GroupeImpl implements GroupeService {
 	    } else {
 	        throw new RestException("Ce utilisateur n'xiste pas dans Ce groupe");
 	    }
+		}
+		else {
+			throw new RestException("Vous n'avez pas le droit d'exécuter cette requête");
+		}
 	}
 
 	@Override

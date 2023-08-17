@@ -15,10 +15,12 @@ import com.example.hps.entity.Board;
 import com.example.hps.entity.Columnn;
 import com.example.hps.entity.Session;
 import com.example.hps.entity.Task;
+import com.example.hps.entity.Utilisateur;
 import com.example.hps.repository.BoardRepository;
 import com.example.hps.repository.ColumnnRepository;
 import com.example.hps.repository.SessionRepository;
 import com.example.hps.repository.TaskRepository;
+import com.example.hps.repository.UtilisateurRepository;
 import com.example.hps.service.BoardService;
 @Service
 public class BoardServiceImpl implements BoardService  {
@@ -31,12 +33,22 @@ public class BoardServiceImpl implements BoardService  {
 	TaskRepository taskRepository;
 	@Autowired
 	SessionRepository sessionRepository;
+	@Autowired
+	UtilisateurRepository utilisateurRepository;
 	@Override
-	public List<BoardDto> GetAll() {
+	public List<BoardDto> GetAll(String email) {
 		// TODO Auto-generated method stub
-		List<Board> boards=boardRepository.findAll();
-		List<BoardDto> boardDtos=new ArrayList<>();
+		Utilisateur currentuser=utilisateurRepository.findByemail(email);
 		ModelMapper mapper=new ModelMapper();
+		List<Board> boards=new ArrayList<>();
+		if(currentuser.getRole().getIdRole()==7 || currentuser.getRole().getIdRole()==8 ) {
+		 boards=boardRepository.findAll();
+		}
+		else {
+			boards=boardRepository.getBoardByUser(currentuser.getIdutilisateur());
+		}
+		
+		List<BoardDto> boardDtos=new ArrayList<>();
 		for (Board board : boards) {
 			BoardDto boardDto=mapper.map(board,BoardDto.class);
 			boardDtos.add(boardDto);
@@ -46,18 +58,25 @@ public class BoardServiceImpl implements BoardService  {
 	}
 
 	@Override
-	public BoardDto GetById(Long id) {
+	public BoardDto GetById(Long id,String email) {
 		// TODO Auto-generated method stub
+		Utilisateur currentuser=utilisateurRepository.findByemail(email);
+		if(currentuser.getRole().getIdRole()==7 || currentuser.getRole().getIdRole()==8 ) {
 		Board board=boardRepository.findByidboard(id);
 		if(board==null) throw new RestException("Cette Board n'existe Pas");
 		ModelMapper mapper=new ModelMapper();
 		BoardDto boardDto=mapper.map(board, BoardDto.class);
-		return boardDto;
+		return boardDto;}
+		else {
+			throw new RestException("Vous n'avez pas le droit d'exécuter cette requête");
+		}
 	}
 
 	@Override
-	public BoardDto AddBoard(BoardDto boardDto) {
+	public BoardDto AddBoard(BoardDto boardDto,String email) {
 		// TODO Auto-generated method stub
+		Utilisateur currentuser=utilisateurRepository.findByemail(email);
+		if(currentuser.getRole().getIdRole()==7 || currentuser.getRole().getIdRole()==8 ) {
 		ModelMapper modelMapper=new ModelMapper();
 		Board board=modelMapper.map(boardDto,Board.class);
 		for(int i=0;i<boardDto.getColumns().size();i++) {
@@ -79,7 +98,10 @@ public class BoardServiceImpl implements BoardService  {
 		}
 		Board board2=boardRepository.save(board);
 		BoardDto boardDto2=modelMapper.map(board2, BoardDto.class);
-		return boardDto2;
+		return boardDto2;}
+		else {
+			throw new RestException("Vous n'avez pas le droit d'exécuter cette requête");
+		}
 	}
 
 
@@ -117,13 +139,19 @@ public class BoardServiceImpl implements BoardService  {
 	}
 	
 	@Override
-	public void RemoveBoard(Long id) {
+	public void RemoveBoard(Long id,String email) {
+		Utilisateur currentuser=utilisateurRepository.findByemail(email);
+		if(currentuser.getRole().getIdRole()==7 || currentuser.getRole().getIdRole()==8 ) {
 		// TODO Auto-generated method stub
 		Board board=boardRepository.findByidboard(id);
 		if(board==null) throw new RestException("Cette Board n'existe Pas");
 		
 		boardRepository.delete(board);
-
+		}
+		else
+		{
+			throw new RestException("Vous n'avez pas le droit d'exécuter cette requête");
+		}
 	}
 
 	@Override
@@ -172,9 +200,10 @@ public class BoardServiceImpl implements BoardService  {
 	}
 
 	@Override
-	public BoardDto GetBoardBySession(Long idsession) {
+	public BoardDto GetBoardBySession(Long idsession,String email) {
 		// TODO Auto-generated method stub
-
+		Utilisateur currentuser=utilisateurRepository.findByemail(email);
+		if(currentuser.getRole().getIdRole()==7 || currentuser.getRole().getIdRole()==8 ) {
 		Board board=boardRepository.boardbysession(idsession);
 		if(board==null) throw new RestException("Cette Board n'existe pas"); 
 		
@@ -182,9 +211,11 @@ public class BoardServiceImpl implements BoardService  {
 
 		BoardDto boardDto=modelMapper.map(board, BoardDto.class);
 		return boardDto;
+		}
+		else {
+			throw new RestException("Vous n'avez pas le droit d'exécuter cette requête");
+		}
+		}
 	}
 	
 	
-
-
-}

@@ -2,6 +2,7 @@ package com.example.hps.web;
 
 
 import java.io.Console;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,12 +34,12 @@ public class UtilisateurController {
 
 	
 	@PostMapping
-	public ResponseEntity<UtilisateurResponse> AjouterUtilisateur(@RequestBody UtilisateurRequest utilisateurRequest) throws Exception{
+	public ResponseEntity<UtilisateurResponse> AjouterUtilisateur(@RequestBody UtilisateurRequest utilisateurRequest,Principal principal) throws Exception{
 		
 		ModelMapper modelMapper=new ModelMapper();
 		UtilisateurDto utilisateurDto=modelMapper.map(utilisateurRequest, UtilisateurDto.class);
 		
-		UtilisateurDto utilisateurDto2=utilisateurService.AjouterUtilisateur(utilisateurDto);
+		UtilisateurDto utilisateurDto2=utilisateurService.AjouterUtilisateur(utilisateurDto,principal.getName());
 		UtilisateurResponse utilisateurResponse=modelMapper.map(utilisateurDto2, UtilisateurResponse.class);
 		
 		
@@ -62,18 +63,18 @@ public class UtilisateurController {
 	}
 	
 	@DeleteMapping(path = "/{id}")
-	public ResponseEntity<Object> Supperimer(@PathVariable Long id){
+	public ResponseEntity<Object> Supperimer(@PathVariable Long id,Principal principal){
 		
-		utilisateurService.SupperimerUtilisateur(id);
+		utilisateurService.SupperimerUtilisateur(id,principal.getName());
 		return new ResponseEntity<Object>(HttpStatus.NO_CONTENT);
 	}
 	@PutMapping(path = "/{id}")
-	public ResponseEntity<UtilisateurResponse> Update(@RequestBody UtilisateurRequest  UtilisateurRequest,@PathVariable Long id){
+	public ResponseEntity<UtilisateurResponse> Update(@RequestBody UtilisateurRequest  UtilisateurRequest,@PathVariable Long id,Principal principal){
 		
 		ModelMapper modelMapper=new ModelMapper();
 		
 		UtilisateurDto utilisateurDto=modelMapper.map(UtilisateurRequest, UtilisateurDto.class);
-		UtilisateurDto utilisateurDto2=utilisateurService.ModifierUtilisateur(utilisateurDto, id);
+		UtilisateurDto utilisateurDto2=utilisateurService.ModifierUtilisateur(utilisateurDto, id,principal.getName());
 		
 		UtilisateurResponse utilisateurResponse=modelMapper.map(utilisateurDto2, UtilisateurResponse.class);
 		

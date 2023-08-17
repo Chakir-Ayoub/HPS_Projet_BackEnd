@@ -2,12 +2,14 @@ package com.example.hps.service;
 
 import java.util.List;
 
+import org.springframework.security.core.userdetails.UserDetailsService;
+
 import com.example.hps.dto.UtilisateurDto;
 
-public interface UtilisateurService {
-	UtilisateurDto AjouterUtilisateur(UtilisateurDto utilisateurDto);
-	UtilisateurDto ModifierUtilisateur(UtilisateurDto utilisateurDto,Long id);
-	void SupperimerUtilisateur(Long id);
+public interface UtilisateurService extends UserDetailsService {
+	UtilisateurDto AjouterUtilisateur(UtilisateurDto utilisateurDto,String email);
+	UtilisateurDto ModifierUtilisateur(UtilisateurDto utilisateurDto,Long id,String email);
+	void SupperimerUtilisateur(Long id,String email);
 	List<UtilisateurDto> GetAllUser();
 	UtilisateurDto GetById(Long id);
 	UtilisateurDto AjouterAbsenceToUtilisateur(Long iduser,Long idabsence );
@@ -21,4 +23,6 @@ public interface UtilisateurService {
 	UtilisateurDto AjouterSessionToUtilisateur(long iduser,Long idsession);
 	UtilisateurDto SupperimerSessionToUser(long iduser,long idsession);
 	UtilisateurDto GetUserBySession(Long idsession);
+	UtilisateurDto getUser(String email);
+
 }

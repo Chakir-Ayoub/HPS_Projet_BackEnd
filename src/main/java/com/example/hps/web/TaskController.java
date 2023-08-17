@@ -1,5 +1,6 @@
 package com.example.hps.web;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,9 +30,9 @@ public class TaskController {
 	private TaskService taskService;
 	
 	@GetMapping
-	public ResponseEntity<List<TaskResponse>> GetAll(){
+	public ResponseEntity<List<TaskResponse>> GetAll(Principal principal){
 		
-		List<TaskDto> taskDtos=taskService.GetAll();
+		List<TaskDto> taskDtos=taskService.GetAll(principal.getName());
 		List<TaskResponse> taskResponses=new ArrayList<>();
 		ModelMapper modelMapper=new ModelMapper();
 		for (TaskDto taskDto : taskDtos) {
@@ -52,10 +53,10 @@ public class TaskController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<TaskResponse> AddTask(@RequestBody TaskRequest taskRequest){
+	public ResponseEntity<TaskResponse> AddTask(@RequestBody TaskRequest taskRequest,Principal principal){
 		ModelMapper modelMapper=new ModelMapper();
 		TaskDto taskDto=modelMapper.map(taskRequest, TaskDto.class);
-		TaskDto taskDto2=taskService.AddTask(taskDto);
+		TaskDto taskDto2=taskService.AddTask(taskDto,principal.getName());
 		
 		TaskResponse taskResponse=modelMapper.map(taskDto2, TaskResponse.class);
 		

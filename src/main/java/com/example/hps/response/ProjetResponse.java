@@ -1,8 +1,6 @@
 package com.example.hps.response;
 
 import java.time.LocalDate;
-import java.util.Date;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

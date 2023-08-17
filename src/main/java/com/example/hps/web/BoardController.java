@@ -1,5 +1,6 @@
 package com.example.hps.web;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,9 +35,9 @@ public class BoardController {
 	private BoardService boardService;
 	
 	@GetMapping
-	public ResponseEntity<List<BoardResponse>> GetAll(){
+	public ResponseEntity<List<BoardResponse>> GetAll(Principal principal){
 		ModelMapper modelMapper=new ModelMapper();
-		List<BoardDto> boardDtos=boardService.GetAll();
+		List<BoardDto> boardDtos=boardService.GetAll(principal.getName());
 		List<BoardResponse> boardResponses=new ArrayList<>();
 		for (BoardDto boardDto : boardDtos) {
 			BoardResponse boardResponse=modelMapper.map(boardDto, BoardResponse.class);
@@ -46,18 +47,18 @@ public class BoardController {
 	}
 	
 	@GetMapping(path = "/{id}")
-	public ResponseEntity<BoardResponse> GetById(@PathVariable Long id){
+	public ResponseEntity<BoardResponse> GetById(@PathVariable Long id,Principal principal){
 		ModelMapper modelMapper=new ModelMapper();
-		BoardDto boardDtos=boardService.GetById(id);
+		BoardDto boardDtos=boardService.GetById(id,principal.getName());
 		BoardResponse boardResponse=modelMapper.map(boardDtos, BoardResponse.class);
 		return new ResponseEntity<BoardResponse> (boardResponse,HttpStatus.OK);
 	}
 	
 	@PostMapping
-	public ResponseEntity<BoardResponse> AddBoard(@RequestBody BoardRequest boardRequest){
+	public ResponseEntity<BoardResponse> AddBoard(@RequestBody BoardRequest boardRequest,Principal principal){
 		ModelMapper modelMapper=new ModelMapper();
 		BoardDto boardDto=modelMapper.map(boardRequest, BoardDto.class);
-		BoardDto boardDto2=boardService.AddBoard(boardDto);
+		BoardDto boardDto2=boardService.AddBoard(boardDto,principal.getName());
 		BoardResponse boardResponse=modelMapper.map(boardDto2, BoardResponse.class);
 		
 		return new ResponseEntity<BoardResponse>(boardResponse,HttpStatus.OK);
@@ -77,8 +78,8 @@ public class BoardController {
 	
 	
 	@DeleteMapping("{id}")
-	public ResponseEntity<Object> Remove(@PathVariable Long id){
-		boardService.RemoveBoard(id);
+	public ResponseEntity<Object> Remove(@PathVariable Long id,Principal principal){
+		boardService.RemoveBoard(id,principal.getName());
 		return new ResponseEntity<Object>(HttpStatus.OK);
 	}
 	
@@ -118,9 +119,9 @@ public class BoardController {
 	}
 	
 	@GetMapping(path = "getboardbysession/{idsession}")
-	public ResponseEntity<BoardResponse> GetBoardBySession(@PathVariable Long idsession){
+	public ResponseEntity<BoardResponse> GetBoardBySession(@PathVariable Long idsession,Principal principal){
 		
-		BoardDto boardDto=boardService.GetBoardBySession(idsession);
+		BoardDto boardDto=boardService.GetBoardBySession(idsession,principal.getName());
 		ModelMapper modelMapper=new ModelMapper();
 		
 		BoardResponse boardResponse=modelMapper.map(boardDto, BoardResponse.class);

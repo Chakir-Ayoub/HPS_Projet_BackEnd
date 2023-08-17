@@ -1,5 +1,6 @@
 package com.example.hps.web;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,11 +30,11 @@ public class AbsenceController {
 	private AbsenceService absenceService;
 	
 	@GetMapping
-	public ResponseEntity<List<AbsenceResponse>> GetAll(){
+	public ResponseEntity<List<AbsenceResponse>> GetAll(Principal principal){
 		
 		List<AbsenceResponse> absenceResponses=new ArrayList<>();
 		
-		List<AbsenceDto> absenceDtos=absenceService.GetAll();
+		List<AbsenceDto> absenceDtos=absenceService.GetAll(principal.getName());
 		for(AbsenceDto absenceDto: absenceDtos) {
 			ModelMapper modelMapper=new ModelMapper();
 			AbsenceResponse absenceResponse	=modelMapper.map(absenceDto, AbsenceResponse.class);
@@ -55,12 +56,12 @@ public class AbsenceController {
 	}
 	
 	@PutMapping(path = "/{id}")
-	public ResponseEntity<AbsenceResponse> Update(@RequestBody AbsenceRequest absenceRequest, @PathVariable Long id){
+	public ResponseEntity<AbsenceResponse> Update(@RequestBody AbsenceRequest absenceRequest, @PathVariable Long id,Principal principal){
 		
 		ModelMapper  modelMapper=new ModelMapper();
 		
 		AbsenceDto absenceDto=modelMapper.map(absenceRequest, AbsenceDto.class);
-		AbsenceDto ModificationAbsence=absenceService.ModifierAbsence(absenceDto, id);
+		AbsenceDto ModificationAbsence=absenceService.ModifierAbsence(absenceDto, id,principal.getName());
 		
 		AbsenceResponse absenceResponse=modelMapper.map(ModificationAbsence, AbsenceResponse.class);
 		
@@ -68,14 +69,14 @@ public class AbsenceController {
 	}
 	
 	@DeleteMapping(path = "/{id}")
-	public ResponseEntity<Object> Delete(@PathVariable Long id){
-		absenceService.SupperimerAbsence(id);
+	public ResponseEntity<Object> Delete(@PathVariable Long id,Principal principal){
+		absenceService.SupperimerAbsence(id,principal.getName());
 		return new ResponseEntity<Object>(HttpStatus.NO_CONTENT);
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<AbsenceResponse> GetById(@PathVariable Long id){
-		AbsenceDto absenceDto= absenceService.GetById(id);
+	public ResponseEntity<AbsenceResponse> GetById(Principal principal,@PathVariable Long id){
+		AbsenceDto absenceDto= absenceService.GetById(id,principal.getName());
 		ModelMapper modelMapper=new ModelMapper();
 		AbsenceResponse absenceResponse=modelMapper.map(absenceDto, AbsenceResponse.class);
 		

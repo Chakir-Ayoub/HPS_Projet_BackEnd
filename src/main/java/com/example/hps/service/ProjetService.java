@@ -6,13 +6,13 @@ import java.util.List;
 import com.example.hps.dto.ProjetDto;
 
 public interface ProjetService {
-	ProjetDto AjouterProjet(ProjetDto projetDto);
-    ProjetDto ModifierProjet(ProjetDto projetDto,Long id);
-	void SupperimerProjet(Long id);
-	List<ProjetDto> GetAllProjet();
-	ProjetDto GetById(Long id);
+	ProjetDto AjouterProjet(ProjetDto projetDto,String email);
+    ProjetDto ModifierProjet(ProjetDto projetDto,Long id,String email);
+	void SupperimerProjet(Long id,String email);
+	List<ProjetDto> GetAllProjet(String email);
+	ProjetDto GetById(Long id,String email);
 	Long GetCountProject();
 	Long GetProjectStar();
-	ProjetDto GetProjectBysesssion(Long idsession);
-	void DropProjectByDate();
+	ProjetDto GetProjectBysesssion(Long idsession,String email);
+	void DropProjectByDate(String email);
 }
