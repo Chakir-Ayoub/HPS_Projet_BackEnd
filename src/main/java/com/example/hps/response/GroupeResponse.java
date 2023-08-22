@@ -1,6 +1,5 @@
 package com.example.hps.response;
 
-import java.util.List;
 
 import lombok.Data;
 
@@ -8,5 +7,5 @@ import lombok.Data;
 public class GroupeResponse {
 	private Long idgroup;
 	private String nomgroupe;
-	private List<UtilisateurResponse> utilisateurs;
+	//private List<UtilisateurResponse> utilisateurs;
 }

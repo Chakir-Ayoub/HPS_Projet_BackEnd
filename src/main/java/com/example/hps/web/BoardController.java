@@ -128,4 +128,14 @@ public class BoardController {
 		
 		return new ResponseEntity<BoardResponse>(boardResponse,HttpStatus.OK);
 	}
+	
+	@GetMapping(path = "getboardbyuser/{idprojet}")
+	public ResponseEntity<BoardResponse> GetBoardByProject(@PathVariable Long idprojet){
+		BoardDto boardDto=boardService.GetBoardByProject(idprojet);
+		ModelMapper modelMapper=new ModelMapper();
+		
+		BoardResponse boardResponse=modelMapper.map(boardDto, BoardResponse.class);
+		return new ResponseEntity<BoardResponse>(boardResponse,HttpStatus.ACCEPTED);
+	}
+	
 }

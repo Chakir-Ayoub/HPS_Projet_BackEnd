@@ -4,15 +4,16 @@ import java.util.List;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
 
+import com.example.hps.dto.AbsenceDto;
 import com.example.hps.dto.UtilisateurDto;
 
 public interface UtilisateurService extends UserDetailsService {
-	UtilisateurDto AjouterUtilisateur(UtilisateurDto utilisateurDto,String email);
+	UtilisateurDto AjouterUtilisateur(UtilisateurDto utilisateurDto);
 	UtilisateurDto ModifierUtilisateur(UtilisateurDto utilisateurDto,Long id,String email);
 	void SupperimerUtilisateur(Long id,String email);
 	List<UtilisateurDto> GetAllUser();
 	UtilisateurDto GetById(Long id);
-	UtilisateurDto AjouterAbsenceToUtilisateur(Long iduser,Long idabsence );
+	UtilisateurDto AjouterAbsenceToUtilisateur(Long iduser,AbsenceDto absenceDto );
 	UtilisateurDto SupperimerAbsenceToUtilisateur(Long iduser,Long idabsence );
 	Long NombreAbsenceNonJustifier(Long id);
 	Long NombreAbsenceJustifier(Long id);
@@ -24,5 +25,6 @@ public interface UtilisateurService extends UserDetailsService {
 	UtilisateurDto SupperimerSessionToUser(long iduser,long idsession);
 	UtilisateurDto GetUserBySession(Long idsession);
 	UtilisateurDto getUser(String email);
+	
 
 }

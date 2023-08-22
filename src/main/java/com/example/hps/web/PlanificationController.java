@@ -21,9 +21,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.hps.dto.PlanificationDto;
 import com.example.hps.dto.SessionDto;
-import com.example.hps.entity.Planification;
-import com.example.hps.entity.Session;
-import com.example.hps.repository.PlanificationRepository;
 import com.example.hps.request.PlanificationRequest;
 import com.example.hps.response.PlanificationResponse;
 import com.example.hps.service.PlanificationService;

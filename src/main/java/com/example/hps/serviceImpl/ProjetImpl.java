@@ -28,7 +28,7 @@ public class ProjetImpl implements ProjetService {
 	public ProjetDto AjouterProjet(ProjetDto projet,String email) {
 		// TODO Auto-generated method stub
 		Utilisateur currentuser=utilisateurRepository.findByemail(email);
-		if(currentuser.getRole().getIdRole()==7 || currentuser.getRole().getIdRole()==8 ) {
+		if(currentuser.getRole().getIdRole()==1 || currentuser.getRole().getIdRole()==2 ) {
 		Projet projetCheck = projetRepository.findBynomprojet(projet.getNomprojet());
 		
 		if (projetCheck != null) throw new RestException("Ce Projet existe déjà !");
@@ -59,7 +59,7 @@ public class ProjetImpl implements ProjetService {
 
 		// TODO Auto-generated method stub
 		Utilisateur currentuser=utilisateurRepository.findByemail(email);
-		if(currentuser.getRole().getIdRole()==7 || currentuser.getRole().getIdRole()==8 ) {
+		if(currentuser.getRole().getIdRole()==1 || currentuser.getRole().getIdRole()==2 ) {
 		Projet projetCheck=projetRepository.findByidprojet(id);
 		if(projetCheck==null) throw new RestException("Ce Projet il n'existe pas !");
 		
@@ -96,7 +96,7 @@ public class ProjetImpl implements ProjetService {
 	public void SupperimerProjet(Long id,String email) {
 		// TODO Auto-generated method stub
 		Utilisateur currentuser=utilisateurRepository.findByemail(email);
-		if(currentuser.getRole().getIdRole()==7 ) {
+		if(currentuser.getRole().getIdRole()==1 ) {
 		Projet projetCheck=projetRepository.findByidprojet(id);
 		if(projetCheck==null) throw new RuntimeException("Ce Projet il n'existe pas !");
 		
@@ -111,7 +111,7 @@ public class ProjetImpl implements ProjetService {
 		// TODO Auto-generated method stub
 		Utilisateur currentuser=utilisateurRepository.findByemail(email);
 		List<Projet> projets=new ArrayList<>();
-		if(currentuser.getRole().getIdRole()==7 ) {
+		if(currentuser.getRole().getIdRole()==1 || currentuser.getRole().getIdRole()==2 ) {
 		projets=projetRepository.findAll();
 		}else {
 			projets=projetRepository.GetProjectByUser(currentuser.getIdutilisateur());	
@@ -140,7 +140,7 @@ public class ProjetImpl implements ProjetService {
 	public ProjetDto GetById(Long id,String email) {
 		// TODO Auto-generated method stub
 		Utilisateur currentuser=utilisateurRepository.findByemail(email);
-		if(currentuser.getRole().getIdRole()==7 || currentuser.getRole().getIdRole()==8 ) {
+		if(currentuser.getRole().getIdRole()==1 || currentuser.getRole().getIdRole()==2 ) {
 		ModelMapper modelMapper=new ModelMapper();
 		
 		Projet projet=projetRepository.findByidprojet(id);
@@ -168,7 +168,7 @@ public class ProjetImpl implements ProjetService {
 	@Override
 	public ProjetDto GetProjectBysesssion(Long idsession,String email) {
 		Utilisateur currentuser=utilisateurRepository.findByemail(email);
-		if(currentuser.getRole().getIdRole()==7 || currentuser.getRole().getIdRole()==8 ) {
+		if(currentuser.getRole().getIdRole()==1 || currentuser.getRole().getIdRole()==2 ) {
 		// TODO Auto-generated method stub
 		ModelMapper modelMapper=new ModelMapper();
 		Projet projet=projetRepository.GetProjectBySession(idsession);
@@ -186,7 +186,7 @@ public class ProjetImpl implements ProjetService {
 	public void DropProjectByDate(String email) {
 		// TODO Auto-generated method stub
 		Utilisateur currentuser=utilisateurRepository.findByemail(email);
-		if(currentuser.getRole().getIdRole()==7 || currentuser.getRole().getIdRole()==8 ) {
+		if(currentuser.getRole().getIdRole()==1 || currentuser.getRole().getIdRole()==2 ) {
 		this.projetRepository.DropProjectByDate();	
 		}
 		else {

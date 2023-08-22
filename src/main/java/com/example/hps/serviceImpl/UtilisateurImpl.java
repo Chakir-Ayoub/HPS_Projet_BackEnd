@@ -1,5 +1,6 @@
 package com.example.hps.serviceImpl;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import org.modelmapper.ModelMapper;
@@ -12,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.hps.Exceptions.RestException;
+import com.example.hps.dto.AbsenceDto;
 import com.example.hps.dto.UtilisateurDto;
 import com.example.hps.entity.Absence;
 import com.example.hps.entity.Session;
@@ -33,10 +35,10 @@ public class UtilisateurImpl implements UtilisateurService {
 	@Autowired
 	BCryptPasswordEncoder bCryptPasswordEncoder;
 	@Override
-	public UtilisateurDto AjouterUtilisateur(UtilisateurDto utilisateurDto,String email) {
+	public UtilisateurDto AjouterUtilisateur(UtilisateurDto utilisateurDto) {
 		// TODO Auto-generated method stub
-		Utilisateur currentuser=utilisateurRepository.findByemail(email);
-		if(currentuser.getRole().getIdRole()==7 || currentuser.getRole().getIdRole()==8 ) {
+		/*Utilisateur currentuser=utilisateurRepository.findByemail(email);
+		if(currentuser.getRole().getIdRole()==7 || currentuser.getRole().getIdRole()==8 ) {*/
 		Utilisateur utilisateurcheckemail=utilisateurRepository.findByemail(utilisateurDto.getEmail());
 		Utilisateur utilisateurChecktelephone=utilisateurRepository.findBytelephone(utilisateurDto.getTelephone());
 		
@@ -54,34 +56,35 @@ public class UtilisateurImpl implements UtilisateurService {
 		
 		return utilisateurDto2;
 		}
-		else {
+	/*	else {
 			throw new RestException("Vous n'avez pas le droit d'exécuter cette requête");
-		}
-	}
+		}*/
+	//}
 
 	@Override
 	public UtilisateurDto ModifierUtilisateur(UtilisateurDto utilisateurDto,Long id,String email) {
 		// TODO Auto-generated method stub
 		Utilisateur currentuser=utilisateurRepository.findByemail(email);
-		if(currentuser.getRole().getIdRole()==7 || currentuser.getRole().getIdRole()==8 ) {
+		if(currentuser.getRole().getIdRole()==1 || currentuser.getRole().getIdRole()==2 ) {
 		Utilisateur utilisateurcheck=utilisateurRepository.findByidutilisateur(id);
 		if(utilisateurcheck==null) throw new RestException("Ce utiisateur n'existe pas ");
-		
+		ModelMapper modelMapper=new ModelMapper();
+
 		Utilisateur utilisateurcheckemail=utilisateurRepository.findByemail(utilisateurDto.getEmail());
 		Utilisateur utilisateurChecktelephone=utilisateurRepository.findBytelephone(utilisateurDto.getTelephone());
 		
-		if(utilisateurcheckemail!=null || utilisateurChecktelephone!=null ) throw new RestException("Vous Pouvez pas Ajouté deux utilisateur avec méme email ou bien le méme numéro de téléphone ");
+	//	if(utilisateurcheckemail!=null || utilisateurChecktelephone!=null ) throw new RestException("Vous Pouvez pas Ajouté deux utilisateur avec méme email ou bien le méme numéro de téléphone ");
 		
-
+		Utilisateur utilisateur=modelMapper.map(utilisateurDto,Utilisateur.class);
 		
 		utilisateurcheck.setEmail(utilisateurDto.getEmail());
 		utilisateurcheck.setNom_utilisateur(utilisateurDto.getNom_utilisateur());
 		utilisateurcheck.setPrenom_utilisateur(utilisateurcheck.getPrenom_utilisateur());
 		utilisateurcheck.setTelephone(utilisateurcheck.getTelephone());
-		
+		utilisateurcheck.setGroupe(utilisateur.getGroupe());
+		utilisateurcheck.setRole(utilisateur.getRole());
 		Utilisateur ObjetModifier=utilisateurRepository.save(utilisateurcheck);
 		
-		ModelMapper modelMapper=new ModelMapper();
 		UtilisateurDto utilisateurDto2=modelMapper.map(ObjetModifier, UtilisateurDto.class);
 		
 		return utilisateurDto2;}
@@ -94,7 +97,7 @@ public class UtilisateurImpl implements UtilisateurService {
 	public void SupperimerUtilisateur(Long id,String email) {
 		// TODO Auto-generated method stub
 		Utilisateur currentuser=utilisateurRepository.findByemail(email);
-		if(currentuser.getRole().getIdRole()==7 ) {
+		if(currentuser.getRole().getIdRole()==1 ) {
 		Utilisateur utilisateur=utilisateurRepository.findByidutilisateur(id);
 		if(utilisateur==null) throw new RestException("Ce Utilisateur il n'existe pas");
 		utilisateurRepository.delete(utilisateur);
@@ -124,12 +127,17 @@ public class UtilisateurImpl implements UtilisateurService {
 
 
 	@Override
-	public UtilisateurDto AjouterAbsenceToUtilisateur(Long iduser, Long idabsence) {
+	public UtilisateurDto AjouterAbsenceToUtilisateur(Long iduser,AbsenceDto absenceDto) {
 		// TODO Auto-generated method stub
 		ModelMapper modelMapper=new ModelMapper();
+		LocalDate currentdate=LocalDate.now();
+
+		if(currentdate.isAfter(absenceDto.getDate_debut())) {throw new RestException("La date de Debut n'est pas acceptée ");}
+		if(currentdate.isAfter(absenceDto.getDate_fin())) {throw new RestException("La date de Fin n'est pas acceptée ");}
+		if (currentdate.isEqual(absenceDto.getDate_fin())) { throw new RestException("La date de Fin  est la même que la date actuelle.");}
 		
 		Utilisateur utilisateur=utilisateurRepository.findByidutilisateur(iduser);
-		Absence absence=absenceRepository.findByidAbsence(idabsence);
+		Absence absence=modelMapper.map(absenceDto, Absence.class);
 		
 		if(utilisateur==null) {throw new RestException("Ce utilisateur n'existe pas ");}
 		if(absence==null) {throw new RestException("Ce Absence n'existe pas");}
@@ -283,9 +291,8 @@ public class UtilisateurImpl implements UtilisateurService {
 		// TODO Auto-generated method stub
 		Utilisateur userEntity=utilisateurRepository.findByemail(email);
 		if(userEntity==null) throw new RuntimeException("User Not Exist");
-
 		UtilisateurDto dto=new UtilisateurDto();
-		BeanUtils.copyProperties(userEntity, dto);
+		BeanUtils.copyProperties(userEntity, dto);		
 		return dto;
 	}
 
@@ -293,11 +300,8 @@ public class UtilisateurImpl implements UtilisateurService {
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 		// TODO Auto-generated method stub
 		Utilisateur userEntity=utilisateurRepository.findByemail(email);
-		
 		if(userEntity==null) throw new RuntimeException(email);
-		
 		return new User(userEntity.getEmail(),userEntity.getEncryptionpassword(), new ArrayList<>());	
-		
 	}
 	
 

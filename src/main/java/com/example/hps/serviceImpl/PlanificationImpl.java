@@ -32,7 +32,7 @@ public class PlanificationImpl implements PlanificationService {
 	public PlanificationDto AjouterPlanification(PlanificationDto planificationDto,String email) {
 		// TODO Auto-generated method stub
 		Utilisateur currentuser=utilisateurRepository.findByemail(email);
-		if(currentuser.getRole().getIdRole()==7 || currentuser.getRole().getIdRole()==8 ) {
+		if(currentuser.getRole().getIdRole()==1 || currentuser.getRole().getIdRole()==2 ) {
 		Planification planificationCheck=planificationRepository.findBydatePlanification(planificationDto.getDatePlanification());
 		
 		if(planificationCheck!=null) {
@@ -68,7 +68,7 @@ public class PlanificationImpl implements PlanificationService {
 	public PlanificationDto ModifierPlanification(PlanificationDto planificationDto,LocalDate date,String email) {
 		// TODO Auto-generated method stub
 		Utilisateur currentuser=utilisateurRepository.findByemail(email);
-		if(currentuser.getRole().getIdRole()==7 || currentuser.getRole().getIdRole()==8 ) {
+		if(currentuser.getRole().getIdRole()==1 || currentuser.getRole().getIdRole()==2 ) {
 		Planification planificationCheck=planificationRepository.findBydatePlanification(date);
 		if(planificationCheck==null) throw new RestException("Cette planification n'existe pas ! ");
 		
@@ -91,7 +91,7 @@ public class PlanificationImpl implements PlanificationService {
 	public void SupperimerPlanification(LocalDate date,String email) {
 		// TODO Auto-generated method stub
 		Utilisateur currentuser=utilisateurRepository.findByemail(email);
-		if(currentuser.getRole().getIdRole()==7 || currentuser.getRole().getIdRole()==8 ) {
+		if(currentuser.getRole().getIdRole()==1 || currentuser.getRole().getIdRole()==2 ) {
 		Planification planification=planificationRepository.findBydatePlanification(date);
 		if(planification==null) throw new RestException("Cette Planification n'existe pas ! ");
 		planificationRepository.delete(planification);
@@ -106,7 +106,7 @@ public class PlanificationImpl implements PlanificationService {
 		// TODO Auto-generated method stub
 		Utilisateur currentuser=utilisateurRepository.findByemail(email);
 		List<Planification> planifications=new ArrayList<>();
-		if(currentuser.getRole().getIdRole()==7 || currentuser.getRole().getIdRole()==8 ) {
+		if(currentuser.getRole().getIdRole()==1 || currentuser.getRole().getIdRole()==2 ) {
 		planifications=planificationRepository.findAll();
 		}
 		else {
@@ -127,7 +127,7 @@ public class PlanificationImpl implements PlanificationService {
 	public PlanificationDto AffecteSessionToplanification(SessionDto session, LocalDate Date,String email) {
 		// TODO Auto-generated method stub
 		Utilisateur currentuser=utilisateurRepository.findByemail(email);
-		if(currentuser.getRole().getIdRole()==7 || currentuser.getRole().getIdRole()==8 ) {
+		if(currentuser.getRole().getIdRole()==1 || currentuser.getRole().getIdRole()==2 ) {
 		ModelMapper modelMapper=new ModelMapper();
 	//	Session session=sessionRepository.findByidsession(idsession);
 		Planification planification=planificationRepository.findBydatePlanification(Date);
@@ -149,7 +149,7 @@ public class PlanificationImpl implements PlanificationService {
 	public PlanificationDto SupperimerSessionToPlanification(Long idsession, Long idplanification,String email) {
 		// TODO Auto-generated method stub
 		Utilisateur currentuser=utilisateurRepository.findByemail(email);
-		if(currentuser.getRole().getIdRole()==8 ) {
+		if(currentuser.getRole().getIdRole()==1 ) {
 		ModelMapper modelMapper=new ModelMapper();
 		
 		Session session=sessionRepository.findByidsession(idsession);

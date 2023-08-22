@@ -41,7 +41,7 @@ public class BoardServiceImpl implements BoardService  {
 		Utilisateur currentuser=utilisateurRepository.findByemail(email);
 		ModelMapper mapper=new ModelMapper();
 		List<Board> boards=new ArrayList<>();
-		if(currentuser.getRole().getIdRole()==7 || currentuser.getRole().getIdRole()==8 ) {
+		if(currentuser.getRole().getIdRole()==1 || currentuser.getRole().getIdRole()==2 ) {
 		 boards=boardRepository.findAll();
 		}
 		else {
@@ -61,7 +61,7 @@ public class BoardServiceImpl implements BoardService  {
 	public BoardDto GetById(Long id,String email) {
 		// TODO Auto-generated method stub
 		Utilisateur currentuser=utilisateurRepository.findByemail(email);
-		if(currentuser.getRole().getIdRole()==7 || currentuser.getRole().getIdRole()==8 ) {
+		if(currentuser.getRole().getIdRole()==1 || currentuser.getRole().getIdRole()==2 ) {
 		Board board=boardRepository.findByidboard(id);
 		if(board==null) throw new RestException("Cette Board n'existe Pas");
 		ModelMapper mapper=new ModelMapper();
@@ -76,7 +76,7 @@ public class BoardServiceImpl implements BoardService  {
 	public BoardDto AddBoard(BoardDto boardDto,String email) {
 		// TODO Auto-generated method stub
 		Utilisateur currentuser=utilisateurRepository.findByemail(email);
-		if(currentuser.getRole().getIdRole()==7 || currentuser.getRole().getIdRole()==8 ) {
+		if(currentuser.getRole().getIdRole()==1 || currentuser.getRole().getIdRole()==2 ) {
 		ModelMapper modelMapper=new ModelMapper();
 		Board board=modelMapper.map(boardDto,Board.class);
 		for(int i=0;i<boardDto.getColumns().size();i++) {
@@ -141,7 +141,7 @@ public class BoardServiceImpl implements BoardService  {
 	@Override
 	public void RemoveBoard(Long id,String email) {
 		Utilisateur currentuser=utilisateurRepository.findByemail(email);
-		if(currentuser.getRole().getIdRole()==7 || currentuser.getRole().getIdRole()==8 ) {
+		if(currentuser.getRole().getIdRole()==1 || currentuser.getRole().getIdRole()==2 ) {
 		// TODO Auto-generated method stub
 		Board board=boardRepository.findByidboard(id);
 		if(board==null) throw new RestException("Cette Board n'existe Pas");
@@ -203,7 +203,7 @@ public class BoardServiceImpl implements BoardService  {
 	public BoardDto GetBoardBySession(Long idsession,String email) {
 		// TODO Auto-generated method stub
 		Utilisateur currentuser=utilisateurRepository.findByemail(email);
-		if(currentuser.getRole().getIdRole()==7 || currentuser.getRole().getIdRole()==8 ) {
+		if(currentuser.getRole().getIdRole()==1 || currentuser.getRole().getIdRole()==2 ) {
 		Board board=boardRepository.boardbysession(idsession);
 		if(board==null) throw new RestException("Cette Board n'existe pas"); 
 		
@@ -216,6 +216,15 @@ public class BoardServiceImpl implements BoardService  {
 			throw new RestException("Vous n'avez pas le droit d'exécuter cette requête");
 		}
 		}
+
+	@Override
+	public BoardDto GetBoardByProject(Long idproject) {
+		// TODO Auto-generated method stub
+		Board board=boardRepository.getboardbyproject(idproject);
+		ModelMapper modelMapper=new ModelMapper();
+		BoardDto boardDto=modelMapper.map(board, BoardDto.class);
+		return boardDto;
+	}
 	}
 	
 	

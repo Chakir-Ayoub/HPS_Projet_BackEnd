@@ -39,7 +39,7 @@ public class UtilisateurRequest {
 	
 	private Groupe groupe;
 	private List<SessionRequest> session;	
-	private UtilisateurRequest utilisateur;
+	//private UtilisateurRequest utilisateur;
 	private RoleRequest role;
 
 }

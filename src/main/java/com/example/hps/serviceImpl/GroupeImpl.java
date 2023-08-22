@@ -31,7 +31,8 @@ public class GroupeImpl implements GroupeService {
 	public GroupeDto AjouterGroupe(GroupeDto groupeDto,String email) {
 		// TODO Auto-generated method stub
 		Utilisateur currentuser=utilisateurRepository.findByemail(email);
-		if(currentuser.getRole().getIdRole()==7 ) {
+		
+		if(currentuser.getRole().getIdRole()==1 || currentuser.getRole().getIdRole()==2 ) {
 		Groupe groupecheck=groupeRepository.findBynomgroupe(groupeDto.getNomgroupe());
 		if(groupecheck!=null) throw new RestException("Ce groupe il existe déja");
 		
@@ -53,7 +54,7 @@ public class GroupeImpl implements GroupeService {
 	public GroupeDto ModifierGroupe(GroupeDto groupeDto,Long id,String email) {
 		// TODO Auto-generated method stub
 		Utilisateur currentuser=utilisateurRepository.findByemail(email);
-		if(currentuser.getRole().getIdRole()==7 || currentuser.getRole().getIdRole()==8 ) {
+		if(currentuser.getRole().getIdRole()==1 || currentuser.getRole().getIdRole()==2 ) {
 		Groupe groupecheck=groupeRepository.findByidgroup(id);
 		if(groupecheck==null) throw new RestException("Ce groupe n'existe pas ");
 		
@@ -94,7 +95,7 @@ public class GroupeImpl implements GroupeService {
 		// TODO Auto-generated method stub
 		List<Groupe> groupes=new ArrayList<>();
 		Utilisateur currentuser=utilisateurRepository.findByemail(email);
-		if(currentuser.getRole().getIdRole()==7 || currentuser.getRole().getIdRole()==7 ) {
+		if(currentuser.getRole().getIdRole()==1 || currentuser.getRole().getIdRole()==2 ) {
 		groupes = groupeRepository.findAll();
 		}
 		else {
@@ -116,7 +117,7 @@ public class GroupeImpl implements GroupeService {
 	public GroupeDto Affecte_Utilisateur_Groupe(Long iduser,Long id,String email) {
 		// TODO Auto-generated method stub
 		Utilisateur currentuser=utilisateurRepository.findByemail(email);
-		if(currentuser.getRole().getIdRole()==7 || currentuser.getRole().getIdRole()==7 ) {
+		if(currentuser.getRole().getIdRole()==1 || currentuser.getRole().getIdRole()==2 ) {
 		ModelMapper modelMapper=new ModelMapper();
 		
 		Groupe groupe=groupeRepository.findByidgroup(id);
@@ -137,7 +138,7 @@ public class GroupeImpl implements GroupeService {
 	public GroupeDto GetById(Long id,String email) {
 		// TODO Auto-generated method stub
 		Utilisateur currentuser=utilisateurRepository.findByemail(email);
-		if(currentuser.getRole().getIdRole()==7 || currentuser.getRole().getIdRole()==7 ) {
+		if(currentuser.getRole().getIdRole()==1 || currentuser.getRole().getIdRole()==2 ) {
 		ModelMapper modelMapper=new ModelMapper();
 		
 		Groupe groupe=groupeRepository.findByidgroup(id);
@@ -153,7 +154,7 @@ public class GroupeImpl implements GroupeService {
 	public GroupeDto Supperimer_User_Groupe(Long idgroupe, Long iduser,String email) {
 		// TODO Auto-generated method stub
 		Utilisateur currentuser=utilisateurRepository.findByemail(email);
-		if(currentuser.getRole().getIdRole()==7 || currentuser.getRole().getIdRole()==7 ) {
+		if(currentuser.getRole().getIdRole()==1 || currentuser.getRole().getIdRole()==2 ) {
 
 	    ModelMapper modelMapper = new ModelMapper();
 	    Groupe groupe = groupeRepository.findByidgroup(idgroupe);

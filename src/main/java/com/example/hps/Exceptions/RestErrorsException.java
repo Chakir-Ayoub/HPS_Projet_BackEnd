@@ -6,9 +6,7 @@ import java.util.Set;
 
 import org.springframework.http.HttpStatus;
 
-import lombok.Data;
 
-@Data
 public class RestErrorsException extends RuntimeException {
 	private static final long serialVersionUID = 1L;
 	private String message;

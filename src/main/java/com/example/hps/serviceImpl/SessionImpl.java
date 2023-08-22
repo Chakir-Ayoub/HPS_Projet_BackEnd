@@ -27,7 +27,7 @@ public class SessionImpl implements SessionService {
 	public SessionDto AjouterSession(SessionDto sessionDto,String email) {
 		// TODO Auto-generated method stub
 		Utilisateur currentuser=utilisateurRepository.findByemail(email);
-		if(currentuser.getRole().getIdRole()==7 || currentuser.getRole().getIdRole()==8 ) {
+		if(currentuser.getRole().getIdRole()==1 || currentuser.getRole().getIdRole()==2 ) {
 		Session sessioncheck=sessionRepository.findBynomsession(sessionDto.getNomsession());
 		
 		ModelMapper modelMapper =new ModelMapper();
@@ -50,7 +50,7 @@ public class SessionImpl implements SessionService {
 	public SessionDto ModifierSession(SessionDto sessionDto,Long id,String email) {
 		// TODO Auto-generated method stub
 		Utilisateur currentuser=utilisateurRepository.findByemail(email);
-		if(currentuser.getRole().getIdRole()==7 || currentuser.getRole().getIdRole()==8 ) {
+		if(currentuser.getRole().getIdRole()==1 || currentuser.getRole().getIdRole()==2 ) {
 		Session sessionCheck=sessionRepository.findByidsession(id);
 		if(sessionCheck==null) throw new RestException("Cette Session il n'existe pas !");
 
@@ -74,7 +74,7 @@ public class SessionImpl implements SessionService {
 	public void SupperimerSession(Long id,String email) {
 		// TODO Auto-generated method stub
 		Utilisateur currentuser=utilisateurRepository.findByemail(email);
-		if(currentuser.getRole().getIdRole()==7 ) {
+		if(currentuser.getRole().getIdRole()==1 ) {
 		Session sessionCheck=sessionRepository.findByidsession(id);
 		if(sessionCheck==null) throw new RestException("Cette Session il n'existe pas ! ");
 		
@@ -90,7 +90,7 @@ public class SessionImpl implements SessionService {
 		// TODO Auto-generated method stub
 		List<Session> sessions=new ArrayList<>();
 		Utilisateur currentuser=utilisateurRepository.findByemail(email);
-		if(currentuser.getRole().getIdRole()==7 || currentuser.getRole().getIdRole()==8 ) {
+		if(currentuser.getRole().getIdRole()==1 || currentuser.getRole().getIdRole()==2 ) {
 		sessions=sessionRepository.findAll();
 		}
 		else {

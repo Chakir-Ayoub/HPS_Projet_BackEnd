@@ -24,7 +24,7 @@ public class AbsenceImpl implements AbsenceService {
 	@Autowired
 	UtilisateurRepository utilisateurRepository;
 	@Override
-	public AbsenceDto AjouterAbsence(AbsenceDto absenceDto) {
+	public AbsenceDto AjouterAbsence(AbsenceDto absenceDto,String email) {
 		// TODO Auto-generated method stub
 		ModelMapper modelMapper=new ModelMapper();
 		Absence absence=modelMapper.map(absenceDto, Absence.class);
@@ -34,7 +34,9 @@ public class AbsenceImpl implements AbsenceService {
 		if(currentdate.isAfter(absenceDto.getDate_debut())) {throw new RestException("La date de Debut n'est pas acceptée ");}
 		if(currentdate.isAfter(absenceDto.getDate_fin())) {throw new RestException("La date de Fin n'est pas acceptée ");}
 		if (currentdate.isEqual(absenceDto.getDate_fin())) { throw new RestException("La date de Fin  est la même que la date actuelle.");}
-
+		Utilisateur utilisateurcheckemail=utilisateurRepository.findByemail(email);
+		absence.setUtilisateur(utilisateurcheckemail);
+		
 		Absence absenceAjoute=absenceRepository.save(absence);
 		AbsenceDto absenceDto2=modelMapper.map(absenceAjoute,AbsenceDto.class);
 		
@@ -71,7 +73,7 @@ public class AbsenceImpl implements AbsenceService {
 	public void SupperimerAbsence(Long id,String email) {
 		// TODO Auto-generated method stub
 		Utilisateur currentuser=utilisateurRepository.findByemail(email);
-		if(currentuser.getRole().getIdRole()==7) {
+		if(currentuser.getRole().getIdRole()==1) {
 			Absence absencecheck=absenceRepository.findByidAbsence(id);
 		if(absencecheck==null) throw new RestException("Ce Absence n'existe pas ! ");
 		
@@ -89,13 +91,13 @@ public class AbsenceImpl implements AbsenceService {
 		
 		Utilisateur currentuser=utilisateurRepository.findByemail(email);
 		List<Absence> absences=new ArrayList<>();
-		if(currentuser.getRole().getIdRole()==7) {
+		if(currentuser.getRole().getIdRole()==1) {
 			absences=absenceRepository.findAll();
 		}
-		else if (currentuser.getRole().getIdRole()== 8) {
+		else if (currentuser.getRole().getIdRole()== 2) {
 			absences=absenceRepository.findAll();
 		}
-		else if (currentuser.getRole().getIdRole()== 9) {
+		else if (currentuser.getRole().getIdRole()== 3) {
 			absences=absenceRepository.findByIdUser(currentuser.getIdutilisateur());
 		}
 		List<AbsenceDto> absenceDtos=new ArrayList<>();
@@ -112,7 +114,7 @@ public class AbsenceImpl implements AbsenceService {
 		
 		// TODO Auto-generated method stub
 		Utilisateur currentuser=utilisateurRepository.findByemail(email);
-		if(currentuser.getRole().getIdRole()==7 || currentuser.getRole().getIdRole()==8 ) {
+		if(currentuser.getRole().getIdRole()==1 || currentuser.getRole().getIdRole()==2 ) {
 		ModelMapper modelMapper=new ModelMapper();
 		Absence absence=this.absenceRepository.findByidAbsence(id);
 		if(absence==null) throw new RestException("Ce Absence N'existe pas ");

@@ -45,11 +45,11 @@ public class AbsenceController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<AbsenceResponse> Ajouter(@RequestBody AbsenceRequest absenceRequest){
+	public ResponseEntity<AbsenceResponse> Ajouter(@RequestBody AbsenceRequest absenceRequest,Principal principal){
 		ModelMapper modelMapper=new ModelMapper();
 		AbsenceDto absenceDto=modelMapper.map(absenceRequest, AbsenceDto.class);
 		
-		AbsenceDto absenceDto2=absenceService.AjouterAbsence(absenceDto);
+		AbsenceDto absenceDto2=absenceService.AjouterAbsence(absenceDto,principal.getName());
 		AbsenceResponse absenceResponse=modelMapper.map(absenceDto2, AbsenceResponse.class);
 		
 		return new ResponseEntity<AbsenceResponse>(absenceResponse,HttpStatus.ACCEPTED);

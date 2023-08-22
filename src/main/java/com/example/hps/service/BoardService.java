@@ -16,4 +16,5 @@ public interface BoardService {
 	BoardDto RemoveColumnToBoard(Long idColumn,Long idBoard);
 	SessionDto AffectBoardToSession(Long idboard,Long idSession);
 	BoardDto GetBoardBySession(Long idsession,String email);
+	BoardDto GetBoardByProject(Long idproject);
 }

@@ -1,5 +1,4 @@
 package com.example.hps.dto;
-import java.util.ArrayList;
 import java.util.List;
 import lombok.Data;
 
@@ -13,7 +12,7 @@ public class UtilisateurDto {
 	private String encryptionpassword;
 	private int telephone;
 	private String password;
-	private List<AbsenceDto> absences=new ArrayList<>();
+//	private List<AbsenceDto> absences=new ArrayList<>();
 	private GroupeDto groupe ;
 	private List<SessionDto> session;	
 	private RoleDto role;

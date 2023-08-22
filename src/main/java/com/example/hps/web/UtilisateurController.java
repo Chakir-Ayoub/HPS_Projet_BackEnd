@@ -1,7 +1,6 @@
 package com.example.hps.web;
 
 
-import java.io.Console;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +19,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.hps.dto.AbsenceDto;
 import com.example.hps.dto.UtilisateurDto;
+import com.example.hps.request.AbsenceRequest;
 import com.example.hps.request.UtilisateurRequest;
 import com.example.hps.response.UtilisateurResponse;
 import com.example.hps.service.UtilisateurService;
@@ -34,12 +35,12 @@ public class UtilisateurController {
 
 	
 	@PostMapping
-	public ResponseEntity<UtilisateurResponse> AjouterUtilisateur(@RequestBody UtilisateurRequest utilisateurRequest,Principal principal) throws Exception{
+	public ResponseEntity<UtilisateurResponse> AjouterUtilisateur(@RequestBody UtilisateurRequest utilisateurRequest) throws Exception{
 		
 		ModelMapper modelMapper=new ModelMapper();
 		UtilisateurDto utilisateurDto=modelMapper.map(utilisateurRequest, UtilisateurDto.class);
 		
-		UtilisateurDto utilisateurDto2=utilisateurService.AjouterUtilisateur(utilisateurDto,principal.getName());
+		UtilisateurDto utilisateurDto2=utilisateurService.AjouterUtilisateur(utilisateurDto);
 		UtilisateurResponse utilisateurResponse=modelMapper.map(utilisateurDto2, UtilisateurResponse.class);
 		
 		
@@ -83,12 +84,12 @@ public class UtilisateurController {
 		return new ResponseEntity<UtilisateurResponse>(utilisateurResponse,HttpStatus.CREATED);
 	}
 	
-	@GetMapping("/AffecteAbenceToUser/{iduser}/{idabs}")
-	public ResponseEntity<UtilisateurResponse> AffecteAbsenceToUtilisateur(@PathVariable Long iduser,@PathVariable Long idabs){
+	@PostMapping("/AffecteAbenceToUser/{iduser}")
+	public ResponseEntity<UtilisateurResponse> AffecteAbsenceToUtilisateur(@PathVariable Long iduser,@RequestBody AbsenceRequest absenceRequest){
 		
 		ModelMapper modelMapper=new ModelMapper();
-		
-		UtilisateurDto utilisateurDto=utilisateurService.AjouterAbsenceToUtilisateur(iduser, idabs);
+		AbsenceDto absenceDto=modelMapper.map(absenceRequest, AbsenceDto.class);
+		UtilisateurDto utilisateurDto=utilisateurService.AjouterAbsenceToUtilisateur(iduser, absenceDto);
 		
 		UtilisateurResponse utilisateurResponse=modelMapper.map(utilisateurDto, UtilisateurResponse.class);
 		
@@ -191,6 +192,16 @@ public class UtilisateurController {
 		UtilisateurResponse utilisateurResponse=modelMapper.map(utilisateurDto, UtilisateurResponse.class);
 		
 		return new ResponseEntity<UtilisateurResponse>(utilisateurResponse,HttpStatus.OK);
+	}
+	
+	@GetMapping("userbyemail/{email}")
+	public ResponseEntity<UtilisateurResponse> GetUserByemail(@PathVariable String email){
+		/*UtilisateurDto utilisateurDto=utilisateurService.getUser(email);
+		ModelMapper modelMapper=new ModelMapper();
+		UtilisateurResponse utilisateurResponse=modelMapper.map(utilisateurDto, UtilisateurResponse.class);
+		
+		return new ResponseEntity<UtilisateurResponse>(utilisateurResponse,HttpStatus.ACCEPTED);*/
+		return null;
 	}
 	
 }

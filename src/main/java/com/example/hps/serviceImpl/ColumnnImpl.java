@@ -35,7 +35,7 @@ public class ColumnnImpl implements ColumnnService {
 	public List<ColumnnDto> GetAll(String email) {
 		Utilisateur currentuser=utilisateurRepository.findByemail(email);
 		List<Columnn> columnn=new ArrayList<>();
-		if(currentuser.getRole().getIdRole()==7 || currentuser.getRole().getIdRole()==8 ) {
+		if(currentuser.getRole().getIdRole()==1 || currentuser.getRole().getIdRole()==2 ) {
 		// TODO Auto-generated method stub
 			columnn=columnnRepository.findAll();
 		}
@@ -57,7 +57,7 @@ public class ColumnnImpl implements ColumnnService {
 	public ColumnnDto GetById(Long id,String email) {
 		// TODO Auto-generated method stub
 		Utilisateur currentuser=utilisateurRepository.findByemail(email);
-		if(currentuser.getRole().getIdRole()==7 || currentuser.getRole().getIdRole()==8 ) {
+		if(currentuser.getRole().getIdRole()==1 || currentuser.getRole().getIdRole()==2 ) {
 		Columnn columnn=columnnRepository.findByidcolumn(id);
 		if(columnn==null) throw new RestException("Ce Column N'existe pas");
 		ModelMapper modelMapper=new ModelMapper();
@@ -73,7 +73,7 @@ public class ColumnnImpl implements ColumnnService {
 	public ColumnnDto AddColumnn(ColumnnDto columnnDto,String email) {
 		// TODO Auto-generated method stub
 		Utilisateur currentuser=utilisateurRepository.findByemail(email);
-		if(currentuser.getRole().getIdRole()==7 || currentuser.getRole().getIdRole()==8 ) {
+		if(currentuser.getRole().getIdRole()==1 || currentuser.getRole().getIdRole()==2 ) {
 		ModelMapper modelMapper=new ModelMapper();
 		Columnn columnn=modelMapper.map(columnnDto, Columnn.class);
 		
@@ -101,7 +101,7 @@ public class ColumnnImpl implements ColumnnService {
 	public ColumnnDto UpdateColumnn(Long id, ColumnnDto columnnDto,String email) {
 		// TODO Auto-generated method stub
 		Utilisateur currentuser=utilisateurRepository.findByemail(email);
-		if(currentuser.getRole().getIdRole()==7 || currentuser.getRole().getIdRole()==8 ) {
+		if(currentuser.getRole().getIdRole()==1 || currentuser.getRole().getIdRole()==2 ) {
 		Columnn columnn=columnnRepository.findByidcolumn(id);
 		if(columnn==null) throw new RestException("Ce Column N'existe pas");
 		ModelMapper modelMapper=new ModelMapper();
@@ -121,7 +121,7 @@ public class ColumnnImpl implements ColumnnService {
 	public void RemoveColumnn(Long id,String email) {
 		// TODO Auto-generated method stub
 		Utilisateur currentuser=utilisateurRepository.findByemail(email);
-		if(currentuser.getRole().getIdRole()==7 || currentuser.getRole().getIdRole()==8 ) {
+		if(currentuser.getRole().getIdRole()==1 || currentuser.getRole().getIdRole()==2 ) {
 		Columnn columnn=columnnRepository.findByidcolumn(id);
 		if(columnn==null) throw new RestException("Ce Column N'existe pas"); 
 		
@@ -135,7 +135,7 @@ public class ColumnnImpl implements ColumnnService {
 	public ColumnnDto AddTaskToColumn(Long idCol,TaskDto taskDto,String email) {
 		// TODO Auto-generated method stub
 		Utilisateur currentuser=utilisateurRepository.findByemail(email);
-		if(currentuser.getRole().getIdRole()==7 || currentuser.getRole().getIdRole()==8 ) {
+		if(currentuser.getRole().getIdRole()==1 || currentuser.getRole().getIdRole()==2 ) {
 		Columnn columnn=columnnRepository.findByidcolumn(idCol);
 		if(columnn==null) throw new RestException("Cette columnn n'existe pas");
 		ModelMapper modelMapper=new ModelMapper();
@@ -157,7 +157,7 @@ public class ColumnnImpl implements ColumnnService {
 	public ColumnnDto DeleteTaskFromColumn(Long IdTask, Long IdColumn,String email) {
 		// TODO Auto-generated method stub
 		Utilisateur currentuser=utilisateurRepository.findByemail(email);
-		if(currentuser.getRole().getIdRole()==8 ) {
+		if(currentuser.getRole().getIdRole()==1 ) {
 		Task task=taskRepository.findByidtask(IdTask);
 		if(task==null) throw new RestException("Cette Task n'existe pas");
 		Columnn columnn=columnnRepository.findByidcolumn(IdColumn);
@@ -180,7 +180,7 @@ public class ColumnnImpl implements ColumnnService {
 	public List<ColumnnDto> GetColumnByProject(Long id,String email) {
 		// TODO Auto-generated method stub
 		Utilisateur currentuser=utilisateurRepository.findByemail(email);
-		if(currentuser.getRole().getIdRole()==7 || currentuser.getRole().getIdRole()==8 ) {
+		if(currentuser.getRole().getIdRole()==1 || currentuser.getRole().getIdRole()==2 ) {
 		List<Columnn> columnn=columnnRepository.GetColumnByIdproject(id);
 		if(columnn==null) throw new RestException("Cette Board est vide");
 		
@@ -210,7 +210,7 @@ public class ColumnnImpl implements ColumnnService {
 	public void AddColumnToBoard(Long idboard, ColumnnDto columnnDto,String email) {
 		// TODO Auto-generated method stub
 		Utilisateur currentuser=utilisateurRepository.findByemail(email);
-		if(currentuser.getRole().getIdRole()==7 || currentuser.getRole().getIdRole()==8 ) {
+		if(currentuser.getRole().getIdRole()==1 || currentuser.getRole().getIdRole()==2 ) {
 		Board board=boardRepository.getboardbycolumn(idboard);
 		ModelMapper modelMapper=new ModelMapper();
 		if(board==null) throw new RestException("Cette Board n'existe pas");

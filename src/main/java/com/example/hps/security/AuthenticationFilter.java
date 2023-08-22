@@ -76,7 +76,8 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 	      //Récupérer les information dans l'Body  
 	        res.addHeader(SecurityConstants.HEADER_STRING, SecurityConstants.TOKEN_PREFIX + token);
 	        res.addHeader("user_id",String.valueOf(userDto.getIdutilisateur()));
-	        
+	        System.out.println("++++++++++++++++++++++++++++");
+	        System.out.println(userDto);
 	        res.getWriter().write("{\"token\":\""+token+"\",\"id\":\""+userDto.getIdutilisateur()+"\"}");
 	    }  
 }

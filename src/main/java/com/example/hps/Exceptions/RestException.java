@@ -2,7 +2,6 @@ package com.example.hps.Exceptions;
 
 import org.springframework.http.HttpStatus;
 
-import lombok.Data;
 
 
 public class RestException extends RuntimeException{

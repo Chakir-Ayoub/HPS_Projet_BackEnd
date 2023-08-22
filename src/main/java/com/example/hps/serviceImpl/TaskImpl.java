@@ -28,7 +28,7 @@ public class TaskImpl implements TaskService {
 		// TODO Auto-generated method stub
 		List<Task> tasks=new ArrayList<>();
 		Utilisateur currentuser=utilisateurRepository.findByemail(email);
-		if(currentuser.getRole().getIdRole()==7 || currentuser.getRole().getIdRole()==8 ) {
+		if(currentuser.getRole().getIdRole()==1 || currentuser.getRole().getIdRole()==2 ) {
 			tasks=taskRepository.findAll();
 		}
 		else {
@@ -62,7 +62,7 @@ public class TaskImpl implements TaskService {
 		
 		// TODO Auto-generated method stub
 		Utilisateur currentuser=utilisateurRepository.findByemail(email);
-		if(currentuser.getRole().getIdRole()==7 || currentuser.getRole().getIdRole()==8 ) {
+		if(currentuser.getRole().getIdRole()==1 || currentuser.getRole().getIdRole()==2 ) {
 		ModelMapper modelMapper=new ModelMapper();
 		Task task2=modelMapper.map(task, Task.class);
 		

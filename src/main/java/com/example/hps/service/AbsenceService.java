@@ -5,7 +5,7 @@ import java.util.List;
 import com.example.hps.dto.AbsenceDto;
 
 public interface AbsenceService {
-	AbsenceDto AjouterAbsence(AbsenceDto absenceDto);
+	AbsenceDto AjouterAbsence(AbsenceDto absenceDto,String email);
 	AbsenceDto ModifierAbsence(AbsenceDto absenceDto,Long id,String email);
 	void SupperimerAbsence(Long id,String email);
 	List<AbsenceDto> GetAll(String email);
