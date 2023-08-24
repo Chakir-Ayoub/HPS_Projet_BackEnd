@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.hps.dto.ProjetDto;
+import com.example.hps.entity.DatabaseFile;
 import com.example.hps.request.ProjetRequest;
 import com.example.hps.response.ProjetResponse;
 import com.example.hps.service.ProjetService;
@@ -111,6 +112,16 @@ public class ProjetController {
 	@DeleteMapping("/dropBydate")
 	public void DropByDate(Principal principal){
 		projetService.DropProjectByDate(principal.getName());
+	}
+	
+	
+	@PostMapping("/savedetail/{id}")
+	public ResponseEntity<ProjetResponse> AddDetailToProject(@RequestBody DatabaseFile databaseFile,Long id){
+		
+		ProjetDto projetDto=projetService.AddDetailToProject(databaseFile, id);
+		ModelMapper modelMapper=new ModelMapper();
+		ProjetResponse projetResponse=modelMapper.map(projetDto, ProjetResponse.class);
+		return new ResponseEntity<ProjetResponse>(projetResponse,HttpStatus.ACCEPTED);
 	}
 
 }

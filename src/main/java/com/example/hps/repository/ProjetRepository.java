@@ -12,7 +12,7 @@ import com.example.hps.entity.Projet;
 public interface ProjetRepository extends JpaRepository<Projet, Long> {
 	
 	Projet findBynomprojet(String nom);
-	Projet findByidprojet(Long id);
+	Projet findByidprojet(long id);
 	
 	@Query(value = "SELECT  COUNT(*) FROM `projet` ",nativeQuery = true)
 	Long GetCountProject();

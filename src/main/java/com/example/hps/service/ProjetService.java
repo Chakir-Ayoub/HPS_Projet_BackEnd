@@ -4,6 +4,8 @@ import java.util.List;
 
 
 import com.example.hps.dto.ProjetDto;
+import com.example.hps.entity.DatabaseFile;
+import com.example.hps.entity.Projet;
 
 public interface ProjetService {
 	ProjetDto AjouterProjet(ProjetDto projetDto,String email);
@@ -15,4 +17,5 @@ public interface ProjetService {
 	Long GetProjectStar();
 	ProjetDto GetProjectBysesssion(Long idsession,String email);
 	void DropProjectByDate(String email);
+	ProjetDto AddDetailToProject(DatabaseFile databaseFile,Long idprojet);
 }

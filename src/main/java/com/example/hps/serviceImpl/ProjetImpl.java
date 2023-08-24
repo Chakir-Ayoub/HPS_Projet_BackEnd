@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.hps.Exceptions.RestException;
 import com.example.hps.dto.ProjetDto;
+import com.example.hps.entity.DatabaseFile;
 import com.example.hps.entity.Projet;
 import com.example.hps.entity.Utilisateur;
 import com.example.hps.repository.ProjetRepository;
@@ -193,6 +194,21 @@ public class ProjetImpl implements ProjetService {
 			throw new RestException("Vous n'avez pas le droit d'exécuter cette requête");
 		}
 	}
+
+	@Override
+	public ProjetDto AddDetailToProject(DatabaseFile databaseFile, Long idprojet) {
+		// TODO Auto-generated method stub
+		Projet projet=projetRepository.findByidprojet(idprojet);
+		
+		projet.AddPin(databaseFile, projet);
+		
+		Projet projet2= projetRepository.save(projet);
+		ModelMapper modelMapper=new ModelMapper();
+		ProjetDto projetDto=modelMapper.map(projet2, ProjetDto.class);
+		return projetDto;
+	}
+
+
 
 	
 

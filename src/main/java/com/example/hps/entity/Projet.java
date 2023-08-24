@@ -2,9 +2,11 @@ package com.example.hps.entity;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,6 +14,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -41,4 +45,13 @@ public class Projet implements Serializable {
 	@JoinColumn(name = "board")
 	private Board board;
 	
+	
+	@OneToMany(cascade = CascadeType.ALL,mappedBy = "project")
+	List<DatabaseFile> databaseFiles;
+	
+	@Transactional
+	public void AddPin(DatabaseFile databaseFile,Projet projet) {
+		databaseFiles.add(databaseFile);
+		projet.setDatabaseFiles(databaseFiles);
+	}
 }

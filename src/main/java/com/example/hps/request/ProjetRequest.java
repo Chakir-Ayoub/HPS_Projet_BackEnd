@@ -1,6 +1,10 @@
 package com.example.hps.request;
 
 import java.time.LocalDate;
+import java.util.List;
+
+import com.example.hps.entity.DatabaseFile;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -22,4 +26,6 @@ public class ProjetRequest {
 	@NotBlank(message = "Ce champs ne doit pas etre Null !")
 	private Boolean softdelete;
 	private BoardRequest board;
+	private List<DatabaseFile> databaseFiles;
+
 }

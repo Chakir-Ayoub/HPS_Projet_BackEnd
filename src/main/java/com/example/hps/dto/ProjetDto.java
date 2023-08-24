@@ -1,6 +1,9 @@
 package com.example.hps.dto;
 
 import java.time.LocalDate;
+import java.util.List;
+
+import com.example.hps.entity.DatabaseFile;
 
 import lombok.Data;
 
@@ -14,6 +17,7 @@ public class ProjetDto {
 	private LocalDate datedemarrage;
 	private Boolean softdelete;
 	private BoardDto board;
+	private List<DatabaseFile> databaseFiles;
 
 
 }
