@@ -21,4 +21,7 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
 	
 	@Query(value = "SELECT b.* FROM board b INNER JOIN projet p on(b.idboard=p.board) WHERE p.idprojet= :idprojet",nativeQuery = true)
 	Board getboardbyproject(@Param("idprojet") Long idprojet);
+	
+	@Query(value = "SELECT * FROM projet p WHERE p.board=null",nativeQuery = true)
+	List<Board> getprojectbyboard();
 }

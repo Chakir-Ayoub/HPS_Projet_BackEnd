@@ -15,4 +15,7 @@ public interface GroupeRepository extends JpaRepository<Groupe, Long> {
 	Long getCountUserInGroupe(Long id_groupe);
 	@Query(value = "SELECT g.* FROM groupe g INNER JOIN utilisateur u on(g.idgroup=u.id_groupe) WHERE u.idutilisateur= :idutilisateur",nativeQuery = true)
 	List<Groupe> getgroupbyuser(@Param("idutilisateur") Long idutilisateur);
+
+	@Query(value = "SELECT g.* FROM utilisateur u INNER JOIN groupe g on(u.id_groupe=g.idgroup) WHERE u.idutilisateur= :idutilisateur",nativeQuery = true)
+	List<Groupe> getgroupebyuser(@Param("idutilisateur") Long idutilisateur);
 }

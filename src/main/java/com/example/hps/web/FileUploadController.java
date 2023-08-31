@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,9 +24,9 @@ public class FileUploadController {
 	@Autowired
 	private DatabaseFileService fileStorageService;
 
-	@PostMapping("/uploadFile/{id}")
-	public Response uploadFile(@RequestParam("file") MultipartFile file,@PathVariable long id) throws IOException {
-		DatabaseFile fileName = fileStorageService.storeFile(file,id);
+	@PostMapping("/uploadFile/{id}/{type}")
+	public Response uploadFile(@RequestParam("file") MultipartFile file,@PathVariable long id,@PathVariable Boolean type) throws IOException {
+		DatabaseFile fileName = fileStorageService.storeFile(file,id,type);
 
 		String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/downloadFile/")
 				.path(fileName.getFileName()).toUriString();

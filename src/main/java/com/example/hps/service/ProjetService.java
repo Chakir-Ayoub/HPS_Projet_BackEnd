@@ -18,4 +18,5 @@ public interface ProjetService {
 	ProjetDto GetProjectBysesssion(Long idsession,String email);
 	void DropProjectByDate(String email);
 	ProjetDto AddDetailToProject(DatabaseFile databaseFile,Long idprojet);
+	List<ProjetDto> GetProjet();
 }

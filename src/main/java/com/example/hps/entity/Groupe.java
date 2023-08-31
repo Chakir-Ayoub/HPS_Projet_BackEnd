@@ -3,7 +3,6 @@ package com.example.hps.entity;
 import java.io.Serializable;
 import java.util.List;
 
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

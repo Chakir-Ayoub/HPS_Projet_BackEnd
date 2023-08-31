@@ -1,5 +1,6 @@
 package com.example.hps.web;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,8 +35,8 @@ public class RoleController {
 	}
 	
 	@GetMapping
-	public ResponseEntity<List<RoleResponse>> GetAll(){
-		List<RoleDto> dtos=roleService.getAllRole();
+	public ResponseEntity<List<RoleResponse>> GetAll(Principal principal){
+		List<RoleDto> dtos=roleService.getAllRole(principal.getName());
 		ModelMapper modelMapper=new ModelMapper();
 		List<RoleResponse> responses=new ArrayList<>();
 		for (RoleDto roleDto : dtos) {

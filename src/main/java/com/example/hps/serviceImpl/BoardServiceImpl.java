@@ -191,7 +191,9 @@ public class BoardServiceImpl implements BoardService  {
 		ModelMapper modelMapper=new ModelMapper();
 		Session session=sessionRepository.findByidsession(idSession);
 		Board board=boardRepository.findByidboard(idboard);
-		
+		if(session.getUtilisateur()==null || session.getBoard()!=null) {
+			throw new RestException("Vous ne pouvez rien affecter à cette session.");
+		}
 		board.AjouterBoardASessions(board, session);
 		
 		boardRepository.save(board);

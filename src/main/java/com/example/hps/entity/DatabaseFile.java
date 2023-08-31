@@ -30,6 +30,8 @@ public class DatabaseFile {
 	    private String fileName;
 
 	    private String fileType;
+	    
+	    private Boolean type;
 
 	    @Lob
 	    @Column(name = "data", length = 16777215) 

@@ -9,4 +9,6 @@ import com.example.hps.entity.Role;
 public interface RoleRepository extends JpaRepository<Role,Long> {
 	@Query(value = "SELECT r.* FROM role r INNER JOIN utilisateur u on(r.id_role=u.role) WHERE u.idutilisateur= :idutilisateur ",nativeQuery = true)
 	Role getrolebyuser(@Param("idutilisateur") Long idutilisateur);
+	
+	Role findByidRole(Long id);
 }

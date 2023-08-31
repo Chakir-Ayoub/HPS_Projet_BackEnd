@@ -208,6 +208,12 @@ public class ProjetImpl implements ProjetService {
 		return projetDto;
 	}
 
+	@Override
+	public List<ProjetDto> GetProjet() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 
 	

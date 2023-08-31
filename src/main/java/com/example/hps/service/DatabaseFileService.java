@@ -22,11 +22,11 @@ public class DatabaseFileService {
     private DatabaseFileRepository dbFileRepository;
     @Autowired
     private ProjetRepository projetRepository;
-    public DatabaseFile storeFile(MultipartFile file,long id) throws IOException {
+    public DatabaseFile storeFile(MultipartFile file,long id,Boolean type) throws IOException {
         // Normalize file name
     		String fileName = StringUtils.cleanPath(file.getOriginalFilename());
         	Projet projet=projetRepository.findByidprojet(id);
-            DatabaseFile dbFile = new DatabaseFile("hhh",fileName, file.getContentType(), file.getBytes(),projet);
+            DatabaseFile dbFile = new DatabaseFile("hhh",fileName, file.getContentType(), type, file.getBytes(),projet);
             return dbFileRepository.save(dbFile);
     }
 
@@ -36,6 +36,10 @@ public class DatabaseFileService {
     
     public List<DatabaseFile> GetByProject(long idproject){
     	return dbFileRepository.GetPinByProject(idproject);
+    }
+    
+    public List<DatabaseFile> GetAll(){
+    	return dbFileRepository.GetAll();
     }
     
     public void Delete(String id) {

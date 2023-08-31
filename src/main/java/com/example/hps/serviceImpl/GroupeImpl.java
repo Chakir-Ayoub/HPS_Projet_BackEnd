@@ -95,8 +95,11 @@ public class GroupeImpl implements GroupeService {
 		// TODO Auto-generated method stub
 		List<Groupe> groupes=new ArrayList<>();
 		Utilisateur currentuser=utilisateurRepository.findByemail(email);
-		if(currentuser.getRole().getIdRole()==1 || currentuser.getRole().getIdRole()==2 ) {
+		if(currentuser.getRole().getIdRole()==1 ) {
 		groupes = groupeRepository.findAll();
+		}
+		else if(currentuser.getRole().getIdRole()==2) {
+		groupes =groupeRepository.getgroupbyuser(currentuser.getIdutilisateur());	
 		}
 		else {
 			groupes=groupeRepository.getgroupbyuser(currentuser.getIdutilisateur());

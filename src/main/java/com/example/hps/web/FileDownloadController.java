@@ -5,8 +5,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
@@ -39,10 +37,23 @@ public class FileDownloadController {
             .body(new ByteArrayResource(databaseFile.getData()));
     }
     
-    @GetMapping("/getFilesByProject/{id}")
-    public ResponseEntity<List<DatabaseFile>> getAllFiles(@PathVariable long id) {
-        List<DatabaseFile> files = fileStorageService.GetByProject(id);
+    @GetMapping("/getFilesByProject/{id}/{type}")
+    public ResponseEntity<List<DatabaseFile>> getAllFiles(@PathVariable long id,@PathVariable Boolean type) {
+    	  List<DatabaseFile> files =new ArrayList<>();
+    	if(type==false) {
+            files = fileStorageService.GetByProject(id);
+    	}
+    	else {
+    		files = fileStorageService.GetAll();
+    	}
         return ResponseEntity.ok(files);
+    }
+    
+    @GetMapping()
+    public ResponseEntity<List<DatabaseFile>> GetAll(){
+    	List<DatabaseFile> databaseFiles=fileStorageService.GetAll();
+    	
+    	return ResponseEntity.ok(databaseFiles);
     }
 
 }

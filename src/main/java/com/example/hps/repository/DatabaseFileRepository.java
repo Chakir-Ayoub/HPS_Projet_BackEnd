@@ -13,4 +13,7 @@ public interface DatabaseFileRepository extends JpaRepository<DatabaseFile, Stri
 	@Query(value = "SELECT f.* FROM files f INNER JOIN projet p on(f.project_idprojet=p.idprojet) WHERE p.idprojet= :idprojet ",nativeQuery = true)
 	List<DatabaseFile> GetPinByProject(@Param("idprojet") Long idprojet);
 	
+	@Query(value = "SELECT * FROM files f WHERE f.type=true",nativeQuery = true)
+	List<DatabaseFile> GetAll();
+	
 }

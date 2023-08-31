@@ -108,12 +108,17 @@ public class UtilisateurImpl implements UtilisateurService {
 	}
 
 	@Override
-	public List<UtilisateurDto> GetAllUser() {
+	public List<UtilisateurDto> GetAllUser(String email) {
 		
 		// TODO Auto-generated method stub
+		Utilisateur currentuser=utilisateurRepository.findByemail(email);
 		List<Utilisateur> utilisateurs=new ArrayList<>();
-		utilisateurs=utilisateurRepository.findAll();
-		
+		if(currentuser.getRole().getIdRole()==1) {
+			utilisateurs=utilisateurRepository.findAll();	
+		}
+		else if(currentuser.getRole().getIdRole()==2) {
+			utilisateurs=utilisateurRepository.getAllUsersByGroupe(Long.valueOf(2));
+		}
 
 		List<UtilisateurDto> utilisateurDtos=new ArrayList<>();
 		for(Utilisateur utilisateur: utilisateurs) {
@@ -303,6 +308,27 @@ public class UtilisateurImpl implements UtilisateurService {
 		if(userEntity==null) throw new RuntimeException(email);
 		return new User(userEntity.getEmail(),userEntity.getEncryptionpassword(), new ArrayList<>());	
 	}
+
+	@Override
+	public List<UtilisateurDto> getusersbyrole(String email) {
+		// TODO Auto-generated method stub
+		Utilisateur currentuser=utilisateurRepository.findByemail(email);
+		List<Utilisateur> utilisateurs=new ArrayList<>();
+		if(currentuser.getRole().getIdRole()==1) {
+			utilisateurs=utilisateurRepository.getUsersByRole(Long.valueOf(3));
+		}
+		else if(currentuser.getRole().getIdRole()==2) {
+			utilisateurs=utilisateurRepository.getUsersByRole(Long.valueOf(3));
+		}
+		List<UtilisateurDto> utilisateurDtos=new ArrayList<>();
+		ModelMapper modelMapper=new ModelMapper();
+		for (Utilisateur utilisateur : utilisateurs) {
+			UtilisateurDto utilisateurDto= modelMapper.map(utilisateur, UtilisateurDto.class);
+			utilisateurDtos.add(utilisateurDto);
+		}
+		return utilisateurDtos;
+	}
+	
 	
 
 }

@@ -48,10 +48,10 @@ public class UtilisateurController {
 	}
 	
 	@GetMapping
-	public ResponseEntity<List<UtilisateurResponse>> GetAllUtilisateur(){
+	public ResponseEntity<List<UtilisateurResponse>> GetAllUtilisateur(Principal principal){
 		List<UtilisateurResponse> utilisateurResponses=new ArrayList<>();
 		
-		List<UtilisateurDto> utilisateurDtos=utilisateurService.GetAllUser();
+		List<UtilisateurDto> utilisateurDtos=utilisateurService.GetAllUser(principal.getName());
 		
 		for(UtilisateurDto utilisateurDto: utilisateurDtos) {
 			ModelMapper modelMapper=new ModelMapper();
@@ -204,4 +204,16 @@ public class UtilisateurController {
 		return null;
 	}
 	
+	@GetMapping("/getbyrole")
+	public ResponseEntity< List<UtilisateurResponse> > GetUsersByRole(Principal principal){
+		
+		List<UtilisateurDto> utilisateurDtos=utilisateurService.getusersbyrole(principal.getName());
+		List<UtilisateurResponse> utilisateurResponses=new ArrayList<>();
+		ModelMapper modelMapper=new ModelMapper();
+		for (UtilisateurDto utilisateurDto : utilisateurDtos) {
+			UtilisateurResponse utilisateurResponse=modelMapper.map(utilisateurDto, UtilisateurResponse.class);
+			utilisateurResponses.add(utilisateurResponse);
+		}
+		return new ResponseEntity<List<UtilisateurResponse>>(utilisateurResponses,HttpStatus.ACCEPTED);
+	}
 }
