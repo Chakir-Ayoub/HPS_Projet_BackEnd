@@ -7,7 +7,7 @@ import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatus;import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.hps.dto.AbsenceDto;
 import com.example.hps.dto.UtilisateurDto;
+import com.example.hps.entity.Utilisateur;
 import com.example.hps.request.AbsenceRequest;
 import com.example.hps.request.UtilisateurRequest;
 import com.example.hps.response.UtilisateurResponse;
@@ -28,7 +29,6 @@ import com.example.hps.service.UtilisateurService;
 
 @RestController
 @RequestMapping("Utilisateur")
-@CrossOrigin("http://localhost:4200")
 public class UtilisateurController {
 	@Autowired
 	private UtilisateurService utilisateurService;
@@ -215,5 +215,21 @@ public class UtilisateurController {
 			utilisateurResponses.add(utilisateurResponse);
 		}
 		return new ResponseEntity<List<UtilisateurResponse>>(utilisateurResponses,HttpStatus.ACCEPTED);
+	}
+	
+	@GetMapping("/getusersbyid")
+	public ResponseEntity<List<Utilisateur>> GetIdUsers(){
+		
+		List<Utilisateur> get=utilisateurService.GetIdUsers();
+		
+		return new ResponseEntity<List<Utilisateur>>(get,HttpStatus.ACCEPTED);
+	}
+	
+	@GetMapping("/getusersbynom")
+	public ResponseEntity<List<String>> GetnameUsers(){
+		
+		List<String> get=utilisateurService.GetnameUsers();
+		
+		return new ResponseEntity<List<String>>(get,HttpStatus.ACCEPTED);
 	}
 }

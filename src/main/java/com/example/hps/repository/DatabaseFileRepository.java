@@ -16,4 +16,10 @@ public interface DatabaseFileRepository extends JpaRepository<DatabaseFile, Stri
 	@Query(value = "SELECT * FROM files f WHERE f.type=true",nativeQuery = true)
 	List<DatabaseFile> GetAll();
 	
+	@Query(value = "SELECT * FROM files f WHERE f.file_name= :name ",nativeQuery = true)
+	DatabaseFile getdatafilebyname(@Param("name") String name);
+	
+/*	@Query(value = "SELECT * FROM files WHERE file_name LIKE '+%' OR file_name LIKE '%+%' OR file_name LIKE '%+'", nativeQuery = true)
+	List<DatabaseFile> Getlikename(@Param("file_name") String name);*/
+
 }

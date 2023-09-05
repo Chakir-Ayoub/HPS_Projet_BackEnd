@@ -3,6 +3,7 @@ package com.example.hps.response;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.example.hps.dto.CommentaireDto;
 import com.example.hps.entity.DatabaseFile;
 
 import lombok.AllArgsConstructor;
@@ -19,5 +20,4 @@ public class ProjetResponse {
 	private LocalDate datedemarrage;
 	private Boolean softdelete;
 	private List<DatabaseFile> databaseFiles;
-
 }

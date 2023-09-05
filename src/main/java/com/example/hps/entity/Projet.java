@@ -49,9 +49,12 @@ public class Projet implements Serializable {
 	@OneToMany(cascade = CascadeType.ALL,mappedBy = "project")
 	List<DatabaseFile> databaseFiles;
 	
+	@OneToMany(mappedBy = "projet",orphanRemoval = true)
+	List<Commentaire> commentaires;
 	@Transactional
 	public void AddPin(DatabaseFile databaseFile,Projet projet) {
 		databaseFiles.add(databaseFile);
 		projet.setDatabaseFiles(databaseFiles);
 	}
+	
 }

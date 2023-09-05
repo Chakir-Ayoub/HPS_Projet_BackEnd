@@ -2,6 +2,7 @@ package com.example.hps.dto;
 
 import java.util.List;
 
+import com.example.hps.entity.Task;
 
 import lombok.Data;
 

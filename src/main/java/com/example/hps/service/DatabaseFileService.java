@@ -49,4 +49,10 @@ public class DatabaseFileService {
     	
     	dbFileRepository.delete(databaseFile);
     }
+    
+    public DatabaseFile getdatafilebyname(String name) {
+    	return dbFileRepository.getdatafilebyname(name);
+    }
+    
+
 }

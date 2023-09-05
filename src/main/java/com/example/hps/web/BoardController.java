@@ -66,7 +66,6 @@ public class BoardController {
 	
 	@PutMapping("{id}")
 	public ResponseEntity<BoardResponse> UpdateBoard(@PathVariable Long id,@RequestBody BoardRequest boardRequest){
-		
 		  ModelMapper modelMapper=new ModelMapper(); 
 		  BoardDto boardDto=modelMapper.map(boardRequest, BoardDto.class); 
 		  BoardDto boardDto2=boardService.UpdateBoard(id, boardDto);

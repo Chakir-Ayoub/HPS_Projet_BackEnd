@@ -40,7 +40,7 @@ public class Columnn implements Serializable {
 	@JsonIgnore
 	private Board board;
 	
-	@OneToMany(    cascade = CascadeType.ALL, mappedBy = "columnn")
+	@OneToMany( cascade = CascadeType.ALL, mappedBy = "columnn")
 	private List<Task> tasks=new ArrayList<>();
 	
 	@Transactional

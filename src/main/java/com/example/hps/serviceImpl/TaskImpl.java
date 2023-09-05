@@ -122,4 +122,11 @@ public class TaskImpl implements TaskService {
 		return taskDtos;
 	}
 
+	@Override
+	public Long GetCountTaskByUser(Long idcolumn, Long utilisateur) {
+		// TODO Auto-generated method stub
+		Long CountTask=taskRepository.GetCountTaskByUser(idcolumn, utilisateur);
+		return CountTask;
+	}
+
 }

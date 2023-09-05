@@ -12,4 +12,5 @@ public interface TaskService {
 	void RemoveTask(Long id);
 	TaskDto AddTaskToColumn();
 	List<TaskDto> GetColumnTask(Long idcolumn);
+	Long GetCountTaskByUser(Long idcolumn,Long utilisateur);
 }

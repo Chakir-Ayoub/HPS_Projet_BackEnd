@@ -21,6 +21,8 @@ import com.example.hps.dto.ProjetDto;
 import com.example.hps.entity.DatabaseFile;
 import com.example.hps.request.ProjetRequest;
 import com.example.hps.response.ProjetResponse;
+import com.example.hps.response.ResponseChart;
+
 import com.example.hps.service.ProjetService;
 
 @RestController
@@ -100,13 +102,14 @@ public class ProjetController {
 	
 	@GetMapping("getprojectbysession/{id}")
 	public ResponseEntity<ProjetResponse> ProjetBySession(@PathVariable Long id,Principal principal){
+		
 		ModelMapper modelMapper=new ModelMapper();
+		
 		ProjetDto projetDto=projetService.GetProjectBysesssion(id,principal.getName());
 		
 		ProjetResponse projetResponse=modelMapper.map(projetDto, ProjetResponse.class);
 		
 		return new ResponseEntity<ProjetResponse>(projetResponse,HttpStatus.OK);
-		
 	}
 	
 	@DeleteMapping("/dropBydate")
@@ -122,6 +125,31 @@ public class ProjetController {
 		ModelMapper modelMapper=new ModelMapper();
 		ProjetResponse projetResponse=modelMapper.map(projetDto, ProjetResponse.class);
 		return new ResponseEntity<ProjetResponse>(projetResponse,HttpStatus.ACCEPTED);
+	}
+	
+	@GetMapping("GetAllProjectName")
+	public ResponseEntity<List<String>> GetAllProjectName(){
+		List<String> strings=projetService.GetAllProjectName();
+		
+		return new ResponseEntity<List<String>>(strings,HttpStatus.ACCEPTED);
+	}
+	
+	@GetMapping("GetProjectColumnCount/{name}")
+	public ResponseEntity<List<String>>  GetProjectColumnCount(@PathVariable String name){
+		List<String> responseCharts=projetService.GetProjectColumnCount(name);
+		return new ResponseEntity<List<String>>(responseCharts,HttpStatus.ACCEPTED);
+	}
+	
+	@GetMapping("GetCountTodo")
+	public ResponseEntity<List<Long>> GetCountTodo(){
+		List<Long> responseCharts=projetService.GetCountTodo();
+		return new ResponseEntity<List<Long>>(responseCharts,HttpStatus.ACCEPTED);
+	}
+	
+	@GetMapping("GetCountDone")
+	public ResponseEntity<List<Long>> GetCountDone(){
+		List<Long> responseCharts=projetService.GetCountDone();
+		return new ResponseEntity<List<Long>>(responseCharts,HttpStatus.ACCEPTED);
 	}
 
 }

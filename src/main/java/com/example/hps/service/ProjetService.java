@@ -6,6 +6,7 @@ import java.util.List;
 import com.example.hps.dto.ProjetDto;
 import com.example.hps.entity.DatabaseFile;
 import com.example.hps.entity.Projet;
+import com.example.hps.response.ResponseChart;
 
 public interface ProjetService {
 	ProjetDto AjouterProjet(ProjetDto projetDto,String email);
@@ -19,4 +20,9 @@ public interface ProjetService {
 	void DropProjectByDate(String email);
 	ProjetDto AddDetailToProject(DatabaseFile databaseFile,Long idprojet);
 	List<ProjetDto> GetProjet();
+	List<String> GetAllProjectName();
+	List<String> GetProjectColumnCount(String name);
+	List<Long> GetCountTodo();
+	List<Long> GetCountDone();
+
 }

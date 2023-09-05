@@ -3,6 +3,7 @@ package com.example.hps.dto;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.example.hps.entity.Commentaire;
 import com.example.hps.entity.DatabaseFile;
 
 import lombok.Data;

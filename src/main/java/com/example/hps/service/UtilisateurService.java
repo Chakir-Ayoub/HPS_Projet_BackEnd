@@ -27,6 +27,6 @@ public interface UtilisateurService extends UserDetailsService {
 	UtilisateurDto GetUserBySession(Long idsession);
 	UtilisateurDto getUser(String email);
 	List<UtilisateurDto> getusersbyrole(String email);
-	
-
+	List<Utilisateur> GetIdUsers();
+	List<String> GetnameUsers();
 }

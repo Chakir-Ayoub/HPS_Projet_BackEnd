@@ -21,4 +21,7 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
 	List<Task> GetTaskByColumn(@Param("idcolumn") Long idcolumn);
 	@Query(value = "SELECT t.* from task t INNER JOIN columnn c on(t.columnn=c.idcolumn) INNER JOIN board b on(c.board=b.idboard) INNER JOIN session s on(b.idboard=s.board_idboard) INNER JOIN utilisateur u on(s.utilisateur=u.idutilisateur) where u.idutilisateur= :idutilisateur",nativeQuery = true)
 	List<Task> GetTaskByUser(@Param("idutilisateur") Long idutilisateur);
+	
+	@Query(value = "SELECT count(c.idcolumn) FROM session s INNER JOIN board b on(s.board_idboard=b.idboard) INNER JOIN columnn c on(b.idboard=c.board) INNER JOIN task t on(c.idcolumn=t.columnn) WHERE c.idcolumn= :idcolumn AND s.utilisateur= :utilisateur ",nativeQuery = true)
+	Long GetCountTaskByUser(@Param("idcolumn") Long idcolumn,@Param("utilisateur") Long utilisateur);
 }

@@ -33,5 +33,11 @@ public interface UtilisateurRepository extends JpaRepository<Utilisateur, Long> 
 	@Query(value = "SELECT * FROM utilisateur u WHERE u.role= :role",nativeQuery = true)
 	List<Utilisateur> getUsersByRole(@Param("role") Long role);
 
+	 @Query(value = "SELECT u.* from utilisateur u",nativeQuery = true)
+	 List<Utilisateur> GetIdUsers();
 	 
+	 @Query(value = "SELECT u.nom_utilisateur from utilisateur u",nativeQuery = true)
+	 List<String> GetnameUsers();
+	 
+	
 }

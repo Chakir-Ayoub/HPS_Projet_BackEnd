@@ -3,6 +3,7 @@ package com.example.hps.request;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.example.hps.dto.CommentaireDto;
 import com.example.hps.entity.DatabaseFile;
 
 import jakarta.validation.constraints.NotBlank;
@@ -27,5 +28,6 @@ public class ProjetRequest {
 	private Boolean softdelete;
 	private BoardRequest board;
 	private List<DatabaseFile> databaseFiles;
+
 
 }

@@ -10,7 +10,7 @@ import com.example.hps.entity.Board;
 
 public interface BoardRepository extends JpaRepository<Board, Long> {
 	
-	Board findByidboard(Long id);
+	Board findByidboard(Long idboard);
 	
 	@Query(value = "SELECT b.* FROM board b INNER JOIN session s on(b.idboard=s.board_idboard) WHERE s.idsession= :idsession",nativeQuery = true)
 	Board boardbysession(@Param("idsession") Long idsession);

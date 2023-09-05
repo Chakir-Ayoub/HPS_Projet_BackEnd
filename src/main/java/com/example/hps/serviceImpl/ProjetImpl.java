@@ -14,6 +14,7 @@ import com.example.hps.entity.Projet;
 import com.example.hps.entity.Utilisateur;
 import com.example.hps.repository.ProjetRepository;
 import com.example.hps.repository.UtilisateurRepository;
+import com.example.hps.response.ResponseChart;
 import com.example.hps.service.ProjetService;
 
 
@@ -213,6 +214,37 @@ public class ProjetImpl implements ProjetService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public List<String> GetAllProjectName() {
+		// TODO Auto-generated method stub
+		List<String> strings=projetRepository.GetAllProjectName();
+		
+		return strings;
+	}
+
+	@Override
+	public List<String> GetProjectColumnCount(String name) {
+		// TODO Auto-generated method stub
+		List<String> responseCharts=projetRepository.GetNameColumnCount(name);
+
+		return responseCharts;
+	}
+
+	@Override
+	public List<Long> GetCountTodo() {
+		// TODO Auto-generated method stub
+		List<Long> responseCharts=projetRepository.GetCountTodo();
+
+		return responseCharts;
+		}
+
+	@Override
+	public List<Long> GetCountDone() {
+		// TODO Auto-generated method stub
+		List<Long> responseCharts=projetRepository.GetCountDone();
+
+		return responseCharts;	}
 
 
 

@@ -95,4 +95,12 @@ public class TaskController {
 		}
 		return new ResponseEntity<List<TaskResponse>>(taskResponses,HttpStatus.ACCEPTED);
 	}
+	
+	@GetMapping("getcountbyuser/{idcolumn}/{utilisateur}")
+	public ResponseEntity<Long> GetCountTaskByUser(@PathVariable Long idcolumn,@PathVariable Long utilisateur) {
+		
+		Long counttaskbyuser=taskService.GetCountTaskByUser(idcolumn, utilisateur);
+		
+		return new ResponseEntity<Long>(counttaskbyuser,HttpStatus.ACCEPTED);
+	}
 }

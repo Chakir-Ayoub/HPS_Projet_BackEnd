@@ -328,6 +328,20 @@ public class UtilisateurImpl implements UtilisateurService {
 		}
 		return utilisateurDtos;
 	}
+
+	@Override
+	public List<Utilisateur> GetIdUsers() {
+		// TODO Auto-generated method stub
+		List<Utilisateur> GetAll=utilisateurRepository.GetIdUsers();
+		return GetAll;
+	}
+
+	@Override
+	public List<String> GetnameUsers() {
+		// TODO Auto-generated method stub
+		List<String> nom=utilisateurRepository.GetnameUsers();
+		return nom;
+	}
 	
 	
 

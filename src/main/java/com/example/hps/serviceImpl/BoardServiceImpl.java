@@ -58,11 +58,11 @@ public class BoardServiceImpl implements BoardService  {
 	}
 
 	@Override
-	public BoardDto GetById(Long id,String email) {
+	public BoardDto GetById(Long idboard,String email) {
 		// TODO Auto-generated method stub
 		Utilisateur currentuser=utilisateurRepository.findByemail(email);
 		if(currentuser.getRole().getIdRole()==1 || currentuser.getRole().getIdRole()==2 ) {
-		Board board=boardRepository.findByidboard(id);
+		Board board=boardRepository.findByidboard(idboard);
 		if(board==null) throw new RestException("Cette Board n'existe Pas");
 		ModelMapper mapper=new ModelMapper();
 		BoardDto boardDto=mapper.map(board, BoardDto.class);
@@ -109,33 +109,35 @@ public class BoardServiceImpl implements BoardService  {
 	@Override
 	public BoardDto UpdateBoard( Long id, BoardDto boardDto) {
 		// TODO Auto-generated method stub
-		Board board=boardRepository.findByidboard(id);
 	//	RemoveBoard(id);
-		if(board==null) throw new RestException("Cette Board n'existe Pas");
-		ModelMapper modelMapper=new ModelMapper();		
-		board.setName(boardDto.getName());
-		Board board2=new Board();
-			for(int i=0;i<boardDto.getColumns().size();i++) {
-				for (Task t : boardDto.getColumns().get(i).getTasks() ) {
-					if(boardDto.getColumns().get(i).getTasks().isEmpty() ) {
-						Task task=taskRepository.findByidtask(board.getColumns().get(i).getTasks().get(i).getIdtask());
-						board.getColumns().get(i).SupperimerTask(task);
-					}
-					else {
-						List<Task> tasks=taskRepository.GetTaskNull();
-						for(Task task:tasks) {
-							taskRepository.delete(task);
+		// TODO Auto-generated method stub
+				Board board=boardRepository.findByidboard(id);
+			//	RemoveBoard(id);
+				if(board==null) throw new RestException("Cette Board n'existe Pas");
+				ModelMapper modelMapper=new ModelMapper();		
+				board.setName(boardDto.getName());
+				Board board2=new Board();
+					for(int i=0;i<boardDto.getColumns().size();i++) {
+						for (Task t : boardDto.getColumns().get(i).getTasks() ) {
+							if(boardDto.getColumns().get(i).getTasks().isEmpty() ) {
+								Task task=taskRepository.findByidtask(board.getColumns().get(i).getTasks().get(i).getIdtask());
+								board.getColumns().get(i).SupperimerTask(task);
+							}
+							else {
+								List<Task> tasks=taskRepository.GetTaskNull();
+								for(Task task:tasks) {
+									taskRepository.delete(task);
+								}
+								Task task=taskRepository.findByname(t.getName());
+									board.getColumns().get(i).setTasks(boardDto.getColumns().get(i).getTasks());
+									task.setColumnn(board.getColumns().get(i));
+									
+							}
 						}
-						Task task=taskRepository.findByname(t.getName());
-							board.getColumns().get(i).setTasks(boardDto.getColumns().get(i).getTasks());
-							task.setColumnn(board.getColumns().get(i));
-							
 					}
-				}
-			}
-			 board2= boardRepository.save(board);
-		BoardDto boardDto2=modelMapper.map(board2,BoardDto.class);
-		return boardDto2;
+					 board2= boardRepository.save(board);
+				BoardDto boardDto2=modelMapper.map(board2,BoardDto.class);
+				return boardDto2;
 	}
 	
 	@Override
